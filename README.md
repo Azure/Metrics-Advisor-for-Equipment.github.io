@@ -1,4 +1,4 @@
-# Metrics Advisor for equipment(private preview)
+# Metrics Advisor for equipment (private preview)
 
 The new Metrics Advisor for equipment feature on Metrics Advisor enables users by easily integrating advanced AI for detecting anomalies from groups of time series signals, without the need for machine learning knowledge or labeled data. This new capability helps you to proactively protect your complex systems such as pumps, Compressors, Motors and turbines from failures.
 

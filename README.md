@@ -1,4 +1,4 @@
-# Metrics Advisor for equipment overview (private preview)
+# Metrics Advisor for equipment(private preview)
 
 The new Metrics Advisor for equipment feature on Metrics Advisor enables users by easily integrating advanced AI for detecting anomalies from groups of time series signals, without the need for machine learning knowledge or labeled data. This new capability helps you to proactively protect your complex systems such as pumps, Compressors, Motors and turbines from failures.
 
@@ -20,16 +20,12 @@ If your goal is to detect system level anomalies from a group of time series dat
 ### Prerequisites
 
 1. [Preprocessing your data](https://github.com/Azure/Metrics-Advisor-for-Equipment.github.io/blob/gh-pages/Preprocessing%20your%20data.md).
-2. [Create an Azure resource](https://go.microsoft.com/fwlink/?linkid=2142156) for Metrics Advisor studio. 
+2. [Create an Azure resource for Metrics Advisor studio](https://go.microsoft.com/fwlink/?linkid=2142156).
 3. Login to Metrics Advisor studio and clicked the Adel card to start trying out the service.
 4. Create a model and onboard your data.
 5. Start training and evaluate your model.
 6. Start inferencing and get Inference result & contributor ranking visualization.
 7. About alert
-## What is the relationship between Anomaly Detector's multivariate feature and Metrics Advisor's multivarite feature
-
-The new Metrics Advisor for equipment feature is under the umbrella of Metrics Advisor studio. This feature directly leverage the Anomaly Detector's multivariate detection core capabilities, and built on top of that an easy to use UX to provide no-code experience for data ingestion, model training, inferencing and model explanation. 
-
 
 
 ## Other references

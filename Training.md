@@ -1,7 +1,11 @@
 <!-- BEGIN MICROSOFT SECURITY.MD V0.0.7 BLOCK -->
 
 ## Security
+You've ingested your dataset, and You've also decided which sensors are providing the data that will be used to train your model. Now it's time to check your trained model.
 
+First, you'll specify the details of your model, such as its name, encryption settings, and tags.
+
+Then, you'll configure your input data. During that process, you'll make decisions about the balance between your training dataset and your evaluation dataset, and whether or not to use data labels.
 Microsoft takes the security of our software products and services seriously, which includes all source code repositories managed through our GitHub organizations, which include [Microsoft](https://github.com/Microsoft), [Azure](https://github.com/Azure), [DotNet](https://github.com/dotnet), [AspNet](https://github.com/aspnet), [Xamarin](https://github.com/xamarin), and [our GitHub organizations](https://opensource.microsoft.com/).
 
 If you believe you have found a security vulnerability in any Microsoft-owned repository that meets [Microsoft's definition of a security vulnerability](https://aka.ms/opensource/security/definition), please report it to us as described below.

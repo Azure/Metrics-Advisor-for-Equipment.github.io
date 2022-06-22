@@ -1,12 +1,48 @@
-<!-- BEGIN MICROSOFT SECURITY.MD V0.0.7 BLOCK -->
+## Scheduling inference
+After you create a model, you can use it to monitor your asset in real-time. To use your model to monitor your asset, you do the following.
 
-## Security
-You've ingested your dataset, and You've also decided which sensors are providing the data that will be used to train your model. Now it's time to check your trained model.
+Create an new real time inference.
 
-First, you'll specify the details of your model, such as its name, encryption settings, and tags.
+![image](https://user-images.githubusercontent.com/36343326/175054446-79c3977d-6e18-498f-8622-3ec436c14b8c.png)
 
-Then, you'll configure your input data. During that process, you'll make decisions about the balance between your training dataset and your evaluation dataset, and whether or not to use data labels.
-Microsoft takes the security of our software products and services seriously, which includes all source code repositories managed through our GitHub organizations, which include [Microsoft](https://github.com/Microsoft), [Azure](https://github.com/Azure), [DotNet](https://github.com/dotnet), [AspNet](https://github.com/aspnet), [Xamarin](https://github.com/xamarin), and [our GitHub organizations](https://opensource.microsoft.com/).
+
+Specify the frequency that data is uploaded.
+
+![image](https://user-images.githubusercontent.com/36343326/175054891-c5311013-94c0-4762-b9b3-5353cb442711.png)
+
+
+![image](https://user-images.githubusercontent.com/36343326/175054762-521ef174-d2ae-4ba5-8c3e-a249c5431cd3.png)
+
+Schedule the time period that your model performs inference on the data coming from your pipeline.
+
+
+
+To create an inference schedule on the data that your model outputs to Amazon S3, use one of the following procedures.
+
+Schedule inference (console)
+To schedule an inference (console)
+
+To schedule inference, you specify the model, the schedule, the S3 location of where the model is reading the data, and where it outputs the results of the inference.
+
+Sign in to AWS Management Console and open the Amazon Lookout for Equipment console at Amazon Lookout for Equipment console.
+
+Choose Models. Then choose the model that monitors your asset.
+
+Choose Schedule inference.
+
+For Inference schedule name, specify the name for the inference schedule.
+
+For Model, choose the model that is monitoring the data coming from your asset.
+
+For S3 location under Input data, specify the Amazon S3 location of the input data coming from the asset.
+
+For Data upload frequency, specify how often your asset sends the data to the S3 bucket.
+
+For S3 location under Output data, specify the S3 location to store the output of the inference results.
+
+For IAM role under Access Permissions, specify the IAM role that provides Amazon Lookout for Equipment with access to your data in Amazon S3.
+
+Choose Schedule inference.
 
 If you believe you have found a security vulnerability in any Microsoft-owned repository that meets [Microsoft's definition of a security vulnerability](https://aka.ms/opensource/security/definition), please report it to us as described below.
 

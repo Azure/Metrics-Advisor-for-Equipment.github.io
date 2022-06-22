@@ -19,11 +19,25 @@ Several parameters should be filled for multivariate anomaly detection applicati
 
 Click **Load** to complete the creation, then you can find the created dataset.
 
+You've ingested your dataset, and you've reviewed any issues with the job, the files, or the sensors. You've also decided which sensors are providing the data that will be used to train your model. Now it's time to move forward with creating the model.
 
-Four buttons below **Model** tab represent from four operations:
+First, you'll specify the details of your model, such as its training time range, advanced settings.
+
+![image](https://user-images.githubusercontent.com/36343326/175045723-4cb8bc63-bf87-4748-ae04-f790e0f805d6.png)
 
 
+When selecting training time range, you'll need to configure your input data. During that process, you'll make decisions about the balance between your training dataset and your evaluation dataset, and whether or not to use data labels.
 
+Under training time range-include, use the timepickers to select the training dates and time that you want to include in your model.
+
+Under training time range-exclude, use the timepickers to select the training dates and time that you want to exclude in your model.
+
+Optionally, customize your advanced settings. 
+•	Sliding Window – How many data points are used to determine anomalies. An integer between 28 and 2,880. The default value is 300. 
+•	Missing data Filling Method – we will automatically fill in missing data. Options are Linear, Previous, Subsequent, and Customized, and the default value is Linear.
+•	However, if too much original data is missing, it might affect your results.
+
+Choose **Create**.
 ## Next steps
 
 - [Training](https://github.com/MS-AI-Platform/MetricsAdvisorMultivariate/blob/main/training.md)

@@ -40,4 +40,9 @@ Optionally, customize your advanced settings.
 Choose **Create**.
 ## Next steps
 
+Starting the training process
+
+The **Model deatils** page gives you a chance review model details such as the name, the dataset, or training time range.
+
+
 - [Training](https://github.com/MS-AI-Platform/MetricsAdvisorMultivariate/blob/main/training.md)

@@ -3,12 +3,13 @@
 **Models** is the place where you can create a new model.
 
 Click **Create a new model** to create a model.
+![image](https://user-images.githubusercontent.com/36343326/175043087-24453360-a2a6-41db-85c9-cee02a0d1e5c.png)
 
-![image-20220622145048266](C:\Users\jinruishao\AppData\Roaming\Typora\typora-user-images\image-20220622145048266.png)
 
 To create a model, you should fill a model name.
 
-![image-20220622145141721](C:\Users\jinruishao\AppData\Roaming\Typora\typora-user-images\image-20220622145141721.png)
+
+![image](https://user-images.githubusercontent.com/36343326/175043003-899fdd93-d535-4804-b341-e49410653217.png)
 
 
 

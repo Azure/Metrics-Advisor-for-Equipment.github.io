@@ -1,4 +1,4 @@
-# Metrics Advisor for equipment (private preview)
+# Metrics Advisor for equipment (private preview)🌞🌎⭐
 
 
 The new Metrics Advisor for equipment feature on Metrics Advisor enables users by easily integrating advanced AI for detecting anomalies from groups of time series signals, without the need for machine learning knowledge or labeled data. This new capability helps you to proactively protect your complex systems such as pumps, Compressors, Motors and turbines from failures.
@@ -11,10 +11,10 @@ If your goal is to detect system level anomalies from a group of time series dat
 
 ## Value propositions
 
-- Easy for use: No data science knowledge needed, users can leverage no code experience to create models and set up inferencing and alert with a few clicks, customers and partners to build this AI capability into their own solutions.
-- Scalability: Multivariate Metrics Advisor can be used across 300 pieces of equipment and sensors located across the world.
-- Cost Effectiveness: Compared with custom build model, significantly lower the model building cost and shorten the time to market. You don't need to have a few data scientists building and tuning models for a few weeks then go production. Instead, the whole process can be done in hours instead of days or weeks. Multivariate Metrics Advisor is priced based on usage, so training and inferencing can be set up and automated for cost-effective model deployment.
-- Accuracy: State of the art AI model created by Microsoft research and AI platform data scientists. While not all equipment issues can be seen in the data, Multivariate Metrics Advisor can find key abnormal equipment behavior with best-in-class detection algorithms and multiple signals analyzed in a group as opposed to being watched individually, dependencies and inter-correlations between signals have now been accounted. 
+- Easy for use✔️: No data science knowledge needed, users can leverage no code experience to create models and set up inferencing and alert with a few clicks, customers and partners to build this AI capability into their own solutions.
+- Scalability✔️: Multivariate Metrics Advisor can be used across 300 pieces of equipment and sensors located across the world.
+- Cost Effectiveness✔️: Compared with custom build model, significantly lower the model building cost and shorten the time to market. You don't need to have a few data scientists building and tuning models for a few weeks then go production. Instead, the whole process can be done in hours instead of days or weeks. Multivariate Metrics Advisor is priced based on usage, so training and inferencing can be set up and automated for cost-effective model deployment.
+- Accuracy✔️: State of the art AI model created by Microsoft research and AI platform data scientists. While not all equipment issues can be seen in the data, Multivariate Metrics Advisor can find key abnormal equipment behavior with best-in-class detection algorithms and multiple signals analyzed in a group as opposed to being watched individually, dependencies and inter-correlations between signals have now been accounted. 
 
 ## Get familiar with new multivariate detection flow
 

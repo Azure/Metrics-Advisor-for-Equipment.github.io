@@ -12,7 +12,6 @@ Navigate to **Model deatils** page and choose **create a evaluation**.
 
 ![image](https://user-images.githubusercontent.com/36343326/175050952-b3a5036e-2a48-48f2-92e1-070d54d8e886.png)
 
-
 In the following image, you can see 
 
 ![image](https://user-images.githubusercontent.com/36343326/175051021-6633e3fd-61af-45b1-bcb3-f3c645efa388.png)

@@ -18,4 +18,4 @@ Use the slider to zoom in on a particular event (red bar).
 Click on a particular event (red bar) to view details about it.
 
 After you click on a particular event, the Event details tab indicates which sensors contributed the most to that event.
-![Uploading image.png…]()
+

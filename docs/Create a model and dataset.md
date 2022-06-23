@@ -1,4 +1,4 @@
-# Create a model
+# Creating a model
 
 **Models** is the place where you can create a new model.
 
@@ -13,9 +13,7 @@ To create a model, you should fill a model name.
 Several parameters should be filled for multivariate anomaly detection application.
 ![image](https://user-images.githubusercontent.com/36343326/175043003-899fdd93-d535-4804-b341-e49410653217.png)
 
-
-> 
-> - To access your data source, you need to assign managed identity to Metrics-Advisor-for-Equipment. [How to assign role to a resource](https://github.com/MS-AI-Platform/MetricsAdvisorMultivariate/blob/main/managed_identity.md)
+To access your data source, you need to assign managed identity to Metrics-Advisor-for-Equipment. [How to assign role to a resource](https://github.com/MS-AI-Platform/MetricsAdvisorMultivariate/blob/main/managed_identity.md)
 
 Click **Load** to complete the creation, then you can find the created dataset.
 
@@ -25,11 +23,9 @@ First, you'll specify the details of your model, such as its training time range
 
 ![image](https://user-images.githubusercontent.com/36343326/175045723-4cb8bc63-bf87-4748-ae04-f790e0f805d6.png)
 
-
 When selecting training time range, you'll need to configure your input data. During that process, you'll make decisions about the balance between your training dataset and your evaluation dataset, and whether or not to use data labels.
 
 Under training time range-include, use the timepickers to select the training dates and time that you want to include in your model.
-
 Under training time range-exclude, use the timepickers to select the training dates and time that you want to exclude in your model.
 
 Optionally, customize your advanced settings. 

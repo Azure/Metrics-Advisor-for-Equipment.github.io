@@ -1,16 +1,53 @@
 # Creating a model
 
-**Models** is the place where you can create a new model.
+## About the left navigation panel
+
+After you navigate to the workspace,  a navigation panel appears in the left side of the Metrics Advisor for Equipment UI. 
+
+The first three items in the left navigation panel—**Models**, **Datasets**, **Visulazaiton** and **Settings**. If you select:
+
+- **Models**, you can use the models navigation bar to access all existing models, or create a new model.
+- **Datasets**, you can use the datasets navigation bar to access all existing datasets, or create a new dataset.
+- **Visulazaiton**, you can use the visulazaiton navigation bar to access a inference graphs and contribution rank.
+
+## Create a new model
 
 Click **Create a new model**.
 ![image](https://user-images.githubusercontent.com/36343326/175043087-24453360-a2a6-41db-85c9-cee02a0d1e5c.png)
 
+### Model name
 
-To create a model, you should fill a model name.
+When you create a model, the model name must be unique .The model name can contain the following:
+
+o	Make sure your name don't include any invalid characters, such as spaces.
+o	Valid characters are: 200 characters.
+o	Valid characters are: 0-9, a-z, A-Z, and # $ . \ - (hyphen) _ (underscore)
+o	Make sure that you don't have any duplicated names.
+
 ![image](https://user-images.githubusercontent.com/36343326/175043374-999d68a9-f23b-46ed-87b5-90dd5bf08e8e.png)
 
+### Create/Select a Dataset 
 
-Several parameters should be filled for multivariate anomaly detection application.
+1. On the **Create dataset** page:
+
+   - For **Dataset ID**, enter a unique dataset name.
+
+   - For **Data location**, choose a geographic [location](https://cloud.google.com/bigquery/docs/locations) for the dataset. After a dataset is created, the location can't be changed.
+
+     **Note:** If you choose `EU` or an EU-based region for the dataset location, your Core BigQuery Customer Data resides in the EU. Core BigQuery Customer Data is defined in the [Service Specific Terms](https://cloud.google.com/terms/service-terms#13-google-bigquery-service).
+
+     
+
+   - For **Default table expiration**, choose one of the following options:
+
+     - **Never:** (Default) Tables created in the dataset are never automatically deleted. You must delete them manually.
+
+     - **Number of days after table creation:** This value determines when a newly created table in the dataset is deleted. This value is applied if you do not set a table expiration when the table is [created](https://cloud.google.com/bigquery/docs/tables#create-table).
+
+       **Note:** If your project is not associated with a billing account, BigQuery automatically sets the default table expiration for datasets that you create in the project. You can specify a shorter default table expiration for a dataset, but you can't specify a longer default table expiration.
+
+   - Click **Create dataset**.
+
 ![image](https://user-images.githubusercontent.com/36343326/175043003-899fdd93-d535-4804-b341-e49410653217.png)
 
 To access your data source, you need to assign managed identity to Metrics-Advisor-for-Equipment. [How to assign role to a resource](https://github.com/MS-AI-Platform/MetricsAdvisorMultivariate/blob/main/managed_identity.md)

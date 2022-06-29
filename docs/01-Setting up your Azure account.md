@@ -1,21 +1,19 @@
 # Setting up your Azure account
 
-Before you can start with Metrics-Advisor-for-Equipment, you must sign up for an Azure account if you don't already have one.
+Before starting with Metrics Advisor for Equipment, you must sign up for an Azure account if you don't already have one.
 
-### To create an Azure account
+### 1. To create an Azure account
 
 Open [Azure Portal](https://azure.microsoft.com/free/cognitive-services).
 
-Follow the online instructions.
+Follow the online instructions. Part of the sign-up procedure involves receiving a phone call and entering a verification code on the phone keypad.
 
-Part of the sign-up procedure involves receiving a phone call and entering a verification code on the phone keypad.
-
-### To create a Metrics Advisor for Equipment resource
+### 2. To create a Metrics Advisor for Equipment resource
 
 When you have your Azure subscription, create a [Metrics Advisor](https://go.microsoft.com/fwlink/?linkid=2142156) resource in the Azure portal to deploy your instance of Metrics Advisor.
 
 
-### Sign in to your workspace
+### 3. Sign in to your workspace
 
 After your resource is created, sign in to the Metrics Advisor portal with your Active Directory account. From the landing page, select your Directory, Subscription, and Workspace that you just created, and then select Get started. 
 

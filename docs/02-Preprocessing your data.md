@@ -42,19 +42,16 @@ o	Make sure that you don't have any duplicated column headers.
 
 ## 3. Data quality
 
-- As the model learns normal patterns from historical data, the training data should represent the **overall normal** state of the system. It's hard for the model to learn these types of patterns if the training data is full of anomalies. An empirical threshold of abnormal rate is **1%** and below for good accuracy.
+Your dataset should contain time-series data that's generated from an industrial asset such as a pump, compressor, motor, and so on. Each asset should be generating data from one or more sensors. The data that Metrics Advisor for Equipment uses for training should be representative of the condition and operation of the asset. Making sure that you have the right data is crucial.
+We recommend that you work with a **SME**. A SME can help you make sure that the data is relevant to the aspect of the asset that you're trying to analyze. We recommend that you remove unnecessary sensor data. With data from too few sensors, you might miss critical information. With data from too many sensors, your model might overfit the data and it might miss out on key patterns.
 
-- In general, the **missing value ratio of training data should be under 20%**. Too much missing data may end up with automatically filled values (usually linear values or constant values) being learned as normal patterns. That may result in real (not missing) data points being detected as anomalies.
+#### Use these guidelines to choose the right data:
 
-  
+- **Missing data: **In general, the missing value ratio of training data should be under 20%. Too much missing data may end up with automatically filled values (usually linear values or constant values) being learned as normal patterns. That may result in real (not missing) data points being detected as anomalies.Metrics Advisor for Equipment automatically fills in missing data (known as imputing). It does this by forward filling previous sensor readings. However, if too much original data is missing, it might affect your results.
 
-### Data quantity
+- **Sample rate** – Sample rate is the interval at which the sensor readings are recorded. Use the highest frequency sample rate possible without exceeding the data size limit. The sample rate and data size might also increase your ML model training time. 
 
-- **Minimum number of data points to train a model:** The empirical rule is that you need to provide **15,000 or more data points (timestamps) per variable** to train the model for good accuracy. In general, the more the training data, better the accuracy. However, in cases when you're not able to accrue that much data, we still encourage you to experiment with less data and see if the compromised accuracy is still acceptable.
-- **Minimum number of data points to batch inference: **At most 20000, at least 12 sliding window length.
-- **Minimum number of data points to near real time inference:** At most 2880, at least 1 sliding window length. Detecting timestamps: From 1 to 10.
-
-### Timestamp round-up
+#### Timestamp round-up
 
 In a group of variables (time series), each variable may be collected from an independent source. The timestamps of different variables may be inconsistent with each other and with the known frequencies. Here's a simple example.
 
@@ -131,7 +128,9 @@ Now the merged table is more reasonable.
 
 Values of different variables at close timestamps are well aligned, and the model can now extract correlation information.
 
+## 4. Data quantity
 
-
-
-
+- **Data size:** Although Metrics Advisor for Equipment can ingest more than 50 GB of data, it can use only 7 GB with a model. Factors such as the number of sensors used, how far back in history the dataset goes, and the sample rate of the sensors can all determine how many measurements this amount of data can include. 
+- **Minimum number of data points to train a model:** The empirical rule is that you need to provide **15,000 or more data points (timestamps) per variable** to train the model for good accuracy. In general, the more the training data, better the accuracy. However, in cases when you're not able to accrue that much data, we still encourage you to experiment with less data and see if the compromised accuracy is still acceptable.
+- **Minimum number of data points to batch inference: **At most 20000, at least 12 sliding window length.
+- **Minimum number of data points to near real time inference:** At most 2880, at least 1 sliding window length. Detecting timestamps: From 1 to 10.

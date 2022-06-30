@@ -24,3 +24,8 @@ To create a web hook, you will need to add the following information:
 | Endpoint            | The API address to be called when an alert is triggered.     |
 | Username / Password | For authenticating to the API address. Leave this black if authentication isn't needed. |
 | Header              | Custom headers in the API call.                              |
+
+![image](https://user-images.githubusercontent.com/36343326/176591650-a9007c26-a009-4a30-8d06-d30a6f90bb47.png)
+![image](https://user-images.githubusercontent.com/36343326/176591665-53329e17-851a-4ecd-bbe3-ab344d039561.png)
+![image](https://user-images.githubusercontent.com/36343326/176591680-a4d31a3f-bd5b-49ca-9179-ac1c6806ffaf.png)
+![image](https://user-images.githubusercontent.com/36343326/176591694-c4da8a61-7a89-4e64-9e53-f229b2e66be2.png)

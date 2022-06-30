@@ -57,7 +57,22 @@ Select from existing real-time inferences by inference name and Metrics Advisor 
 ![image](https://user-images.githubusercontent.com/36343326/176591438-dfbad83b-c300-41c1-a692-de23ce6c99b3.png)
 
 
-## 5. Manage inference schedules
+
+## 5. Set a replay
+
+After a model is doing real time inference, users could choose to schedule a replay. This will trigger an backfill on your selected timestamp immediately to fix a failed inference or to override the existing data.
+
+Schedule replay/backfill for an existing real-time inference
+
+-  **Select start date and time** 
+
+- **Select end date and time** 
+
+Replay is re-triggered on selected range only.
+
+
+
+## 6. Manage inference schedules
 
 - **Setting inference as inactive**
 
@@ -76,7 +91,7 @@ From the Model details, under inference tab, choose **Delete**.
 
 
 
-## 5. Inference detail
+## 7. Inference detail
 
 Starting the inference process. Click the **model name**, then the **Inference detail** tab gives you a chance review inference details such as the inference name, the dataset, and inference start time.
 

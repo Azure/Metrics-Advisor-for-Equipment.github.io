@@ -2,7 +2,7 @@
 
 You've ingested your dataset, and you've reviewed any issues with the job, the files, or the sensors. You've also decided which sensors are providing the data that will be used to train your model. Now it's time to move forward with creating the model.
 
-## About the left navigation panel
+## 1. About the left navigation panel
 
 After you navigate to the workspace,  a navigation panel appears in the left side of the Metrics Advisor for Equipment UI. 
 
@@ -12,7 +12,7 @@ The first three items in the left navigation panel—**Models**, **Datasets**, *
 - **Datasets**, you can use the datasets navigation bar to access all existing datasets, or create a new dataset.
 - **Visualization**, you can use the visualization navigation bar to access a inference graphs and contribution rank.
 
-## 1. Create a new model
+## 2. Create a new model
 
 Click **Create a new model**.
 ![image](https://user-images.githubusercontent.com/36343326/175043087-24453360-a2a6-41db-85c9-cee02a0d1e5c.png)
@@ -31,7 +31,7 @@ When you create a model, the model name must be unique .The model name can conta
 
 
 
-## 2. Create/Select a Dataset 
+## 3. Create/Select a Dataset 
 
 On the **Create dataset** page:
 
@@ -62,7 +62,7 @@ On the **Create dataset** page:
 
 
 
-## 3. Training Parameters
+## 4. Training Parameters
 
 First, you'll specify the details of your model, such as its training time range, advanced settings.
 
@@ -82,28 +82,64 @@ Optionally, There are several advanced settings to enable data ingested in a cus
 
 Choose **Create**.
 
-**_NOTE:_**  How does sliding window work?
+> **_NOTE:_**  How does sliding window work? Let's use two examples to learn how sliding window works. Suppose you have set `slidingWindow` = 1,440, and your input data is at one-minute granularity.
+>
+> **Streaming scenario**: You want to predict whether the ONE data point at "2021-01-02T00:00:00Z" is anomalous. Your `startTime` and `endTime` will be the same value ("2021-01-02T00:00:00Z"). Your inference data source, however, must contain at least 1,440 + 1 timestamps. Because model will take the leading data before the target data point ("2021-01-02T00:00:00Z") to decide whether the target is an anomaly. The length of the needed leading data is `slidingWindow` or 1,440 in this case. 1,440 = 60 * 24, so your input data must start from at latest "2021-01-01T00:00:00Z".
+>
+> **Batch scenario**: You have multiple target data points to predict. Your `endTime` will be greater than your `startTime`. Inference in such scenarios is performed in a "moving window" manner. For example, model will use data from `2021-01-01T00:00:00Z` to `2021-01-01T23:59:00Z` (inclusive) to determine whether data at `2021-01-02T00:00:00Z` is anomalous. Then it moves forward and uses data from `2021-01-01T00:01:00Z` to `2021-01-02T00:00:00Z` (inclusive) to determine whether data at `2021-01-02T00:01:00Z` is anomalous. It moves on in the same manner (taking 1,440 data points to compare) until the last timestamp specified by `endTime` (or the actual latest timestamp). Therefore, your inference data source must contain data starting from `startTime` - `slidingWindow` and ideally contains in total of size `slidingWindow` + (`endTime` - `startTime`).
 
-Let's use two examples to learn how sliding window works. Suppose you have set `slidingWindow` = 1,440, and your input data is at one-minute granularity.
 
-- **Streaming scenario**: You want to predict whether the ONE data point at "2021-01-02T00:00:00Z" is anomalous. Your `startTime` and `endTime` will be the same value ("2021-01-02T00:00:00Z"). Your inference data source, however, must contain at least 1,440 + 1 timestamps. Because model will take the leading data before the target data point ("2021-01-02T00:00:00Z") to decide whether the target is an anomaly. The length of the needed leading data is `slidingWindow` or 1,440 in this case. 1,440 = 60 * 24, so your input data must start from at latest "2021-01-01T00:00:00Z".
 
-- **Batch scenario**: You have multiple target data points to predict. Your `endTime` will be greater than your `startTime`. Inference in such scenarios is performed in a "moving window" manner. For example, model will use data from `2021-01-01T00:00:00Z` to `2021-01-01T23:59:00Z` (inclusive) to determine whether data at `2021-01-02T00:00:00Z` is anomalous. Then it moves forward and uses data from `2021-01-01T00:01:00Z` to `2021-01-02T00:00:00Z` (inclusive) to determine whether data at `2021-01-02T00:01:00Z` is anomalous. It moves on in the same manner (taking 1,440 data points to compare) until the last timestamp specified by `endTime` (or the actual latest timestamp). Therefore, your inference data source must contain data starting from `startTime` - `slidingWindow` and ideally contains in total of size `slidingWindow` + (`endTime` - `startTime`).
+## 5. Training model detail
 
-  
+Starting the training process. Click the **model name**, then the **Training model detail** tab gives you a chance review model details such as the model name, the dataset, and training time range.
 
-## 4. Model details
+There are four kinds of training model status.
 
-Starting the training process
-
-Click the model name, then the **Model details** page gives you a chance review model details such as the model name, the dataset, and training time range.
-
-There are four kinds of model status.
-
-| status    | Description                                |
+| Status    | Description                                |
 | --------- | ------------------------------------------ |
 | Running   | Training is in processing.                 |
 | Completed | Training is done, you can start inference. |
 | Failed    | Training is failed for some reason.        |
 
-You can click the **View details** button for the error messages when you find the model status gets to **Failed**.
+You can click the **View details** button for the error messages when you find the training model status gets to **Failed**.
+
+## 6. Manage datasets
+
+#### Search datasets by name
+
+To search datasets by name you can enter a dataset name in the search box.
+
+#### Sort datasets
+
+Data feeds can be sorted by using the following methods:
+
+- by created time
+
+#### Delete your data feed
+
+To delete a dataset, you need to complete the following steps:
+
+1. On the datasets list page, click 'Delete' on the data feed.
+
+2. In the dataset details page, click 'Delete'.
+
+   
+
+## 7. Manage models
+
+#### Search models by name
+
+To search models by name you can enter a model name in the search box.
+
+#### Sort models 
+
+Models can be sorted by using the following methods:
+
+- by created time
+
+#### Delete your models 
+
+To delete a model, you need to complete the following steps:
+
+1. On the **Training detail** page, click 'Delete' .

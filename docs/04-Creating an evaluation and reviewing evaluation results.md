@@ -16,7 +16,7 @@ Metrics Advisor for Equipment identifies patterns in the dataset that help to de
 
 
 
-## 2. Create a evaluation
+## 2. Create an evaluation
 
 If you've used part of your dataset for training and the other part for evaluation, you can start evaluate the model's performance after finishing the training. You can also select a different dataset for model evaluations.
 

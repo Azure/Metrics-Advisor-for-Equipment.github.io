@@ -20,13 +20,14 @@ If your goal is to detect system level anomalies from a group of time series dat
 
 ### Prerequisites
 
-1. [Preprocessing your data](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/Preprocessing%20your%20data.md).
-2. [Create an Azure resource for Metrics Advisor studio](https://go.microsoft.com/fwlink/?linkid=2142156).
-3. Login to Metrics Advisor studio and clicked the Adel card to start trying out the service.
-4. Create a model and onboard your data.
-5. Start training and evaluate your model.
-6. Start inferencing and get Inference result & contributor ranking visualization.
-7. About alert
+1. [Setting up your Azure account](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/01-Setting%20up%20your%20Azure%20account.md).
+2. [Preprocessing your data](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/02-Preprocessing%20your%20data.md).
+3. [Creating a model and dataset](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/03-Create%20a%20model%20and%20dataset.md).
+4. [Creating an evaluation and reviewing evaluation results](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/04-Creating%20an%20evaluation%20and%20reviewing%20evaluation%20results.md).
+5. [Scheduling inference](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/05-Scheduling%20an%20inference.md).
+6. [Reviewing inference results](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/06-Reviewing%20inference%20results.md).
+7. [Configuring alerts and getting notifications using a hook](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/07-Configure%20alerts%20an%20get%20notifications%20using%20a%20hook.md).
+8. [Quota](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/08-Quota.md).
 
 
 ## Other references

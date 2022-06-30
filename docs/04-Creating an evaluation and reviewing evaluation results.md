@@ -38,16 +38,24 @@ In the following image, you need to fill evaluation parameters:
 
 
 
-## 4. Reviewing evaluation results
+## 4. Evaluation Summary
 
-On the evaluation tab page you'll find your list of evaluations. 
+Starting the evaluation process. Click the **model name**, then the **Evaluation result** tab gives you a chance review evaluation details such as the evaluation name, the dataset, and evaluation time range.
+
+On the evaluation results tab page you'll find your list of evaluations. 
 Click **Evaluation summary**, you'll find details about the evalution summarys.
 
-![image](https://user-images.githubusercontent.com/36343326/175233341-e8eda33b-84e8-4e1a-8440-a635cacde7fd.png)
+There are three kinds of evaluation status.
+
+| Status    | Description                                  |
+| --------- | -------------------------------------------- |
+| Running   | Evaluation is in processing.                 |
+| Completed | Evaluation is done, you can start inference. |
+| Failed    | Evaluation is failed for some reason.        |
+
+You can click the **View details** button for the error messages when you find the Evaluation status gets to **Failed**.
 
 At the below, Equipment anomalies and health trend means the results from the chosen evaluation run.These results provide information about anomalous behavior that occurred over the evalution time range.
-
-![image](https://user-images.githubusercontent.com/36343326/175233779-f04dbc0c-b49a-40ff-a49b-b057552ece29.png)
 
 Use the slider to zoom in on a particular event.
 
@@ -55,9 +63,11 @@ Click on a particular event (red bar) to view details about it.
 
 After you click on a particular event, the Event details tab indicates which sensors contributed the most to that event.
 
+![image](https://user-images.githubusercontent.com/36343326/175233341-e8eda33b-84e8-4e1a-8440-a635cacde7fd.png)
 
 
-## 5. Uploading the label
+
+## 5. Upload the label
 
 If you've provided Metrics-Advisor-for-Equipment with label data, you can see how the model's predictions compare to the label data. 
 ![image](https://user-images.githubusercontent.com/36343326/175234568-54d77e0b-926b-4a3a-9f48-01c8d6f3a8fa.png)
@@ -72,15 +82,7 @@ Event_start_time (timestamp format MUST be the same as your evaluation data)-Eve
 
 File size limit: 1MB
 
-If a label csv file was uploaded successfully, Users should see the labeled time periods on the visualization.
-
-- Data granularity: automatically detected on the backend; 
-- Sensitivity: choose an integer between 1-100,
-- Snoozing window (based on time): “Do not send out alerts if an alert was already sent in the last ____ min”
-- severity = anomaly score / (e - 1)
-- sensitivity = (1- severity) *100
-
-**Advandced settings:**
+**Advanced settings:**
 
 Users should modify the detection configuration to let Adel's predicted anomalies match with their labels as much as possible
 When users try different numbers for sensitivity, the anomaly red points on the anomaly score trend visuals will change accordingly.
@@ -113,7 +115,7 @@ for contribution score color scale:
    > **_NOTE:_**  Metrics Advisor for Equipment will pull 300 data points for each variable when users clicked on an anomalous point, show top 5 contributors by default.
 
 
-## 7. Downloading results
+## 7. Download results
 
 Users could download raw model output. The downloaded file will have the following information: 
 

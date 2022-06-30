@@ -22,7 +22,7 @@ If your goal is to detect system level anomalies from a group of time series dat
 
 1. [Setting up your Azure account](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/01-Setting%20up%20your%20Azure%20account.md).
 2. [Preprocessing your data](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/02-Preprocessing%20your%20data.md).
-3. [Creating a model and dataset](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/03-Create%20a%20model%20and%20dataset.md).
+3. [Creating a model and dataset]([https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/03-Create%20a%20model%20and%20dataset.md](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/03-Creating%20a%20model%20and%20dataset.md)).
 4. [Creating an evaluation and reviewing evaluation results](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/04-Creating%20an%20evaluation%20and%20reviewing%20evaluation%20results.md).
 5. [Scheduling inference](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/05-Scheduling%20an%20inference.md).
 6. [Reviewing inference results](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/06-Reviewing%20inference%20results.md).

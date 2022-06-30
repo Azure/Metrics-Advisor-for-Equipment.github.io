@@ -1,11 +1,13 @@
 ## Scheduling inference
 After you create a model, you can use it to monitor your asset in real-time. To use your model to monitor your asset, you do the following.
 
-Create an new real time inference.
+## 1. Create an near real time inference
+
+When the model status is completed, click the button to create a inference. 
 
 ![image](https://user-images.githubusercontent.com/36343326/175054446-79c3977d-6e18-498f-8622-3ec436c14b8c.png)
 
-Set alert configuration, specfiy alert name and sensetivity, inference snoozing windows.
+Set alert configuration, specify alert name and sensitivity, inference snoozing windows.
 
 Select hooks for alert.
 
@@ -16,21 +18,25 @@ For the dataset, select or create an inference dataset.
 
 ![image](https://user-images.githubusercontent.com/36343326/175054891-c5311013-94c0-4762-b9b3-5353cb442711.png)
 
-## Managing inference schedules
-### Stopping inference
-This section explains how to halt the inference process.
+## 2. Managing inference schedules
 
-From the Model details, under inference tab, choose** inactive**.
-### Resuming inference
-This section explains how to resume a stopped inference schedule.
+- **Setting inference as inactive**
+
+This will halt the inference process.
+
+From the Model details, under inference tab, choose **inactive.**
+
+- **Setting inference as active**
+
+This will resume a stopped inference schedule.
 From the Model details, under inference tab, choose **active**.
-### Deleting an inactive inference
-From the Model details, under inference tab, choose** Delete**.
 
-## Understanding the inference process      
-Metrics-Advisor-for-Equipment looks for the component name (which can be the name of an asset or a sensor).
+- **Deleting an inactive inference**
 
-Once the component name is found in the file name, Metrics-Advisor-for-Equipment looks at the time stamp in the timestamps column.
+From the Model details, under inference tab, choose **Delete**.
 
-The timestamp in the file name must be within the range of time that your scheduler is running. For example, if the scheduler is running every 5 minutes, then at 9:05, Metrics-Advisor-for-Equipment will look for any files that have a timestamp from 9:00 to 9:05. Any files with timestamps outside this range will be ignored for the inference run.
+
+
+## 3. Understanding the inference process      
+Metrics-Advisor-for-Equipment looks for the component name (which can be the name of an asset or a sensor).Once the component name is found in the file name, Metrics-Advisor-for-Equipment looks at the time stamp in the timestamps column. The timestamp in the file name must be within the range of time that your scheduler is running. For example, if the scheduler is running every 5 minutes, then at 9:05, Metrics-Advisor-for-Equipment will look for any files that have a timestamp from 9:00 to 9:05. Any files with timestamps outside this range will be ignored for the inference run.
 

@@ -13,12 +13,25 @@ Select hooks for alert.
 
 ![image](https://user-images.githubusercontent.com/36343326/175054762-521ef174-d2ae-4ba5-8c3e-a249c5431cd3.png)
 
+
+
+## 2. Set alert configuration
+
+| Parameter             | Description                                                  |
+| --------------------- | ------------------------------------------------------------ |
+| Snoozing window       | If there is an alert has been triggered, for the selecting snoozing time, alert will not be triggered no matter whether there is an anomaly. |
+| Detection sensitivity | From 1 ~ 100, to define detector's sensitivity. The bigger the more sensitive to anomalies. |
+
+
+
+### 3. inferernce parametrers
+
 Specify the name for the inference and the time period that your model performs inference on the data coming from your pipeline.
 For the dataset, select or create an inference dataset.
 
 ![image](https://user-images.githubusercontent.com/36343326/175054891-c5311013-94c0-4762-b9b3-5353cb442711.png)
 
-## 2. Managing inference schedules
+## 4. Managing inference schedules
 
 - **Setting inference as inactive**
 
@@ -37,6 +50,6 @@ From the Model details, under inference tab, choose **Delete**.
 
 
 
-## 3. Understanding the inference process      
+## 5. Understanding the inference process      
 Metrics-Advisor-for-Equipment looks for the component name (which can be the name of an asset or a sensor).Once the component name is found in the file name, Metrics-Advisor-for-Equipment looks at the time stamp in the timestamps column. The timestamp in the file name must be within the range of time that your scheduler is running. For example, if the scheduler is running every 5 minutes, then at 9:05, Metrics-Advisor-for-Equipment will look for any files that have a timestamp from 9:00 to 9:05. Any files with timestamps outside this range will be ignored for the inference run.
 

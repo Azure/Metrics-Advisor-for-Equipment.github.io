@@ -11,6 +11,8 @@ The first three items in the left navigation panel—**Models**, **Datasets**, *
 - **Models**, you can use the models navigation bar to access all existing models, or create a new model.
 - **Datasets**, you can use the datasets navigation bar to access all existing datasets, or create a new dataset.
 - **Visualization**, you can use the visualization navigation bar to access a inference graphs and contribution rank.
+![image](https://user-images.githubusercontent.com/36343326/176643695-d39385ed-26f3-4501-bb36-d4f79559e532.png)
+
 
 ## 2. Create a new model
 
@@ -104,6 +106,7 @@ There are four kinds of training model status.
 
 You can click the **View details** button for the error messages when you find the training model status gets to **Failed**.
 
+
 ## 6. Manage datasets
 
 #### Search datasets by name
@@ -123,9 +126,11 @@ To delete a dataset, you need to complete the following steps:
 1. On the datasets list page, click 'Delete' on the data feed.
 
 2. In the dataset details page, click 'Delete'.
+  
 
-   
+![image](https://user-images.githubusercontent.com/36343326/176643089-c06e12b8-0045-4ccd-b598-1b44ba1122ee.png)
 
+    
 ## 7. Manage models
 
 #### Search models by name
@@ -142,4 +147,7 @@ Models can be sorted by using the following methods:
 
 To delete a model, you need to complete the following steps:
 
-1. On the **Training detail** page, click 'Delete' .
+On the **Training detail** page, click 'Delete'.
+   
+![image](https://user-images.githubusercontent.com/36343326/176643591-6121a31f-7229-43c1-9eff-28ac189cec73.png)
+

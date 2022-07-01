@@ -17,27 +17,21 @@ When the model status is completed, click the button to create a inference.
 Set alert configuration, specify alert name and sensitivity, and  inference snoozing windows.
 ![image](https://user-images.githubusercontent.com/36343326/176591239-1aab9a06-0d90-4d13-8f2c-37edab1b1d92.png)
 
+Select or create new hooks for alert.
 
+![image](https://user-images.githubusercontent.com/36343326/176645158-90e62e49-b68a-4678-bfe1-65ed9661b770.png)
 
 | Parameter       | Description                                                  |
 | --------------- | ------------------------------------------------------------ |
 | Snoozing window | If there is an alert has been triggered, for the selecting snoozing time, alert will not be triggered no matter whether there is an anomaly. |
 | Sensitivity     | From 1 ~ 100, to define detector's sensitivity. The bigger the more sensitive to anomalies. |
 
-Select or Add new hooks for alert.
-
-
-![image](https://user-images.githubusercontent.com/36343326/176591270-7127defa-46d1-4b03-8c02-819f14358be9.png)
-
 ## 3. Inference parameters
 
 Specify the name for the inference and the time period that your model performs inference on the data coming from your pipeline.
 For the dataset, select or create an inference dataset.
-
-​                     
-
-![image](https://user-images.githubusercontent.com/36343326/176591345-dbb3ad25-a2cc-4be1-b8e7-1a3b1e7bb66c.png)
-
+ 
+![image](https://user-images.githubusercontent.com/36343326/176644652-a9e9993b-6381-461d-ab04-7397c6663bff.png)
 
 
 ## 4. Use existing inference
@@ -45,11 +39,10 @@ For the dataset, select or create an inference dataset.
 If users already created some real time inference which are running in other models, users could reuse this inference id into a new trained model to do inference.  	
 
 Select from existing real-time inferences by inference name and Metrics Advisor for Equipment will prefill the detection settings    (sensitivity and Snoozing window are all used existing inference and not allowed any change) in the portal and trigger inference starting from the current timestamp (None of the information for the selected inference is editable in this step).
+![image](https://user-images.githubusercontent.com/36343326/176644500-84af22bd-370d-4e37-9d2e-aef42e21bea3.png)
+  
 
-
-
-
-
+                                             
 ![image](https://user-images.githubusercontent.com/36343326/176591367-fe6aa6e0-11a7-4854-aa98-74e79bc13c41.png)
 
 
@@ -62,15 +55,11 @@ Select from existing real-time inferences by inference name and Metrics Advisor 
 
 After a model is doing real time inference, users could choose to schedule a replay. This will trigger an backfill on your selected timestamp immediately to fix a failed inference or to override the existing data.
 
-Schedule replay/backfill for an existing real-time inference
+Schedule replay/backfill for an existing real-time inference.
+Select start date and time and Select end date and time.
+![image](https://user-images.githubusercontent.com/36343326/176645839-c3fe65b1-ad9f-4211-8fc7-30ba96ab5c3d.png)
 
--  **Select start date and time** 
-
-- **Select end date and time** 
-
-Replay is re-triggered on selected range only.
-
-
+Replay is re-triggered only on selected range   .
 
 ## 6. Manage inference schedules
 

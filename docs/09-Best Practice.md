@@ -35,9 +35,7 @@ Example metrics you could check include:
 
 ## 4. Evaluate properly
 
-The final thing is to evaluate properly. So especially with time series data where you have highly interdependent data, you really have to make sure that you're testing on the right thing.  You have to be really careful there to make sure that the estimate of the performance that you get from data analysis is the thing that you will also then see in the reality. 
-
-
+The labels and the evaluation metrics will help assess just how good the unsupervised models are at catching known patterns. Unsupervised learning systems are much harder to evaluate than supervised learning systems. Often, unsupervised learning systems are judged by their ability to catch known patterns. It’s important to be mindful of this limitation as we proceed in evaluating the results. With time series data where you have highly interdependent data, you really have to make sure that you're testing on the right thing.  You have to be really careful there to make sure that the estimate of the performance that you get from data analysis is the thing that you will also then see in the reality. 
 
 ## 5. Close the loop
 
@@ -45,7 +43,7 @@ In the company, data science is just one part. And eventually you want to bring 
 
 
 
-## 6. Filters to Control False Positives
+## 6. Alarm Selectively
 
 Anomaly detection methods and models don’t have enough context themselves to know if a system is actually anomalous or not. It’s your task to utilize them for that purpose. On the flip side, you also need to know when to *not* rely on your anomaly detection framework. When a system or process is highly unstable, it becomes extremely difficult for models to work well. We highly recommend implementing filters to reduce the number of false positives. Some of the filters we’ve used include:
 
@@ -54,3 +52,9 @@ Anomaly detection methods and models don’t have enough context themselves to k
 - If a system violates a threshold and you trigger an anomaly or send an alert, don’t allow another one to be sent unless the system resets back to normal first. This can be implemented by having a reset threshold, below which the metrics of interest must dip before they can trigger above the upper threshold again.
 
 Filters don’t have to be complicated. Sometimes it’s much simpler and more efficient to just simply ignore metrics that are likely to cause alerting nuisances.
+
+# Conclusions
+
+Although it’s easy to get excited about success stories in anomaly detection, most of the time someone else’s techniques will not translate directly to your systems and your data. That’s why you have to learn for yourself what works, what’s appropriate to use in some situations and not in others, and the like.
+
+Our suggestion, store the results, but don’t alert on them in most cases. And keep in mind that the map is not the territory: the metric isn’t the system, an anomaly isn’t a crisis, three sigmas isn’t unlikely, and so on.

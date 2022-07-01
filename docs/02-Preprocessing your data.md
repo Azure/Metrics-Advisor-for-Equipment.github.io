@@ -32,9 +32,9 @@ Metrics Advisor for equipment uses your data in the following steps:
 
 Metrics Advisor for equipment accepts tables with only three columns:
 
-- The first column headers of the file are a timestamp that indicates the date and time. 
-- The second column headers contain the sensor name. 
-- The third column headers show the data value from the sensor.
+- The first column headers of the file are a `timestamp` that indicates the date and time. 
+- The second column headers contain the `sensor name`. 
+- The third column headers show the  `sensor value`.
 
 | Timestamp     | Sensor  name | Sensor  value |
 | ------------- | ------------ | ------------- |

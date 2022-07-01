@@ -78,19 +78,17 @@ First, you'll specify the details of your model, such as its training time range
 
 Optionally, There are several advanced settings to enable data ingested in a customized way:
 
-- Sliding Window – How many data points are used to determine anomalies. An integer between 28 and 2,880. The default value is 300. 
+- `sliding Window` - How many data points are used to determine anomalies. An integer between 28 and 2,880. The default value is 300. If `sliding Window` is `k` for model training, then at least `k` points should be accessible from the source file during inference to get valid results.
+
+> **_NOTE:_**  Please keep two things in mind when choosing a `slidingWindow` value:
+>
+> 1. The properties of your data: whether it's periodic and the sampling rate. When your data is periodic, you could set the length of 1 - 3 cycles as the `slidingWindow`. When your data is at a high frequency (small granularity) like minute-level or second-level, you could set a relatively higher value of `slidingWindow`.
+> 2. The trade-off between training/inference time and potential performance impact. A larger `sliding Window` may cause longer training/inference time. There is **no guarantee** that larger `sliding Window`s will lead to accuracy gains. A small `sliding Window` may cause the model difficult to converge to an optimal solution. For example, it is hard to detect anomalies when `sliding Window` has only two points.
+
 - Missing data Filling Method – we will automatically fill in missing data. Options are Linear, Previous, Subsequent, and Customized, and the default value is Linear.
 - However, if too much original data is missing, it might affect your results.
 
 Choose **Create**.
-
-> **_NOTE:_**  How does sliding window work? Let's use two examples to learn how sliding window works. Suppose you have set `slidingWindow` = 1,440, and your input data is at one-minute granularity.
->
-> **Streaming scenario**: You want to predict whether the ONE data point at "2021-01-02T00:00:00Z" is anomalous. Your `startTime` and `endTime` will be the same value ("2021-01-02T00:00:00Z"). Your inference data source, however, must contain at least 1,440 + 1 timestamps. Because model will take the leading data before the target data point ("2021-01-02T00:00:00Z") to decide whether the target is an anomaly. The length of the needed leading data is `slidingWindow` or 1,440 in this case. 1,440 = 60 * 24, so your input data must start from at latest "2021-01-01T00:00:00Z".
->
-> **Batch scenario**: You have multiple target data points to predict. Your `endTime` will be greater than your `startTime`. Inference in such scenarios is performed in a "moving window" manner. For example, model will use data from `2021-01-01T00:00:00Z` to `2021-01-01T23:59:00Z` (inclusive) to determine whether data at `2021-01-02T00:00:00Z` is anomalous. Then it moves forward and uses data from `2021-01-01T00:01:00Z` to `2021-01-02T00:00:00Z` (inclusive) to determine whether data at `2021-01-02T00:01:00Z` is anomalous. It moves on in the same manner (taking 1,440 data points to compare) until the last timestamp specified by `endTime` (or the actual latest timestamp). Therefore, your inference data source must contain data starting from `startTime` - `slidingWindow` and ideally contains in total of size `slidingWindow` + (`endTime` - `startTime`).
-
-
 
 ## 5. Training model detail
 

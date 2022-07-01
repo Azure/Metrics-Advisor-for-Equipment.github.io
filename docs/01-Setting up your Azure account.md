@@ -1,4 +1,4 @@
-# Setting up your Azure account
+# ⭐Setting up your Azure account
 
 Before starting with Metrics Advisor for Equipment, you must sign up for an Azure account if you don't already have one.
 

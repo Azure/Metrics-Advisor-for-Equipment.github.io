@@ -1,6 +1,6 @@
-# Creating an evaluation and reviewing evaluation results
+# ⭐Creating an evaluation and reviewing evaluation results
 
-
+One of the most important and subtle parts of anomaly detection happens at the intersection between predicting how a metric should behave, and comparing observed values to those expectations.
 
 ## 1. Before Evaluating 
 

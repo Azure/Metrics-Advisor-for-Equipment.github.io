@@ -1,4 +1,4 @@
-## Scheduling inference
+# ⭐Scheduling inference
 After you create a model, you can use it to monitor your asset in real-time. To use your model to monitor your asset, you do the following.
 
 ## 1. Create an near real time inference
@@ -30,7 +30,7 @@ Select or create new hooks for alert.
 
 Specify the name for the inference and the time period that your model performs inference on the data coming from your pipeline.
 For the dataset, select or create an inference dataset.
- 
+
 ![image](https://user-images.githubusercontent.com/36343326/176644652-a9e9993b-6381-461d-ab04-7397c6663bff.png)
 
 
@@ -40,9 +40,9 @@ If users already created some real time inference which are running in other mod
 
 Select from existing real-time inferences by inference name and Metrics Advisor for Equipment will prefill the detection settings    (sensitivity and Snoozing window are all used existing inference and not allowed any change) in the portal and trigger inference starting from the current timestamp (None of the information for the selected inference is editable in this step).
 ![image](https://user-images.githubusercontent.com/36343326/176644500-84af22bd-370d-4e37-9d2e-aef42e21bea3.png)
-  
 
-                                             
+
+​                                             
 ![image](https://user-images.githubusercontent.com/36343326/176591367-fe6aa6e0-11a7-4854-aa98-74e79bc13c41.png)
 
 

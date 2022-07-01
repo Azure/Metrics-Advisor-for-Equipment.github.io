@@ -1,4 +1,4 @@
-# Configuring alerts and getting notifications using a hook
+# ⭐Configuring alerts and getting notifications using a hook
 After an anomaly is detected by Metrics Advisor for equipment, an alert notification will be triggered based on alert setting using a hook. An alert setting can be used with multiple detection configurations, various parameters are available to customize your alert rule. 
 
 ## 1. Create a hook

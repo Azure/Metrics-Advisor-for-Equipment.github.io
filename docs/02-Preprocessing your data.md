@@ -1,15 +1,28 @@
-# Preprocessing your data
+# ⭐Preprocessing your data
 
 Multivariate industrial time-series data can be challenging to deal with. This article will show you how to preprocess your data to Metrics Advisor for equipment.
 
-## 1. Data format requirements 
+## 1. Data Storage
+
+**SQL Databases: **put metrics in a big table,have an index on timestamp.
+**Cons:**
+
+- ACID is a big overhead.
+
+- Unless you create a new table periodically,inserts will be come much slower.
+
+**Pros:**
+
+- Aggregations,groupings etc can be useful.
+
+## 2. Data format requirements 
 
 Data format should be store all the sensor data in one file/table.
 
 - One table/ file per asset.
 - All sensors from that asset are represented in that one file/table.
 
-## 2. Data schema requirements 
+## 3. Data schema requirements 
 
 Metrics Advisor for equipment uses your data in the following steps:
 
@@ -25,11 +38,11 @@ Metrics Advisor for equipment accepts tables with only three columns:
 
 | Timestamp     | Sensor  name | Sensor  value |
 | ------------- | ------------ | ------------- |
-| 1/1/2020 0:00 | Sensor 1     | 2.0456        |
-| 1/1/2020 0:00 | Sensor  2    | 6.4948        |
-| 1/1/2020 0:05 | Sensor  1    | 4.2938        |
-| 1/1/2020 0:05 | Sensor  2    | 4.3894        |
-| 1/1/2020 0:10 | Sensor  1    | 5.4098        |
+| 1/1/2020 0:05 | Sensor 1     | 2.0456        |
+| 1/1/2020 0:10 | Sensor  2    | 6.4948        |
+| 1/1/2020 0:15 | Sensor  1    | 4.2938        |
+| 1/1/2020 0:20 | Sensor  2    | 4.3894        |
+| 1/1/2020 0:25 | Sensor  1    | 5.4098        |
 
 **_NOTE:_** Timestamp format : yyyy-MM-ddTHH:mm.
 
@@ -40,7 +53,7 @@ o	Valid characters are: 0-9, a-z, A-Z, and # $ . \ - (hyphen) _ (underscore)
 o	Make sure that the timestamp column is the one furthest to the left in your CSV file.
 o	Make sure that you don't have any duplicated column headers.
 
-## 3. Data quality
+## 4. Data quality
 
 Your dataset should contain time-series data that's generated from an industrial asset such as a pump, compressor, motor, and so on. Each asset should be generating data from one or more sensors. The data that Metrics Advisor for Equipment uses for training should be representative of the condition and operation of the asset. Making sure that you have the right data is crucial.
 We recommend that you work with a **SME**. A SME can help you make sure that the data is relevant to the aspect of the asset that you're trying to analyze. We recommend that you remove unnecessary sensor data. With data from too few sensors, you might miss critical information. With data from too many sensors, your model might overfit the data and it might miss out on key patterns.
@@ -128,7 +141,7 @@ Now the merged table is more reasonable.
 
 Values of different variables at close timestamps are well aligned, and the model can now extract correlation information.
 
-## 4. Data quantity
+## 5. Data quantity
 
 - **Data size:** Although Metrics Advisor for Equipment can ingest more than 50 GB of data, it can use only 7 GB with a model. Factors such as the number of sensors used, how far back in history the dataset goes, and the sample rate of the sensors can all determine how many measurements this amount of data can include. 
 - **Minimum number of data points to train a model:** The empirical rule is that you need to provide **15,000 or more data points (timestamps) per variable** to train the model for good accuracy. In general, the more the training data, better the accuracy. However, in cases when you're not able to accrue that much data, we still encourage you to experiment with less data and see if the compromised accuracy is still acceptable.

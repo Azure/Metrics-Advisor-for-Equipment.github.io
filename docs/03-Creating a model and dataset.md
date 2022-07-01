@@ -1,4 +1,4 @@
-# Creating a model and dataset
+# ⭐Creating a model and dataset
 
 You've ingested your dataset, and you've reviewed any issues with the job, the files, or the sensors. You've also decided which sensors are providing the data that will be used to train your model. Now it's time to move forward with creating the model.
 
@@ -126,11 +126,11 @@ To delete a dataset, you need to complete the following steps:
 1. On the datasets list page, click 'Delete' on the data feed.
 
 2. In the dataset details page, click 'Delete'.
-  
+
 
 ![image](https://user-images.githubusercontent.com/36343326/176643089-c06e12b8-0045-4ccd-b598-1b44ba1122ee.png)
 
-    
+
 ## 7. Manage models
 
 #### Search models by name
@@ -148,6 +148,6 @@ Models can be sorted by using the following methods:
 To delete a model, you need to complete the following steps:
 
 On the **Training detail** page, click 'Delete'.
-   
+
 ![image](https://user-images.githubusercontent.com/36343326/176643591-6121a31f-7229-43c1-9eff-28ac189cec73.png)
 

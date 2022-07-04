@@ -35,7 +35,9 @@ When you create a model, the model name must be unique .The model name can conta
 
 ## 3. Create/Select a Dataset 
 
-On the **Create dataset** page:
+#### Create a new dataset
+
+Click **Create dataset**, on the **Create dataset** page:
 
 - For **Dataset Granularity**, the interval between consecutive data points in your time series data. Currently Metrics Advisor for Equipment support
 
@@ -61,6 +63,20 @@ On the **Create dataset** page:
   Click **Load** to complete the creation, then you can find the created dataset.
 
 ![image](https://user-images.githubusercontent.com/36343326/175043003-899fdd93-d535-4804-b341-e49410653217.png)
+
+#### Preview dataset
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

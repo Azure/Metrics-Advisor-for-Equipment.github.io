@@ -1,14 +1,14 @@
 # ⭐Configuring alerts and getting notifications using a hook
-After an anomaly is detected by Metrics Advisor for equipment, an alert notification will be triggered based on alert setting using a hook. An alert setting can be used with multiple detection configurations, various parameters are available to customize your alert rule. 
+
+After an anomaly is detected by Metrics Advisor for equipment, an alert notification will be triggered based on alert setting using a hook. An alert setting can be used with multiple detection configurations, various parameters are available to customize your alert rule.
 
 ## 1. Create a hook
 
-Currently, Metrics Advisor for equipment supports only one type of hooks: **Web hook.** 
+Currently, Metrics Advisor for equipment supports only one type of hook: **Web hook.**
 
-A web hook is the entry point for all the information available from the Metrics Advisor service, and calls a user-provided api when an alert is triggered. All alerts can be sent through a web hook.
+A web hook is the entry point for all the information available from the Metrics Advisor service, and calls a user-provided API when an alert is triggered. All alerts can be sent through a web hook.
 
 ![image](https://user-images.githubusercontent.com/36343326/176588851-4f6c3e5c-dfb7-4500-854b-07552cfb0689.png)
-
 
 To create a web hook, you will need to add the following information:
 ![image](https://user-images.githubusercontent.com/36343326/176589224-644b7bf0-565f-4c38-aa7d-53ae9929aa98.png)
@@ -19,8 +19,6 @@ To create a web hook, you will need to add the following information:
 | Endpoint            | The API address to be called when an alert is triggered.     |
 | Username / Password | For authenticating to the API address. Leave this black if authentication isn't needed. |
 | Header              | Custom headers in the API call.                              |
-
-
 
 After Creating, you got a hook lists.
 

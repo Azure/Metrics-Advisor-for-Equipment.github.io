@@ -42,9 +42,9 @@ Click **Create dataset**, on the **Create dataset** page:
 - For **Dataset Granularity**, the interval between consecutive data points in your time series data. Currently Metrics Advisor for Equipment support
 
   - 1 min
-  -  min
-  - 10 min
-  - 30 min
+  -  5 mins
+  - 10 mins
+  - 30 mins
   - 1h
   - 1day
 
@@ -110,7 +110,7 @@ Choose **Create**.
 
 Starting the training process. Click the **model name**, then the **Training model detail** tab gives you a chance review model details such as the model name, the dataset, and training time range.
 
-There are four kinds of training model status.
+There are three kinds of training model status.
 
 | Status    | Description                                |
 | --------- | ------------------------------------------ |

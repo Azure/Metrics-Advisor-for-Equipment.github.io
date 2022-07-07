@@ -84,7 +84,7 @@ File size limit: 1MB
 
 **Advanced settings:**
 
-Users should modify the detection configuration to let Adel's predicted anomalies match with their labels as much as possible
+Users should modify the detection configuration to let Metrics-Advisor-for-Equipment's predicted anomalies match with their labels as much as possible
 When users try different numbers for sensitivity, the anomaly red points on the anomaly score trend visuals will change accordingly.
 
 - `Data granularity`: automatically detected on the backend; 
@@ -138,7 +138,6 @@ Users could download raw model output. The downloaded file will have the followi
 - is Anomaly: True if an anomaly is detected at the current timestamp
 - Score: Raw score from the model
 - Severity: Indicates the significance of the anomaly. The higher the severity, the more significant the anomaly)
-
 
 
 

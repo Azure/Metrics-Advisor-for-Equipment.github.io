@@ -19,6 +19,6 @@
 | Maximum number of evaluations per model                   | 100                   |
 | Maximum retention of evaluations per model                | 6 months              |
 | **Inference**                                             |                       |
-| Maximum number of inferences per model                     | 1                     |
-| Maximum number of inferences lead time                     | 3 days                |
+| Maximum number of inferences per model                    | 1                     |
+| Maximum number of inferences lead time                    | 3 days                |
 | Maximum replay time range                                 | 1000 data points      |

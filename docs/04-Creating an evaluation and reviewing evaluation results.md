@@ -43,7 +43,8 @@ Click **Evaluation summary**, you'll find details about the evaluation summaries
 
 There are three kinds of evaluation status.
 
-| Status    | Description                                  ------ | -------------------------------------------- |
+| Status    | Description                                  |
+|---------- | -------------------------------------------- |
 | Running   | Evaluation is in processing.                 |
 | Completed | Evaluation is done, you can start inference. |
 | Failed    | Evaluation is failed for some reason.        |

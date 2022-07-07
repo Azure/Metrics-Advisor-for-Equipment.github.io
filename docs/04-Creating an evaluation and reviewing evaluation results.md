@@ -43,8 +43,7 @@ Click **Evaluation summary**, you'll find details about the evaluation summaries
 
 There are three kinds of evaluation status.
 
-| Status    | Description                                  |
-| --------- | -------------------------------------------- |
+| Status    | Description                                  ------ | -------------------------------------------- |
 | Running   | Evaluation is in processing.                 |
 | Completed | Evaluation is done, you can start inference. |
 | Failed    | Evaluation is failed for some reason.        |
@@ -79,6 +78,7 @@ File size limit: 1MB
 **Advanced settings:**
 
 Users should modify the detection configuration to let Metric Advisor for Equipment's predicted anomalies match with their labels as much as possible
+
 When users try different numbers for sensitivity, the anomaly red points on the anomaly score trend visuals will change accordingly.
 
 - `Data granularity`: automatically detected on the backend;
@@ -126,4 +126,21 @@ Users can download the raw model output. The downloaded file will have the follo
 - Timestamp: timestamps within the evaluation start and end time users defined during evaluation set up.
 - is Anomaly: True if an anomaly is detected at the current timestamp
 - Score: Raw score from the model
+
 - Severity: Indicates the significance of the anomaly. The higher the severity, the more significant the anomaly)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

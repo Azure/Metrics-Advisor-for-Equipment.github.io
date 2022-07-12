@@ -1,12 +1,16 @@
 # Metrics Advisor for equipment (private preview)🌞
 
-The new Metrics Advisor for equipment feature on Metrics Advisor enables users by easily integrating advanced AI for detecting anomalies from groups of time series signals, without the need for machine learning knowledge or labeled data. This new capability helps you to proactively protect your complex systems such as pumps, compressors, motors and turbines from failures.
+Metrics Advisor for equipment is a new product feature under the [Azure Metrics Advisor ](https://azure.microsoft.com/en-us/services/metrics-advisor/)service. While the existing Metrics Advisor service targets AIOps use cases, Metrics Advisor for equipment is designed to provide Predictive Maintenance for critical physical assets (e.g., oil rigs, automotive engines, aircrafts) thru multivariate anomaly detection AI capabilities. After users trained Metrics Advisor for equipment models with their historical equipment sensor data, they can then initiate real-time equipment health monitoring, receive alerts when the models detected anomalous patterns, and determine the best actions to prevent potential losses as early as possible. Specifically, Metrics Advisor for equipment’s ability to scale, outstanding AI prediction accuracy, and low cost to implement and maintain are perceived as the core value drivers by our customers.
 
-Imagine 20 sensors from an auto engine generating 20 different signals like rotation, fuel pressure, bearing etc. The readings of those signals individually may not tell you much about system level issues, but together they can represent the health of the engine. When the interaction of those signals deviates outside the usual range, the multivariate anomaly detection feature can sense the anomaly like a seasoned expert. The underlying AI models are trained and customized using your data such that it understands the unique needs of your business. With the new feature, developers can now easily integrate the multivariate time series anomaly detection capabilities into predictive maintenance solutions, AIOps monitoring solutions for complex enterprise software, or business intelligence tools.
+![image-20220712171530144](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image-20220712171530144.png)
 
-## ⭐When to use **multivariate** anomaly detection
+## ⭐How to use **multivariate** anomaly detection
 
 If your goal is to detect system level anomalies from a group of time series data, use multivariate anomaly detection. Particularly, when any individual time series won't tell you much, and you have to look at all signals (a group of time series) holistically to determine a system level issue. For example, you have an expensive physical asset like turbines, equipment on an oil rig, or a milk drier. Each of these assets has tens or hundreds of different types of sensors. You would have to look at all those time series signals from those sensors to decide whether there is system level issue. Also if your scenario has the keyword like predicative maintenance, equipment health, then it is likely the multivariate feature will be a great fit.
+
+![image-20220712171646579](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image-20220712171646579.png)
+
+
 
 ## ⭐Value propositions
 
@@ -17,7 +21,7 @@ If your goal is to detect system level anomalies from a group of time series dat
 
 ## ⭐Get familiar with new multivariate detection flow
 
-1. [Setting up your Azure account](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/01-Setting%20up%20your%20Azure%20account.md).
+1. [Setting up your Azure account and getting started with Metrics Advisor studio](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/01-Setting%20up%20your%20Azure%20account.md).
 2. [Preprocessing your data](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/02-Preprocessing%20your%20data.md).
 3. [Creating a model and dataset](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/03-Creating%20a%20model%20and%20dataset.md).
 4. [Creating an evaluation and reviewing evaluation results](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/04-Creating%20an%20evaluation%20and%20reviewing%20evaluation%20results.md).
@@ -25,6 +29,7 @@ If your goal is to detect system level anomalies from a group of time series dat
 6. [Reviewing inference results](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/06-Reviewing%20inference%20results.md).
 7. [Configuring alerts and getting notifications using a hook](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/07-Configure%20alerts%20an%20get%20notifications%20using%20a%20hook.md).
 8. [Quota](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/08-Quota.md).
+8. Best Practice.
 
 ## ⭐Other references
 

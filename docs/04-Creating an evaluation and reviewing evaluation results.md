@@ -1,12 +1,16 @@
 # ⭐Creating an evaluation and reviewing evaluation results
 
-One of the most important and subtle parts of anomaly detection happens at the intersection between predicting how a metric should behave, and comparing observed values to those expectations.
+One of the most important and subtle parts of anomaly detection happens at the intersection between predicting how a metric should behave, and comparing observed values to those expectations. In this chapter, test the quality of a trained model and visually inspect the detected anomalies by creating an evaluation. 
+
+:warning:Note that the results from evaluation are retained for 30 days before removal.
+
+For example, if you create a evaluation at 5/25/2022 12:15 PM, this evaluation result will be retained for 30 days before it expires on 6/24/2022 at 12:15 PM.
 
 ## 1. Before Evaluating
 
 After a model is trained, Metrics Advisor for Equipment evaluates its performance on a subset of the dataset that you've specified for evaluation purposes. It displays results that provide an overview of the performance and detailed information about the abnormal equipment behavior events and how well the model performed when detecting those.
 
-**We strongly recommend that you use labels for evaluating the model**, Metrics Advisor for Equipment reports how many times the model's predictions were true positives (how often the model found the equipment anomaly that was noted within the ranges shown in the labels).
+:white_check_mark:**We strongly recommend that you use labels for evaluating the model**, Metrics Advisor for Equipment reports how many times the model's predictions were true positives (how often the model found the equipment anomaly that was noted within the ranges shown in the labels).
 
 Metrics Advisor for Equipment also displays this information graphically on a chart that shows the days and events.
 
@@ -129,7 +133,6 @@ Users can download the raw model output. The downloaded file will have the follo
 - Score: Raw score from the model
 
 - Severity: Indicates the significance of the anomaly. The higher the severity, the more significant the anomaly)
-
 
 
 

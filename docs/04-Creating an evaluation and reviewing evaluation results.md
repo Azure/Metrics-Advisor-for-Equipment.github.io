@@ -65,6 +65,10 @@ After you click on a particular event, the Event details tab indicates which sen
 
 ![image](https://user-images.githubusercontent.com/36343326/175233341-e8eda33b-84e8-4e1a-8440-a635cacde7fd.png)
 
+
+
+
+
 ## 5. Upload the label
 
 If you've provided Metrics-Advisor-for-Equipment with label data, you can see how the model's predictions compare to the label data.
@@ -73,7 +77,7 @@ Compare the model's detected anomalies to periods of known anomalies by uploadin
 
 ![image](https://user-images.githubusercontent.com/36343326/175234568-54d77e0b-926b-4a3a-9f48-01c8d6f3a8fa.png)
 
-**After clicking on “Upload label”, upload ONE csv file with label data.**
+**After clicking on “Upload label”, upload ONE csv file with label data. **The labels are shown in a purple ribbon labelled “Known anomalies” .
 
 **Format requirement:**
 
@@ -99,13 +103,13 @@ When users try different numbers for sensitivity, the anomaly red points on the 
 
 Use the slider to zoom in on a particular event.
 
-Click on a particular event (red bar) to view details about it.
+Metrics Advisor for Equipment will generate the following plot where you can see:
 
 -  `Anomaly score` is the raw output of the model on which the model makes a decision.  `Anomaly score` will have a value from 0-1.78.  `Anomaly score` usually will indicate a anomaly rise or decline respectively.
-
 -  `Anomaly` indicates an anomaly at the current timestamp.
-
 -  `Not Anomaly` indicates the current timestamp is not an anomaly.
+
+
 
 ![image](https://user-images.githubusercontent.com/36343326/175235792-55d6f4df-5111-4739-8556-e6d46349df43.png)
 
@@ -129,7 +133,7 @@ For contribution score color scale:
 
 ![image](https://user-images.githubusercontent.com/36343326/175237217-cc591970-c8a5-4c16-8eb4-dbd5ef9cf651.png)
 
-## 7. Download results
+## 8. Download results
 
 Users can download the raw model output. The downloaded file will have the following information:
 

@@ -1,8 +1,6 @@
 # ⭐Creating a model and dataset
 
-You've ingested your dataset, and you've reviewed any issues with the job, the files, or the sensors. You've also decided which sensors are providing the data that will be used to train your model. Now it's time to move forward with creating the model.
-
-
+Once you have ingested your dataset, you can train an anomaly detection model:
 
 ## 1. Create a new model
 
@@ -85,7 +83,9 @@ Choose **Create**.
 
 ## 5. Training model detail
 
-Starting the training process. Click the **model name**, then the **Training model detail** tab gives you a chance review model details such as the model name, the dataset, and training time range.
+Starting the training process. You will see a progress status update every five minutes until the training is successful. Depending on the size of dataset used, the training can take up to an hour.
+
+Click the **model name**, then the **Training model detail** tab gives you a chance review model details such as the model name, the dataset, and training time range.
 
 There are three kinds of training model status.
 
@@ -97,17 +97,26 @@ There are three kinds of training model status.
 
 You can click the **View details** button for the error messages when you find the training model status gets to **Failed**.
 
-## 6. Manage datasets
+Once your model is trained, you can either check the results or configure an evaluation or inference scheduler.
 
-#### Search datasets by name
 
-To search datasets by name you can enter a dataset name in the search box.
 
-#### Sort datasets
+#### Delete your models
 
-Data feeds can be sorted by using the following methods:
+To delete a model, you need to complete the following steps:
 
-- by created time
+On the **Training detail** page, click 'Delete'.
+
+![image](https://user-images.githubusercontent.com/36343326/176643591-6121a31f-7229-43c1-9eff-28ac189cec73.png)
+
+**_NOTE:_**
+
+- If training is running: Training must be completed before scheduling an inference and creating an evaluation.
+- If training failed: Can't schedule an inference and evaluation on models with failed training. 
+
+
+
+## 6. Datasets lists and dataset detail
 
 #### Delete your dataset
 
@@ -125,27 +134,3 @@ To delete a dataset, you need to complete the following steps:
 
 ![image](https://user-images.githubusercontent.com/36343326/176643089-c06e12b8-0045-4ccd-b598-1b44ba1122ee.png)
 
-## 7. Manage models
-
-#### Search models by name
-
-To search models by name you can enter a model name in the search box.
-
-#### Sort models
-
-Models can be sorted by using the following methods:
-
-- by created time
-
-#### Delete your models
-
-To delete a model, you need to complete the following steps:
-
-On the **Training detail** page, click 'Delete'.
-
-![image](https://user-images.githubusercontent.com/36343326/176643591-6121a31f-7229-43c1-9eff-28ac189cec73.png)
-
-**_NOTE:_**
-
-- If training is running: Training must be completed before scheduling an inference and creating an evaluation.
-- If training failed: Can't schedule an inference and evaluation on models with failed training. 

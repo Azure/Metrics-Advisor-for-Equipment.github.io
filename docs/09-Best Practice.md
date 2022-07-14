@@ -1,5 +1,7 @@
 # ⭐Best practice and other insights
 
+
+
 ## 1. Is Anomaly Detection the Right Approach?
 
 Not all of the problems you’ll find are solvable with anomaly detection. This implies three important things:
@@ -10,9 +12,11 @@ Not all of the problems you’ll find are solvable with anomaly detection. This 
 
 If you can get close to that, you might have a pretty good shot at using anomaly detection to solve your problem.
 
+
+
 ## 2. Start small, iterate quickly
 
-- Start small: instead of taking the full data set, look at a subsample. It's more valuable if you have a size of a data set which allows you to work very quickly, try out different ideas. And then only over time, when you think you can know this is the right thing, and you have to make more fine-grain decisions, then you can move up to the thing. Because one of the main points about data-driven projects is that all the truth is in the data and, often, you don't really know-- you cannot know beforehand what it actually is that will work. So figuring out, actually, what it is that works, that's the most important thing. Don't fall into the trap of either trying too complicated things, or building too much too early.
+Start small: instead of taking the full data set, look at a subsample. It's more valuable if you have a size of a data set which allows you to work very quickly, try out different ideas. And then only over time, when you think you can know this is the right thing, and you have to make more fine-grain decisions, then you can move up to the thing. Because one of the main points about data-driven projects is that all the truth is in the data and, often, you don't really know-- you cannot know beforehand what it actually is that will work. So figuring out, actually, what it is that works, that's the most important thing. Don't fall into the trap of either trying too complicated things, or building too much too early.
 
 ## 3. Choose a Metric
 

@@ -24,7 +24,7 @@ Select or create new hooks for alert.
 | Alert Correlation and Suppression | Correlated anomalies if they occur within [x] data points of each other.<br />Send one alert for correlated anomalies.<br/>Send an alert for each anomaly: get notifications for new anomalies by receiving alerts at hooks. |
 | Sensitivity                       | From 1 ~ 100, to define detector's sensitivity. The bigger the number the more sensitive to anomalies. Set a lower sensitivity to get notified only when severe anomalies are detected. Set a higher sensitivity to detect anomalies that are less severe. |
 
-## 3. Inference parameters
+## 3. Live Inference parameters
 
 Specify the name for the inference and the time period that your model performs inference on the data coming from your pipeline.
 
@@ -66,28 +66,11 @@ The current replay must finish before creating a new one.Wait until the evaluati
 
 Replay is re-triggered only on selected range.
 
-## 6. Manage inference schedules
-
-- **Pause**
-
-This will halt the inference process.
-
-From the Model details, under inference tab, choose **restart.**
-
-- **Restart**
-
-This will resume a stopped inference schedule.
-From the Model details, under inference tab, choose **Pause**.
-
-- **Deleting an inactive inference**
-
-From the Model details, under inference tab, choose **Delete**.
-
-## 7. Inference detail
+## 6. Inference detail
 
 Starting the inference process. Click the **model name**, then the **Inference detail** tab gives you a chance review inference details such as the inference name, the dataset, and inference start time.
 
-There are two kinds of inference status.
+There are three kinds of inference status. 
 
 | status       | Description                                              |
 | ------------ | -------------------------------------------------------- |
@@ -95,5 +78,18 @@ There are two kinds of inference status.
 | User pause   | Inference is paused by users, you can restart inference. |
 | System pause | Inference is failed for some reason.                     |
 
-You can click the **View details** button for the error messages when you find the training inference status gets to **Inactive**.
+There are three kinds of actions for  live inference. 
 
+- **Pause**
+
+This will halt the inference process. You could stop the live inference to stop incurring cost. From the Model details, under inference tab, choose **restart.**
+
+- **Restart**
+
+This will resume a stopped inference schedule.From the Model details, under inference tab, choose **Pause**.
+
+- **Deleting an paused inference**
+
+When you don’t have any more use for your live inference,  you can delete a stopped live inference by choosing **Delete**.
+
+You can click the **View details** button for the error messages when you find the training inference status gets to **Inactive**.

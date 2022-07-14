@@ -21,19 +21,13 @@ If you want to use the REST API to interact with the service, you need the key a
 
 ## 4. Get started with Metrics Advisor Studio
 
+- **Metrics Advisor card description:** Keep tabs on your business and AI operations.
 
+- **Metrics Advisor for Equipment card description**: Monitor your critical assets with predictive maintenance.
 
+`Change a resource`: To use Adel, you need a Metrics Advisor resource, which belongs to an Azure subscription. Switch resources at any time. Learn more about resources in Azure. 
 
-
-
-
-
-
-
-
-
-
-
+`Switch Azure directory`:Change which Azure subscriptions and Metrics Advisor resources are available by switching to another directory. To switch directories, you'll need to sign out and sign back in.
 
 
 
@@ -44,7 +38,11 @@ After you navigate to the Metrics Advisor for Equipment,  a navigation panel app
 The first four items in the left navigation panel—**Models**, **Datasets**, **Visualization** and **Settings**. If you select:
 
 - **Models**, you can use the models navigation bar to access all existing models, or create a new model.
+
 - **Datasets**, you can use the datasets navigation bar to access all existing datasets, or create a new dataset.
+
 - **Visualization**, you can use the visualization navigation bar to access a inference graphs and contribution rank.
+
 - **Settings**, you can use the setting bar to access alerts and hooks.
-  ![image](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/176643695-d39385ed-26f3-4501-bb36-d4f79559e532.png)
+
+  

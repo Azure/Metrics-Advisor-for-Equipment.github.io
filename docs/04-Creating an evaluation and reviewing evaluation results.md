@@ -68,15 +68,18 @@ After you click on a particular event, the Event details tab indicates which sen
 ## 5. Upload the label
 
 If you've provided Metrics-Advisor-for-Equipment with label data, you can see how the model's predictions compare to the label data.
-![image](https://user-images.githubusercontent.com/36343326/175234568-54d77e0b-926b-4a3a-9f48-01c8d6f3a8fa.png)
 
-Metrics-Advisor-for-Equipment also reports the results where it incorrectly identified an abnormal behavior event in the label data. The label data that you provide when you create a dataset has a time range for abnormal equipment events. You specify the duration of the abnormal events in the label data. In the evaluation data, the model used by Metrics-Advisor-for-Equipment could incorrectly identify abnormal events outside of the equipment range. You can see how often the model identifies these events when you evaluate the model's performance.
+Compare the model's detected anomalies to periods of known anomalies by uploading a CSV file that's 1 MB max. Upload the data with the same timestamp format as your evaluation dataset and in two columns: one column for known anomaly start time, and the other for the end time.
+
+![image](https://user-images.githubusercontent.com/36343326/175234568-54d77e0b-926b-4a3a-9f48-01c8d6f3a8fa.png)
 
 **After clicking on “Upload label”, upload ONE csv file with label data.**
 
 **Format requirement:**
 
-Event_start_time (timestamp format MUST be the same as your evaluation data)-Event_end_time (timestamp format MUST be the same as your evaluation data)
+Event_start_time (timestamp format MUST be the same as your evaluation data)
+
+Event_end_time (timestamp format MUST be the same as your evaluation data)
 
 File size limit: 1MB
 
@@ -92,7 +95,7 @@ When users try different numbers for sensitivity, the anomaly red points on the 
 
 ## 6. Anomaly score
 
-Equipment anomalies and health trend means the results from the most recent evaluation run. These results provide information about anomalous behavior that occurred over the past 300 points.
+`Detected anomalies over time` means the results from the most recent evaluation run. These results provide information about anomalous behavior that occurred over the past 300 points.
 
 Use the slider to zoom in on a particular event.
 
@@ -106,11 +109,13 @@ Click on a particular event (red bar) to view details about it.
 
 ![image](https://user-images.githubusercontent.com/36343326/175235792-55d6f4df-5111-4739-8556-e6d46349df43.png)
 
-## 7. Top 5 contributors
+## 7. Top contributing variables
 
-After you click on a particular event, the Event details tab indicates which sensors contributed the most to that event. Users can select top 5/10/15 contributors at one time from the dropdown.
+After you click on a particular event, the event details tab indicates which sensors contributed the most to that event. Users can select top 5/10/15 contributors at one time from the dropdown.
 
-- `contributors` is a list containing the contribution score of each variable. Higher contribution scores indicate higher possibility of the root cause. This list is often used for interpreting anomalies as well as diagnosing the root causes.
+- `Top contributors` is a list containing the contribution score of each variable. Higher contribution scores indicate higher possibility of the root cause. This list is often used for interpreting anomalies as well as diagnosing the root causes.
+- `Contribution scores` for the top 30 variables will total to 100%.
+- `Correlated Variables`: this field will show which variables have significant correlation change in with the corresponding top contributing variable.
 
 For contribution score color scale:
 

@@ -4,6 +4,8 @@
 
 On the visualization main page you'll find your inference list, both active and inactive.
 
+A max of 10,000 data points and 180 days are kept for inferences.
+
 Click **view details**
 
 On the right panel detail page you'll find details about the inference summaries. You'll also find alert configurations about the inference itself.

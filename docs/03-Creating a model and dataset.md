@@ -4,12 +4,11 @@ Once you have ingested your dataset, you can train an anomaly detection model:
 
 ## 1. Create a new model
 
-Click **Create a new model**.
-![image](https://user-images.githubusercontent.com/36343326/175043087-24453360-a2a6-41db-85c9-cee02a0d1e5c.png)
+You can create a new model by clicking **Create a new model**.
+
+![image-20220715153004155](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715153004155.png)
 
 When you create a model, the model name must be unique. The model name can contain the following:
-
-- Make sure your name doesn't include any invalid characters, such as spaces.
 
 - Max character limit: 200 characters.
 
@@ -23,7 +22,7 @@ When you create a model, the model name must be unique. The model name can conta
 
 #### Create a new dataset
 
-Click **Create dataset**:
+To create a dataset , Click **Create dataset**. You’ll see the new dataset window available:
 
 - `Dataset Granularity` is the smallest interval at which the sensor readings are recorded in your dataset. For example, suppose that data from some sensors is being recorded every 1 minute and other sensors are recording every 5 minutes. In this case, set the data frequency to an interval of 1 minute. 
 
@@ -32,7 +31,7 @@ Click **Create dataset**:
 ​        You need to fill your data granularity with the following options:
 
 - X mins
-- X hours
+- X hours        
 - X days
 
 - `Data source` is the type of data source where your time series data is stored. Choose **Azure SQL** or **Azure Blob.**
@@ -51,13 +50,27 @@ Click **Create dataset**:
 
 ![image](https://user-images.githubusercontent.com/36343326/175043003-899fdd93-d535-4804-b341-e49410653217.png)
 
-#### Preview dataset
+##### Preview dataset
 
-Verify that the dataset you specified can be loaded correctly. 
+Type your dataset name and verify that the dataset you specified can be loaded correctly.
+
+- Max character limit: 200 characters.
+
+- Valid characters are: 0-9, a-z, A-Z, _(underscore),and -(hyphen) and it should be start with alphabet. 
+
+- Make sure that you don't have any duplicated names.
+
+![image-20220715153541442](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715153541442.png)
 
 
 
 
+
+#### Select existing dataset
+
+You can choose an existing dataset you created. 
+
+![image-20220715153319660](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715153319660.png)
 
 
 

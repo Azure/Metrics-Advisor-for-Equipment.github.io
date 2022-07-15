@@ -13,7 +13,7 @@ When you create a model, the model name must be unique. The model name can conta
 
 - Max character limit: 200 characters.
 
-- Valid characters are: 0-9, a-z, A-Z, and # $ . \ - (hyphen) _ (underscore)
+- Valid characters are: 0-9, a-z, A-Z and it should be start with alphabet. 
 
 - Make sure that you don't have any duplicated names.
 
@@ -25,9 +25,17 @@ When you create a model, the model name must be unique. The model name can conta
 
 Click **Create dataset**:
 
-- `Dataset Granularity` is the smallest interval at which the sensor readings are recorded in your dataset. For example, suppose that data from some sensors is being recorded every 1 minute and other sensors are recording every 5 minutes. In this case, set the data frequency to an interval of 1 minute. If your data granularity unit is minute, make sure that your data granularity is a multiple or factors of 60. 
+- `Dataset Granularity` is the smallest interval at which the sensor readings are recorded in your dataset. For example, suppose that data from some sensors is being recorded every 1 minute and other sensors are recording every 5 minutes. In this case, set the data frequency to an interval of 1 minute. 
 
-- `Data source` is the type of data source where your time series data is stored. Choose Azure SQL or Azure Blob.
+  **_IMPORTANT NOTE:_** If your data granularity unit is minute, make sure that your data granularity is a multiple or factors of 60. 
+
+​        You need to fill your data granularity with the following options:
+
+- X mins
+- X hours
+- X days
+
+- `Data source` is the type of data source where your time series data is stored. Choose **Azure SQL** or **Azure Blob.**
 
 - `Authentication type`  : you need to assign managed identity to Metrics Advisor for Equipment. [How to assign role to a resource](https://github.com/MS-AI-Platform/MetricsAdvisorMultivariate/blob/main/managed_identity.md).
 

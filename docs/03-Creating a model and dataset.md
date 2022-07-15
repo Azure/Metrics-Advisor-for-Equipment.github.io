@@ -16,7 +16,7 @@ When you create a model, the model name must be unique. The model name can conta
 
 - Make sure that you don't have any duplicated names.
 
-![image](https://user-images.githubusercontent.com/36343326/175043374-999d68a9-f23b-46ed-87b5-90dd5bf08e8e.png)
+  
 
 ## 2. Create/Select a Dataset
 
@@ -78,7 +78,7 @@ You can choose an existing dataset you created.
 
 First, you'll specify the details of your model, such as its training time range, and advanced settings.
 
-![image](https://user-images.githubusercontent.com/36343326/175045723-4cb8bc63-bf87-4748-ae04-f790e0f805d6.png)
+![image-20220715154821078](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715154821078.png)
 
 - When selecting training time range, you'll need to specify a subset of data on which to train your model. Your specified training time ranges must fall within the first recorded timestamp and the last recorded timestamp of your dataset.
 
@@ -89,6 +89,8 @@ First, you'll specify the details of your model, such as its training time range
 ## 4. Advanced settings
 
 Optionally, There are several advanced settings to enable data ingested in a customized way:
+
+![](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715154854802.png)
 
 - `sliding Window` - How many data points are used to determine anomalies. Our model takes a segment of data points to decide if the next data point is an anomaly. The length of this segment is sliding window. The default value is 300, but you can choose an integer between 28 and 2,880. 
 
@@ -101,6 +103,8 @@ Optionally, There are several advanced settings to enable data ingested in a cus
 - However, if too much original data is missing, it might affect your results.
 
 Choose **Create**.
+
+
 
 ## 5. Training model detail
 
@@ -119,8 +123,6 @@ There are three kinds of training model status.
 You can click the **View details** button for the error messages when you find the training model status gets to **Failed**.
 
 Once your model is trained, you can either check the results or configure an evaluation or inference scheduler.
-
-
 
 #### Delete your models
 

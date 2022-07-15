@@ -34,19 +34,19 @@ To create a dataset , Click **Create dataset**. You’ll see the new dataset win
 - X hours        
 - X days
 
-- `Data source` is the type of data source where your time series data is stored. Choose **Azure SQL** or **Azure Blob.**
+`Data source` is the type of data source where your time series data is stored. Choose **Azure SQL** or **Azure Blob.**
 
-- `Authentication type`  : you need to assign managed identity to Metrics Advisor for Equipment. [How to assign role to a resource](https://github.com/MS-AI-Platform/MetricsAdvisorMultivariate/blob/main/managed_identity.md).
+`Authentication type`  : you need to assign managed identity to Metrics Advisor for Equipment. [How to assign role to a resource](https://github.com/MS-AI-Platform/MetricsAdvisorMultivariate/blob/main/managed_identity.md).
 
-- `Server name/Database name`: separate your SQL server name and database name with a “/”. The database and table names are case sensitive. 
+`Server name/Database name`: separate your SQL server name and database name with a “/”. The database and table names are case sensitive. 
 
-- `Data schema` : Metrics Advisor for equipment accepts tables with only three columns, the time-series data from sensors on your equipment must be properly formatted in three columns. Each of the three columns in your data table/file should belong to one of the schema types below. No duplicate column headers are allowed. 
+`Data schema` : Metrics Advisor for equipment accepts tables with only three columns, the time-series data from sensors on your equipment must be properly formatted in three columns. Each of the three columns in your data table/file should belong to one of the schema types below. No duplicate column headers are allowed. 
 
-  - **Timestamp**: This is the column with time-series data. The timestamp column should contain datetime values in the yyyy-MM-ddTHH:mm:ss format and conform to ISO 8601.
-  - **Variable name**: The variable name column should contain the name of the variable for each data point.
-  - **Variable Value**: The value column should contain numeric values.
+- **Timestamp**: This is the column with time-series data. The timestamp column should contain datetime values in the yyyy-MM-ddTHH:mm:ss format and conform to ISO 8601.
+- **Variable name**: The variable name column should contain the name of the variable for each data point.
+- **Variable Value**: The value column should contain numeric values.
 
-  Click **Load Data** to complete the creation, then you can find the created dataset.
+Click **Load Data** to complete the creation, then you can find the created dataset.
 
 ![image](https://user-images.githubusercontent.com/36343326/175043003-899fdd93-d535-4804-b341-e49410653217.png)
 

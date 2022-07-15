@@ -1,10 +1,10 @@
-# ⭐Scheduling inference
+# ⭐Scheduling a streaming inference
 
-After you create a model, you can use it to monitor your asset in live. To use your model to monitor your asset, you do the following.
+After you create a model, you can use it to monitor your asset in streaming. To use your model to monitor your asset, you do the following.
 
-## 1. Create a live inference
+## 1. Schedule a streaming inference
 
-When the model status is completed, click the button to schedule a live inference to start collecting data and detecting anomalies.
+When the model status is completed, click the button to schedule a streaming inference to start collecting data and detecting anomalies.
 
 ![image](https://user-images.githubusercontent.com/36343326/176591157-ca84e705-aead-420e-990d-590f925ef756.png)
 
@@ -12,19 +12,19 @@ When the model status is completed, click the button to schedule a live inferenc
 
 ## 2. Set alert configuration
 
-Set alert configuration, specify alert name and sensitivity, and alert Correlation and Suppression.
-![image](https://user-images.githubusercontent.com/36343326/176591239-1aab9a06-0d90-4d13-8f2c-37edab1b1d92.png)
+Set alert configuration, specify alert name and sensitivity, and alert correlation and suppression.
+![image-20220715155849989](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715155849989.png)
 
 Select or create new hooks for alert.
 
-![image](https://user-images.githubusercontent.com/36343326/176645158-90e62e49-b68a-4678-bfe1-65ed9661b770.png)
+![image-20220715160532687](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715160532687.png)
 
 | Parameter                         | Description                                                  |
 | --------------------------------- | ------------------------------------------------------------ |
 | Alert Correlation and Suppression | Correlated anomalies if they occur within [x] data points of each other.<br />Send one alert for correlated anomalies.<br/>Send an alert for each anomaly: get notifications for new anomalies by receiving alerts at hooks. |
 | Sensitivity                       | From 1 ~ 100, to define detector's sensitivity. The bigger the number the more sensitive to anomalies. Set a lower sensitivity to get notified only when severe anomalies are detected. Set a higher sensitivity to detect anomalies that are less severe. |
 
-## 3. Live Inference parameters
+## 3. streaming Inference parameters
 
 Specify the name for the inference and the time period that your model performs inference on the data coming from your pipeline.
 
@@ -36,16 +36,16 @@ For the dataset, select or create an inference dataset.
 
 
 
-![image](https://user-images.githubusercontent.com/36343326/176644652-a9e9993b-6381-461d-ab04-7397c6663bff.png)
+![image-20220715160559270](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715160559270.png)
 
 ## 4. Update a paused inference
 
-If users already created a live inference which is running in other models, users could replace the trained model for a paused inference. Previous data will be kept and anomalies that were detected with the old model will still visible next to newly detected anomalies in the same inference data. Updating the model is only recommended if there weren't any major differences in the training parameters.
+If users already created a streaming inference which is running in other models, users could replace the trained model for a paused inference. Previous data will be kept and anomalies that were detected with the old model will still visible next to newly detected anomalies in the same inference data. Updating the model is only recommended if there weren't any major differences in the training parameters.
 
-:warning: If an inference isn't listed here, make sure to pause it first. The inference will restart and be live immediately after updating.
+:warning: If an inference isn't listed here, make sure to pause it first. The inference will restart and be streaming immediately after updating.
 
 
-![image](https://user-images.githubusercontent.com/36343326/176644500-84af22bd-370d-4e37-9d2e-aef42e21bea3.png)
+![image-20220715160627676](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715160627676.png)
 
 ![image](https://user-images.githubusercontent.com/36343326/176591367-fe6aa6e0-11a7-4854-aa98-74e79bc13c41.png)
 
@@ -53,13 +53,13 @@ If users already created a live inference which is running in other models, user
 
 ## 5. Set a replay
 
-After a model is doing live inference, users could choose to schedule a replay. This will trigger a backfill on your selected timestamp immediately to fix a failed inference or to override the existing data.
+After a model is doing streaming inference, users could choose to schedule a replay. This will trigger a backfill on your selected timestamp immediately to fix a failed inference or to override the existing data.
 
 Replay: overwrite the data in a historical time range by running the inference with its current settings.
 
 A max of 2000 data points can be replayed. For example, with a data frequency interval of 1 minute, you can replay a time range of about 1 day. 
 
-Schedule replay/backfill for an existing live inference.
+Schedule replay/backfill for an existing streaming inference.
 Select start date and time and Select end date and time.
 
 The current replay must finish before creating a new one.Wait until the evaluation finishes before creating a replay. ![image](https://user-images.githubusercontent.com/36343326/176645839-c3fe65b1-ad9f-4211-8fc7-30ba96ab5c3d.png)
@@ -78,11 +78,11 @@ There are three kinds of inference status.
 | User pause   | Inference is paused by users, you can restart inference. |
 | System pause | Inference is failed for some reason.                     |
 
-There are three kinds of actions for  live inference. 
+There are three kinds of actions for  streaming inference. 
 
 - **Pause**
 
-This will halt the inference process. You could stop the live inference to stop incurring cost. From the Model details, under inference tab, choose **restart.**
+This will halt the inference process. You could stop the streaming inference to stop incurring cost. From the Model details, under inference tab, choose **restart.**
 
 - **Restart**
 
@@ -90,6 +90,6 @@ This will resume a stopped inference schedule.From the Model details, under infe
 
 - **Deleting an paused inference**
 
-When you don’t have any more use for your live inference,  you can delete a stopped live inference by choosing **Delete**.
+When you don’t have any more use for your streaming inference,  you can delete a stopped streaming inference by choosing **Delete**.
 
 You can click the **View details** button for the error messages when you find the training inference status gets to **Inactive**.

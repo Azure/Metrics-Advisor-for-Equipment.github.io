@@ -36,7 +36,11 @@ Navigate to **Model details** page and choose **create a evaluation**.
 
 In the following image, you need to fill evaluation parameters:
 
-![image](https://user-images.githubusercontent.com/36343326/175051021-6633e3fd-61af-45b1-bcb3-f3c645efa388.png)
+![image-20220715155236792](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715155236792.png)
+
+You could also change your evaluation dataset.
+
+![image-20220715155254477](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715155254477.png)
 
 ## 4. Evaluation Summary
 

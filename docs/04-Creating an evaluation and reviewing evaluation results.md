@@ -1,14 +1,14 @@
 # ⭐Creating an evaluation and reviewing evaluation results
 
-One of the most important and subtle parts of anomaly detection happens at the intersection between predicting how a metric should behave, and comparing observed values to those expectations. In this chapter, test the quality of a trained model and visually inspect the detected anomalies by creating an evaluation. 
+One of the most important and subtle parts of anomaly detection happens at the intersection between predicting how a metric should behave and comparing observed values to those expectations. In this chapter, test the quality of a trained model and visually inspect the detected anomalies by creating an evaluation. 
 
 :warning:Note that the results from evaluation are retained for 30 days before removal.
 
-For example, if you create a evaluation at 5/25/2022 12:15 PM, this evaluation result will be retained for 30 days before it expires on 6/24/2022 at 12:15 PM.
+For example, if you create an evaluation at 5/25/2022 12:15 PM, this evaluation result will be retained for 30 days before it expires on 6/24/2022 at 12:15 PM.
 
 ## 1. Before Evaluating
 
-After a model is trained, Metrics Advisor for Equipment evaluates its performance on a subset of the dataset that you've specified for evaluation purposes. It displays results that provide an overview of the performance and detailed information about the abnormal equipment behavior events and how well the model performed when detecting those.
+After a model is trained; Metrics Advisor for Equipment evaluates its performance on a subset of the dataset that you've specified for evaluation purposes. It displays results that provide an overview of the performance and detailed information about the abnormal equipment behavior events and how well the model performed when detecting those.
 
 :white_check_mark:**We strongly recommend that you use labels for evaluating the model**, Metrics Advisor for Equipment reports how many times the model's predictions were true positives (how often the model found the equipment anomaly that was noted within the ranges shown in the labels).
 
@@ -16,7 +16,7 @@ Metrics Advisor for Equipment also displays this information graphically on a ch
 
 Metrics Advisor for Equipment provides detailed information about the anomalous events that it detects. It displays a list of sensors that provided the data to indicate an anomalous event. This might help you determine which part of your asset is behaving abnormally.
 
-Metrics Advisor for Equipment identifies patterns in the dataset that help to detect critical issues, but it's the responsibility of a technician or subject matter expert (SME) to diagnose the problem and take corrective action, if needed. **To ensure that you are getting the right output, we highly recommend that you work with a SME. The SME should help you make sure that you are using the right input data and that your output results are actionable and relevant.**
+Metrics Advisor for Equipment identifies patterns in the dataset that help to detect critical issues, but it's the responsibility of a technician or subject matter expert (SME) to diagnose the problem and take corrective action, if needed. To ensure that you get the right output, we highly recommend working with an SME. The SME should help you make sure that you are using the right input data and that your output results are actionable and relevant.
 
 ## 2. Create an evaluation
 
@@ -26,13 +26,13 @@ You can use the following procedure and example code to view the models you've c
 
 To view a model:
 
-Go to **Models** and Choose a model and click the model name.
+Go to **Models**, Choose a model and click the model name.
 
-Navigate to **Model details** page and choose **create a evaluation**.
+Navigate to the**Model details** page and choose **create an evaluation**.
 
 ![image](https://user-images.githubusercontent.com/36343326/175050952-b3a5036e-2a48-48f2-92e1-070d54d8e886.png)
 
-## 3.**Evaluation parameters**
+## 3. **Evaluation parameters**
 
 In the following image, you need to fill evaluation parameters:
 
@@ -109,7 +109,7 @@ Use the slider to zoom in on a particular event.
 
 Metrics Advisor for Equipment will generate the following plot where you can see:
 
--  `Anomaly score` is the raw output of the model on which the model makes a decision.  `Anomaly score` will have a value from 0-1.78.  `Anomaly score` usually will indicate a anomaly rise or decline respectively.
+-  `Anomaly score` is the raw output of the model on which the model makes a decision. The anomaly score will have a value from 0-1.78. An anomaly score usually will indicate an anomaly rise or decline, respectively. 
 -  `Anomaly` indicates an anomaly at the current timestamp.
 -  `Not Anomaly` indicates the current timestamp is not an anomaly.
 
@@ -121,31 +121,13 @@ Metrics Advisor for Equipment will generate the following plot where you can see
 
 After you click on a particular event, the event details tab indicates which sensors contributed the most to that event. Users can select top 5/10/15 contributors at one time from the dropdown.
 
-- `Top contributors` is a list containing the contribution score of each variable. Higher contribution scores indicate higher possibility of the root cause. This list is often used for interpreting anomalies as well as diagnosing the root causes.
+- `Top contributors` is a list containing the contribution score of each variable. Higher contribution scores indicate a higher possibility of the root cause. This list is often used for interpreting anomalies as well as diagnosing the root causes.
 - `Contribution scores` for the top 30 variables will total to 100%.
-- `Correlated Variables`: this field will show which variables have significant correlation change in with the corresponding top contributing variable.
+- `Correlated Variables`: this field will show which variables have significant correlation change with the corresponding top contributing variable.
 
-For contribution score color scale:
-
-1. 0<x<=25%: lightest
-
-2. 25%<x<=75%: medium
-
-3. 75%<x<=100%: darkest
-
-   > **_NOTE:_**  Metrics Advisor for Equipment will pull 300 data points for each variable when users clicked on an anomalous point, and show the top 5 contributors by default.
+> **_NOTE:_**  Metrics Advisor for Equipment will pull 300 data points for each variable when users click on an anomalous point and show the top 5 contributors by default.
 
 ![image](https://user-images.githubusercontent.com/36343326/175237217-cc591970-c8a5-4c16-8eb4-dbd5ef9cf651.png)
-
-## 8. Download results
-
-Users can download the raw model output. The downloaded file will have the following information:
-
-- Timestamp: timestamps within the evaluation start and end time users defined during evaluation set up.
-- is Anomaly: True if an anomaly is detected at the current timestamp
-- Score: Raw score from the model
-
-- Severity: Indicates the significance of the anomaly. The higher the severity, the more significant the anomaly)
 
 
 

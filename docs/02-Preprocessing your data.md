@@ -13,21 +13,21 @@ Metrics Advisor for Equipment uses your data following the steps below:
 
 - to train a model
 - to evaluate a model
-- to conduct a live inference
+- to conduct a streaming inference
 
 Metrics Advisor for Equipment accepts tables with only three columns:
 
-- The first column headers of the file are a `Timestamp` that indicates the date and time. The timestamp column should contain date-time values in the yyyy-MM-ddTHH:mm:ss format and conform to ISO 8601. All timestamps passed to the service must be formatted as UTC timestamps.
+- The first column headers of the file include the `Timestamp` that indicates the date and time. The timestamp column should contain date-time values in the yyyy-MM-ddTHH:mm:ss format and conform to ISO 8601. All timestamps passed to the service must be formatted as UTC timestamps.
 - The second column headers include the `Variable name`. The variable name column should contain the name of the variable for each data point
-- The third column headers show the  `Variable value`.The value column should correspond to operational metrics such as revenue, number of users, latency, and error rate.
+- The third column headers show the `Variable value`.The value column should correspond to operational metrics such as revenue, number of users, latency, and error rate.
 
-| Timestamp（DateTime） | Variable name(String) | Variable value(numeric) |
-| --------------------- | --------------------- | ----------------------- |
-| 1/1/2020 0:05         | Sensor 1              | 2.0456                  |
-| 1/1/2020 0:10         | Sensor  2             | 6.4948                  |
-| 1/1/2020 0:15         | Sensor  1             | 4.2938                  |
-| 1/1/2020 0:20         | Sensor  2             | 4.3894                  |
-| 1/1/2020 0:25         | Sensor  1             | 5.4098                  |
+| Timestamp（Date-Time） | Variable name(String) | Variable value(numeric) |
+| ---------------------- | --------------------- | ----------------------- |
+| 1/1/2020 0:05          | Sensor 1              | 2.0456                  |
+| 1/1/2020 0:10          | Sensor  2             | 6.4948                  |
+| 1/1/2020 0:15          | Sensor  1             | 4.2938                  |
+| 1/1/2020 0:20          | Sensor  2             | 4.3894                  |
+| 1/1/2020 0:25          | Sensor  1             | 5.4098                  |
 
 The easiest way to prevent problems with column headers is to take the following precautions:
 o	Make sure your column headers don't include any invalid characters, such as spaces.
@@ -59,7 +59,7 @@ Your dataset should contain time-series data that's generated from an industrial
 
 Once you have your data, you must establish how Metrics Advisor for Equipment will ingest it. Metrics Advisor for Equipment can look very different depending on how fast you need results or how much data goes into detecting an anomaly. To establish data ingestion, we’ll consider two other states of the data: batch and streaming data. The data's state impacts the speed and accuracy of the anomaly detection algorithm(s). 
 
-Batch data on a storage medium (e.g., a database or a data warehouse), and hence, the data processing speed does not have any bearing on data loss. On the other hand, streaming data is typically characterized by the continuous and unbounded nature of inflowing data, where successive record chunks are sent simultaneously and in small sizes.  
+Batch data on a storage medium (e.g.. a database or a data warehouse), and hence, the data processing speed does not have any bearing on data loss. On the other hand, streaming data is typically characterized by the continuous and unbounded nature of inflowing data, where successive record chunks are sent simultaneously and in small sizes.  
 
 
 

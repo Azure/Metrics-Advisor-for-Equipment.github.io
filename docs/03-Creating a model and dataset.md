@@ -24,11 +24,11 @@ When you create a model, the model name must be unique. The model name can conta
 
 To create a dataset, click **Create dataset**. You’ll see the new dataset window available:
 
-- `Dataset Granularity` is the smallest interval at which the sensor readings are recorded in your dataset. For example, suppose that data from some sensors are being recorded every 1 minute and other sensors are recording every 5 minutes. In this case, set the data frequency to an interval of 1 minute. 
+`Dataset Granularity` is the smallest interval at which the sensor readings are recorded in your dataset. For example, suppose that data from some sensors are being recorded every 1 minute and other sensors are recording every 5 minutes. In this case, set the data frequency to an interval of 1 minute. 
 
-  **_IMPORTANT NOTE:_** If your data granularity unit is minute, make sure that your data granularity is a multiple or factors of 60. 
+**_IMPORTANT NOTE:_** If your data granularity unit is minute, make sure that your data granularity is a multiple or factors of 60. 
 
-​        You need to fill your data granularity with the following options:
+ You need to fill your data granularity with the following options:
 
 - X mins
 - X hours        
@@ -96,11 +96,10 @@ Optionally, There are several advanced settings to enable data ingested in a cus
 
 > **_IMPORTANT NOTE:_**  Please keep two things in mind when choosing a `sliding Window` value:
 >
-> 1. The granularity of your data: When your data is at a high frequency (small granularity) like minute-level or second-level, you could set a relatively higher sliding window value.
+> 1. When your data is at a high frequency (small granularity) like minute-level or second-level, you could set a relatively higher sliding window value.
 > 2. Too large of a window can slow down performance without improving accuracy. Too small of a window makes it harder to detect anomalies. For data with frequency at the minute or second level, it's safer to set a higher value here. 
 
-- `Missing data Filling Method`:we will automatically fill in missing data. Options are Linear, Previous, Subsequent, and Custom, and the default value is Linear. If you choose custom, you must fill the value for the custom filling method.
-- However, if too much original data is missing, it might affect your results.
+- `Missing data filling method`:we will automatically fill in missing data. Options are Linear, Previous, Subsequent, and Custom, and the default value is Linear. If you choose custom, you must fill the value for the custom filling method. However, if too much original data is missing, it might affect your results.
 
 Click **Create**.
 
@@ -110,7 +109,7 @@ Click **Create**.
 
 ## 5. Training model detail
 
-Once start the training process. You will see a progress status update every five minutes until the training is successful. Depending on the dataset used, the training can take up to an hour.
+Once start the training process. You will see a progress status update every one minute until the training is successful. Depending on the dataset used, the training can take up to multiple minutes or hours.
 
 Click the **model name**, and then the **Training model detail** tab allows you to review model details such as the model name, the dataset, and the training time range.
 
@@ -148,12 +147,11 @@ On the **Training detail** page, click 'Delete'.
 To delete a dataset, you need to complete the following steps:
 
 1. On the datasets list page, click 'Delete' on the data feed.
-
 2. On the dataset details page, click 'Delete'. Removing a dataset means it won't be available to training, evaluation, or inferences anymore. This doesn't delete the data in the source system and it can't be undone.
 
-   **_IMPORTANT NOTE:_** 
+**_IMPORTANT NOTE:_** 
 
-   Delete error will happen because datasets used in training, evaluation, or inference. Delete the dependencies first, then try again.
+Delete error will happen because datasets used in training, evaluation, or inference. Delete the dependencies first, then try again.
 
 ![image](https://user-images.githubusercontent.com/36343326/176643089-c06e12b8-0045-4ccd-b598-1b44ba1122ee.png)
 

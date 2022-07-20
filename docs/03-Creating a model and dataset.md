@@ -50,7 +50,7 @@ Click **Load Data** to complete the creation, then find the created dataset.
 
 ![image-20220715164847143](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715164847143.png)
 
-##### Preview dataset
+#### Preview dataset
 
 Type your dataset name and verify that the dataset you specified can be loaded correctly.
 

@@ -6,17 +6,13 @@ One of the most important and subtle parts of anomaly detection happens at the i
 
 For example, if you create an evaluation at 5/25/2022 12:15 PM, this evaluation result will be retained for 30 days before it expires on 6/24/2022 at 12:15 PM.
 
-## 1. Before Evaluating
+## 1. Before evaluating
 
 After a model is trained; Metrics Advisor for Equipment evaluates its performance on a subset of the dataset that you've specified for evaluation purposes. It displays results that provide an overview of the performance and detailed information about the abnormal equipment behavior events and how well the model performed when detecting those.
 
-:white_check_mark:**We strongly recommend that you use labels for evaluating the model**, Metrics Advisor for Equipment reports how many times the model's predictions were true positives (how often the model found the equipment anomaly that was noted within the ranges shown in the labels).
+:white_check_mark:The data being used to evaluate the model: This evaluation data set should have the same schema and data granularity as the training data set for the model.
 
-Metrics Advisor for Equipment also displays this information graphically on a chart that shows the days and events.
-
-Metrics Advisor for Equipment provides detailed information about the anomalous events that it detects. It displays a list of sensors that provided the data to indicate an anomalous event. This might help you determine which part of your asset is behaving abnormally.
-
-Metrics Advisor for Equipment identifies patterns in the dataset that help to detect critical issues, but it's the responsibility of a technician or subject matter expert (SME) to diagnose the problem and take corrective action, if needed. To ensure that you get the right output, we highly recommend working with an SME. The SME should help you make sure that you are using the right input data and that your output results are actionable and relevant.
+:white_check_mark:Labels for evaluating the model: Metrics Advisor for Equipment identifies patterns in the dataset that help to detect critical issues, but it's the responsibility of a technician or subject matter expert (SME) to have a label to diagnose the problem and take corrective action, if needed. 
 
 ## 2. Create an evaluation
 
@@ -28,9 +24,9 @@ To view a model:
 
 Go to **Models**, Choose a model and click the model name.
 
-Navigate to the**Model details** page and choose **create an evaluation**.
+Navigate to the **Model details** page and choose **create an evaluation**.
 
-![image](https://user-images.githubusercontent.com/36343326/175050952-b3a5036e-2a48-48f2-92e1-070d54d8e886.png)
+![image-20220720150352166](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220720150352166.png)
 
 ## 3. **Evaluation parameters**
 
@@ -42,7 +38,7 @@ You could also change your evaluation dataset.
 
 ![image-20220715155254477](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715155254477.png)
 
-## 4. Evaluation Summary
+## 4. Evaluation summary
 
 Starting the evaluation process. Click the **model name**, then the **Evaluation result** tab gives you a chance to review evaluation details such as the evaluation name, the dataset, and evaluation time range.
 
@@ -127,19 +123,6 @@ After you click on a particular event, the event details tab indicates which sen
 
 > **_NOTE:_**  Metrics Advisor for Equipment will pull 300 data points for each variable when users click on an anomalous point and show the top 5 contributors by default.
 
-![image](https://user-images.githubusercontent.com/36343326/175237217-cc591970-c8a5-4c16-8eb4-dbd5ef9cf651.png)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+![image-20220720150515256](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220720150515256.png)

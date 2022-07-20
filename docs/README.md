@@ -2,7 +2,7 @@
 
 ## ⭐Introduction
 
-Metrics Advisor for Equipment is a new product feature under the [Azure Metrics Advisor ](https://azure.microsoft.com/en-us/services/metrics-advisor/)service. While the existing Metrics Advisor service targets AIOps use cases, Metrics Advisor for Equipment is designed to provide Predictive Maintenance for critical physical assets (e.g., oil rigs, automotive engines, aircraft) thru multivariate anomaly detection AI capabilities. After users train Metrics Advisor for Equipment models with their historical equipment sensor data, they can initiate real-time equipment health monitoring, receive alerts when the models detect anomalous patterns, and determine the best actions to prevent potential losses as early as possible. Specifically, Metrics Advisor for Equipment’s ability to scale, outstanding AI prediction accuracy, and low cost to implement and maintain are perceived as the core value drivers by our customers.
+Metrics Advisor for Equipment is a new product feature under the Azure Metrics Advisor service. While the existing Metrics Advisor service targets AIOps use cases, Metrics Advisor for Equipment is designed to provide Predictive Maintenance for critical physical assets (e.g., oil rigs, automotive engines, aircraft) thru multivariate anomaly detection AI capabilities. After users train Metrics Advisor for Equipment models with their historical equipment sensor data, they can initiate real-time equipment health monitoring, receive alerts when the models detect anomalous patterns, and determine the best actions to prevent potential losses as early as possible. Specifically, Metrics Advisor for Equipment’s ability to scale, outstanding AI prediction accuracy, and low cost to implement and maintain are perceived as the core value drivers by our customers.
 
 ![image-20220712171530144](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image-20220712171530144.png)
 
@@ -47,8 +47,8 @@ Maintainer: Jinruishao@microsoft.com
 
 ## Other references
 
-* Reference architecture of building predictive maintenance with Metrics Advisor's MV feature
-* Azure Metrics Advisor: [Azure Metrics Advisor Doc](https://docs.microsoft.com/en-us/azure/cognitive-services/metrics-advisor/)
+* Reference architecture of building predictive maintenance with Metrics Advisor for Equipment
+* Metrics Advisor for Equipment: [Metrics Advisor for Equipment](https://ma-adel-dev.azurewebsites.net/)
 * Anomaly Detector: [Anomaly Detector Doc](https://docs.microsoft.com/en-us/azure/cognitive-services/anomaly-detector/)
 * MVAD Blog: [Introducing Multivariate Anomaly Detection](https://techcommunity.microsoft.com/t5/azure-ai/introducing-multivariate-anomaly-detection/ba-p/2260679)
 * MVAD Paper: [Multivariate time series Anomaly Detection via Graph Attention Network](https://arxiv.org/abs/2009.02040)

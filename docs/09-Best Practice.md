@@ -36,7 +36,8 @@ Instead of taking the entire data set, look at a subsample. It's more valuable i
 
 When it comes to real-world or business-related problems, you really need to know what you want to achieve. So **what is the metric?** What kind of performance is the performance level you actually need? You should, beforehand, know the expected performance level that would be OK for the application so that you can also know if I need more data, is this already good enough, and so on, and how to measure it. And especially in some cases, it might also be very clear what the prediction and accuracy that you are looking for are.
 
-![What is Multivariate Anomaly Detection? - Azure Cognitive Services |  Microsoft Docs](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/multivariate-graph.png)
+![image](https://user-images.githubusercontent.com/36343326/180729758-6421364c-8256-4b46-92ad-8c8f05ccba11.png)
+
 
 ## 4. Evaluate properly
 
@@ -55,7 +56,8 @@ Anomaly detection methods and models don’t have enough context themselves to k
 - Instead of sending an alert when an anomaly is detected, send an alert when N anomalies are detected within an interval of time.
 - Suppress anomalies when systems appear to be too unstable to determine any kind of normal behavior.
 
-![Notification Button - Send All Alerts in One-Click - Deliver All Alerts in  1-2 seconds | DeskAlerts](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/one-click-2-gray.png)
+<img width="329" alt="image" src="https://user-images.githubusercontent.com/36343326/180730054-97b6eae9-02bc-41a2-a1a5-bb7b7f65f0fa.png">
+
 
 # Conclusions
 

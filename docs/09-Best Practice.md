@@ -10,23 +10,23 @@ You need a clear and unambiguous definition of the problem you’re trying to de
 
 - **Potential question you need to answer：**
 
-  - Data for experiments
-    How did you define your anomalies? Will the label be provided, and how did you get those labels? The overall plan is to experiment on the label (ground truth) and raw data. In the first step, we hope you can provide us with data with labels that could be easier for us to validate and fine-tune the model efficiently.
+  - **Human defined rules/Features**
 
-  - Evaluation Criteria
+    How did you define your anomalies? Do you have sort of human-defined rules to recognize anomalies? Those rules could be used to guide the model if you have one. What features are used in your current approaches? We would like to know your featurization and selection process.
+
+  - **Label Data for experiments**
+    Will the label be provided, and how did you get those labels?  In the first step, we hope you can provide us with data with labels that could be easier for us to validate and fine-tune the model efficiently.
+
+  - **Evaluation Criteria**
     We usually want to analyze the difference between our model and your current model/method. Studying those differences could give us a rough estimation of the accuracy. Still, we want to know your opinion on the proposed evaluation criteria.
 
-  - Expectation
+  - **Expectation**
 
     What do they expect from ML/DL models? In other words, what challenges are not well addressed by their existing approaches? 
 
-  - Human defined rules/Features
-
-    Do you have sort of human-defined rules to recognize anomalies? Those rules could be used to guide the model if you have one. What features are used in your current approaches? We would like to know your featurization and selection process.
-
 If you can get close to that, you might have a good shot at using anomaly detection to solve your problem.
 
-![image-20220725112931857](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220725112931857.png)
+![Figure 1 from A close look on n-grams in intrusion detection: anomaly  detection vs. classification | Semantic Scholar](https://d3i71xaburhd42.cloudfront.net/be77862e2df994a3e03fad39ee457a783d1ad139/2-Figure1-1.png)
 
 
 
@@ -42,13 +42,13 @@ Instead of taking the entire data set, look at a subsample. It's more valuable i
 
 When it comes to real-world or business-related problems, you really need to know what you want to achieve. So **what is the metric?** What kind of performance is the performance level you actually need? You should, beforehand, know the expected performance level that would be OK for the application so that you can also know if I need more data, is this already good enough, and so on, and how to measure it. And especially in some cases, it might also be very clear what the prediction and accuracy that you are looking for are.
 
-
+![What is Multivariate Anomaly Detection? - Azure Cognitive Services |  Microsoft Docs](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/multivariate-graph.png)
 
 ## 4. Evaluate properly
 
 The labels and the evaluation metrics will help assess just how good the unsupervised models are at catching known patterns. Unsupervised learning systems are much harder to evaluate than supervised learning systems. Often, unsupervised learning systems are judged by their ability to catch known patterns. It’s important to be mindful of this limitation as we proceed in evaluating the results. With time series data where you have highly interdependent data, you really have to make sure that you're testing on the right thing.  You have to be really careful there to make sure that the estimate of the performance that you get from data analysis is the thing that you will also then see in reality.
 
-
+![image-20220725155652732](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220725155652732.png)
 
 ## 5. Close the loop
 
@@ -63,7 +63,7 @@ Anomaly detection methods and models don’t have enough context themselves to k
 - Instead of sending an alert when an anomaly is detected, send an alert when N anomalies are detected within an interval of time.
 - Suppress anomalies when systems appear to be too unstable to determine any kind of normal behavior.
 
-
+![Notification Button - Send All Alerts in One-Click - Deliver All Alerts in  1-2 seconds | DeskAlerts](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/one-click-2-gray.png)
 
 # Conclusions
 

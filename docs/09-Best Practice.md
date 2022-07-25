@@ -7,6 +7,19 @@
 Not all of the problems you’ll find are solvable with anomaly detection. This implies three important things:
 
 - You need a clear and unambiguous definition of the problem you’re trying to detect. It is also best if there are direct ways to measure it happening. 
+
+1.	Data for experiments
+The overall plan is to run experiment on both label (ground truth) data and real traffic. In the first step, we hope you can provide us data with labels which could be easier for us to validate and fine tune the model efficiently.
+2.	Evaluation Criteria
+usually, we want to analysis the difference of our model with your current model/method,  analyzing those difference could give us a roughly estimation on the accuracy. Still we want to know your opinion on the proposed evaluation criteria.
+3.	Open Questions
+
+
+
+
+
+
+
 - To detect a more complicated problem, you might need to relate the system behavior to a known model, such as rules or theory. If you have no model that describes how the system should behave, how do you know that your definition of a problem is correct?
 
 If you can get close to that, you might have a pretty good shot at using anomaly detection to solve your problem.

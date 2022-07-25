@@ -24,4 +24,3 @@
 | Minimum inference lead time                               | 1 day                 |
 | Maximum replay time range                                 | 1000 data points      |
 | Maximum number of replay per inference                    | 100                   |
-|                                                           |                       |

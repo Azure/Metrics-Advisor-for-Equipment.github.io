@@ -17,7 +17,9 @@
 | Maximum number of components/variables in training data      | 300                     |
 | Maximum training data sliding window                         | 2880 data points        |
 | Maximum number of evaluations per model                      | 100                     |
-| Maximum retention of evaluations per model                   | 6 months                |
+| Maximum retention of evaluations per model                   | 30 days                 |
+| Maximum retention of inference per model                     | 6 months                |
+| Maximum retention of alert per model                         | 7 days                  |
 | **Inference**                                                |                         |
 | Maximum number of inferences per model                       | 1                       |
 | Maximum inferences lead time                                 | 3 days                  |

@@ -52,7 +52,7 @@ Example metrics you could check include:
 
 - Concurrency, service demand, backlog, queue length, utilization, and similar metrics of load or saturation of capacity; all also usually have characteristics that are difficult to analyze with standard statistical tools unless you find an appropriate model
 
-  ![image-20220725112946926](../../../../../AppData/Roaming/Typora/typora-user-images/image-20220725112946926.png)
+  
 
 ## 4. Evaluate properly
 

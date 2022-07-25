@@ -11,7 +11,6 @@ You need a clear and unambiguous definition of the problem you’re trying to de
 - **Potential question you need to answer：**
 
   - **Human defined rules/Features**
-
     How did you define your anomalies? Do you have sort of human-defined rules to recognize anomalies? Those rules could be used to guide the model if you have one. What features are used in your current approaches? We would like to know your featurization and selection process.
 
   - **Label Data for experiments**
@@ -21,22 +20,17 @@ You need a clear and unambiguous definition of the problem you’re trying to de
     We usually want to analyze the difference between our model and your current model/method. Studying those differences could give us a rough estimation of the accuracy. Still, we want to know your opinion on the proposed evaluation criteria.
 
   - **Expectation**
-
-    What do they expect from ML/DL models? In other words, what challenges are not well addressed by their existing approaches? 
+    What do you expect from ML/DL models? In other words, what challenges are not well addressed by their existing approaches? 
 
 If you can get close to that, you might have a good shot at using anomaly detection to solve your problem.
 
-![Figure 1 from A close look on n-grams in intrusion detection: anomaly  detection vs. classification | Semantic Scholar](https://d3i71xaburhd42.cloudfront.net/be77862e2df994a3e03fad39ee457a783d1ad139/2-Figure1-1.png)
-
-
+<img width="356" alt="image" src="https://user-images.githubusercontent.com/36343326/180728193-b5733899-312c-4717-80a2-4dfb256b80c6.png">
 
 ## 2. Start small, iterate quickly
 
 Instead of taking the entire data set, look at a subsample. It's more valuable if you have a size of a data set that allows you to work very quickly and try out different ideas. And then only over time, when you think you know this is the right thing and have to make more fine-grain decisions, can you move up to the thing. 
 
 ![image-20220720170106787](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220720170106787.png)
-
-
 
 ## 3. Choose a metric
 
@@ -53,8 +47,6 @@ The labels and the evaluation metrics will help assess just how good the unsuper
 ## 5. Close the loop
 
 Eventually you want to bring data analysis to production. On the upper right hand side, we have the data science part, and on the lower side is the engineering part.  it's not a one-way road where you start with the data, you create your model, you bring it to production. But actually, the next round will be how can we improve the model? So you should definitely, from the very beginning, already think of this whole process like a bigger iteration workflow between production and data science.
-
-
 
 ## 6. Alert Selectively
 

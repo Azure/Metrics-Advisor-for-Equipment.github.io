@@ -55,7 +55,7 @@ The labels and the evaluation metrics will help assess just how good the unsuper
 
 Eventually you want to bring data analysis to production. On the upper right hand side, we have the data science part, and on the lower side is the engineering part.  it's not a one-way road where you start with the data, you create your model, you bring it to production. But actually, the next round will be how can we improve the model? So you should definitely, from the very beginning, already think of this whole process like a bigger iteration workflow between production and data science.
 
-![Why leaders need to close the loop - SmartBrief](https://corp.smartbrief.com/wp-content/uploads/2022/04/stencil.originals-new12-726x420.jpg)
+
 
 
 

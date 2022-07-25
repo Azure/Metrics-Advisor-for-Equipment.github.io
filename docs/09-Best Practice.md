@@ -11,7 +11,7 @@ Not all of the problems you’ll find are solvable with anomaly detection. This 
 
 If you can get close to that, you might have a pretty good shot at using anomaly detection to solve your problem.
 
-
+![image-20220725112931857](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220725112931857.png)
 
 
 
@@ -23,7 +23,7 @@ If you can get close to that, you might have a pretty good shot at using anomaly
 
 Instead of taking the full data set, look at a subsample. It's more valuable if you have a size of a data set which allows you to work very quickly, try out different ideas. And then only over time, when you think you can know this is the right thing, and you have to make more fine-grain decisions, then you can move up to the thing. 
 
-
+![image-20220720170106787](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220720170106787.png)
 
 
 
@@ -41,7 +41,7 @@ Example metrics you could check include:
 
 - Concurrency, service demand, backlog, queue length, utilization, and similar metrics of load or saturation of capacity; all also usually have characteristics that are difficult to analyze with standard statistical tools unless you find an appropriate model
 
-  
+  ![image-20220725112946926](../../../../../AppData/Roaming/Typora/typora-user-images/image-20220725112946926.png)
 
 ## 4. Evaluate properly
 

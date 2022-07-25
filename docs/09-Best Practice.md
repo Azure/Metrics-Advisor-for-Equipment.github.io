@@ -42,17 +42,7 @@ Instead of taking the entire data set, look at a subsample. It's more valuable i
 
 When it comes to real-world or business-related problems, you really need to know what you want to achieve. So **what is the metric?** What kind of performance is the performance level you actually need? You should, beforehand, know the expected performance level that would be OK for the application so that you can also know if I need more data, is this already good enough, and so on, and how to measure it. And especially in some cases, it might also be very clear what the prediction and accuracy that you are looking for are.
 
-Example metrics you could check include:
 
-- Error rate
-
-- Throughput
-
-- Latency (response time), although this is tricky because latency almost always has a complex multi-modal distribution
-
-- Concurrency, service demand, backlog, queue length, utilization, and similar metrics of load or saturation of capacity; all also usually have characteristics that are difficult to analyze with standard statistical tools unless you find an appropriate model
-
-  
 
 ## 4. Evaluate properly
 

@@ -6,27 +6,23 @@
 
 Not all of the problems you’ll find are solvable with anomaly detection. This implies some important things:
 
-You need a clear and unambiguous definition of the problem you’re trying to detect. It is also best if there are direct ways to measure it happening. 
+You need a clear and unambiguous definition of the problem you’re trying to detect. It is also best if there are direct ways to measure it happening. Besides, you might need to relate the system behavior to a known model, such as human defined-rules , to detect a more complicated problem. If you have no model that describes how the system should behave, how do you know that your definition of a problem is correct?
 
 - **Potential question you need to answer：**
 
-  1. Data for experiments
-     How did you define your anomalies? Will the label be provided, and how did you get those labels? The overall plan is to experiment on the label (ground truth) and raw data. In the first step, we hope you can provide us with data with labels that could be easier for us to validate and fine-tune the model efficiently.
+  - Data for experiments
+    How did you define your anomalies? Will the label be provided, and how did you get those labels? The overall plan is to experiment on the label (ground truth) and raw data. In the first step, we hope you can provide us with data with labels that could be easier for us to validate and fine-tune the model efficiently.
 
-  2. Evaluation Criteria
-     We usually want to analyze the difference between our model and your current model/method. Studying those differences could give us a rough estimation of the accuracy. Still, we want to know your opinion on the proposed evaluation criteria.
+  - Evaluation Criteria
+    We usually want to analyze the difference between our model and your current model/method. Studying those differences could give us a rough estimation of the accuracy. Still, we want to know your opinion on the proposed evaluation criteria.
 
-  3. Expectation
+  - Expectation
 
-     What do they expect from ML/DL models? In other words, what challenges are not well addressed by their existing approaches? 
+    What do they expect from ML/DL models? In other words, what challenges are not well addressed by their existing approaches? 
 
-You might need to relate the system behavior to a known model, such as rules or theory, to detect a more complicated problem. If you have no model that describes how the system should behave, how do you know that your definition of a problem is correct?
+  - Human defined rules/Features
 
-- **Potential question you need to answer：**
-
-1. Human defined rules/Features
-
-   Do you have sort of human-defined rules to recognize anomalies? Those rules could be used to guide the model if you have one. What features are used in your current approaches? We would like to know your featurization and selection process.
+    Do you have sort of human-defined rules to recognize anomalies? Those rules could be used to guide the model if you have one. What features are used in your current approaches? We would like to know your featurization and selection process.
 
 If you can get close to that, you might have a good shot at using anomaly detection to solve your problem.
 

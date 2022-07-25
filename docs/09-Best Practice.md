@@ -4,37 +4,39 @@
 
 ## 1. Is Anomaly detection the right approach?
 
-Not all of the problems you’ll find are solvable with anomaly detection. This implies three important things:
+Not all of the problems you’ll find are solvable with anomaly detection. This implies some important things:
 
-- You need a clear and unambiguous definition of the problem you’re trying to detect. It is also best if there are direct ways to measure it happening. 
+You need a clear and unambiguous definition of the problem you’re trying to detect. It is also best if there are direct ways to measure it happening. 
 
-1.	Data for experiments
-   The overall plan is to run experiment on both label (ground truth) data and real traffic. In the first step, we hope you can provide us data with labels which could be easier for us to validate and fine tune the model efficiently.
-2.	Evaluation Criteria
-   usually, we want to analysis the difference of our model with your current model/method,  analyzing those difference could give us a roughly estimation on the accuracy. Still we want to know your opinion on the proposed evaluation criteria.
-3.	Open Questions
+- **Potential question you need to answer：**
 
+  1. Data for experiments
+     How did you define your anomalies? Will the label be provided, and how did you get those labels? The overall plan is to experiment on the label (ground truth) and raw data. In the first step, we hope you can provide us with data with labels that could be easier for us to validate and fine-tune the model efficiently.
 
+  2. Evaluation Criteria
+     We usually want to analyze the difference between our model and your current model/method. Studying those differences could give us a rough estimation of the accuracy. Still, we want to know your opinion on the proposed evaluation criteria.
 
+  3. Expectation
 
+     What do they expect from ML/DL models? In other words, what challenges are not well addressed by their existing approaches? 
 
+You might need to relate the system behavior to a known model, such as rules or theory, to detect a more complicated problem. If you have no model that describes how the system should behave, how do you know that your definition of a problem is correct?
 
+- **Potential question you need to answer：**
 
-- To detect a more complicated problem, you might need to relate the system behavior to a known model, such as rules or theory. If you have no model that describes how the system should behave, how do you know that your definition of a problem is correct?
+1. Human defined rules/Features
 
-If you can get close to that, you might have a pretty good shot at using anomaly detection to solve your problem.
+   Do you have sort of human-defined rules to recognize anomalies? Those rules could be used to guide the model if you have one. What features are used in your current approaches? We would like to know your featurization and selection process.
+
+If you can get close to that, you might have a good shot at using anomaly detection to solve your problem.
 
 ![image-20220725112931857](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220725112931857.png)
 
 
 
-
-
-
-
 ## 2. Start small, iterate quickly
 
-Instead of taking the full data set, look at a subsample. It's more valuable if you have a size of a data set which allows you to work very quickly, try out different ideas. And then only over time, when you think you can know this is the right thing, and you have to make more fine-grain decisions, then you can move up to the thing. 
+Instead of taking the entire data set, look at a subsample. It's more valuable if you have a size of a data set that allows you to work very quickly and try out different ideas. And then only over time, when you think you know this is the right thing and have to make more fine-grain decisions, can you move up to the thing. 
 
 ![image-20220720170106787](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220720170106787.png)
 
@@ -42,7 +44,7 @@ Instead of taking the full data set, look at a subsample. It's more valuable if 
 
 ## 3. Choose a metric
 
-When it comes to real-world problems or business-related problems, you really need to know what it is that you want to achieve. So **what is the metric?** What kind of performance is the performance level you actually need? You should, beforehand, know what is the expected level of performance that would be OK for the application so that you can also know, do I need more data, is this already good enough, and so on, and also how to measure it. And especially in some cases, it might also be very clear what the prediction and accuracy that you are looking for is.
+When it comes to real-world or business-related problems, you really need to know what you want to achieve. So **what is the metric?** What kind of performance is the performance level you actually need? You should, beforehand, know the expected performance level that would be OK for the application so that you can also know if I need more data, is this already good enough, and so on, and how to measure it. And especially in some cases, it might also be very clear what the prediction and accuracy that you are looking for are.
 
 Example metrics you could check include:
 
@@ -68,17 +70,12 @@ Eventually you want to bring data analysis to production. On the upper right han
 
 
 
-
-
 ## 6. Alert Selectively
 
 Anomaly detection methods and models don’t have enough context themselves to know if a system is actually anomalous or not. It’s your task to utilize them for that purpose. On the flip side, you also need to know when to *not* rely on your anomaly detection framework. When a system or process is highly unstable, it becomes extremely difficult for models to work well. We highly recommend implementing filters to reduce the number of false positives. Some of the filters we’ve used include:
 
 - Instead of sending an alert when an anomaly is detected, send an alert when N anomalies are detected within an interval of time.
 - Suppress anomalies when systems appear to be too unstable to determine any kind of normal behavior.
-- If a system violates a threshold and you trigger an anomaly or send an alert, don’t allow another one to be sent unless the system resets back to normal first. This can be implemented by having a reset threshold, below which the metrics of interest must dip before they can trigger above the upper threshold again.
-
-Filters don’t have to be complicated. Sometimes it’s much simpler and more efficient to just simply ignore metrics that are likely to cause alerting nuisances.
 
 
 

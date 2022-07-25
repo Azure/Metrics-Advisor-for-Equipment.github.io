@@ -48,7 +48,7 @@ When it comes to real-world or business-related problems, you really need to kno
 
 The labels and the evaluation metrics will help assess just how good the unsupervised models are at catching known patterns. Unsupervised learning systems are much harder to evaluate than supervised learning systems. Often, unsupervised learning systems are judged by their ability to catch known patterns. It’s important to be mindful of this limitation as we proceed in evaluating the results. With time series data where you have highly interdependent data, you really have to make sure that you're testing on the right thing.  You have to be really careful there to make sure that the estimate of the performance that you get from data analysis is the thing that you will also then see in reality.
 
-![image-20220725155652732](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220725155652732.png)
+![F-score - Wikipedia](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/350px-Precisionrecall.svg.png)
 
 ## 5. Close the loop
 

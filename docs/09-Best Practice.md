@@ -6,8 +6,8 @@
 
 Not all of the problems you’ll find are solvable with anomaly detection. This implies three important things:
 
-- You need a clear and unambiguous definition of the problem you’re trying to detect. It is also best if there are direct ways to measure it happening. The best indicators of problems are usually directly related to one or more business goals or desired outcomes. 
-- To detect a more complicated problem, you might need to relate the system behavior to a known model, such as physical laws or theory or the like. If you have no model that describes how the system should behave, how do you know that your definition of a problem is correct?
+- You need a clear and unambiguous definition of the problem you’re trying to detect. It is also best if there are direct ways to measure it happening. 
+- To detect a more complicated problem, you might need to relate the system behavior to a known model, such as rules or theory. If you have no model that describes how the system should behave, how do you know that your definition of a problem is correct?
 
 If you can get close to that, you might have a pretty good shot at using anomaly detection to solve your problem.
 
@@ -23,15 +23,13 @@ If you can get close to that, you might have a pretty good shot at using anomaly
 
 ## 2. Start small, iterate quickly
 
-Start small: instead of taking the full data set, look at a subsample. It's more valuable if you have a size of a data set which allows you to work very quickly, try out different ideas. And then only over time, when you think you can know this is the right thing, and you have to make more fine-grain decisions, then you can move up to the thing. 
+Instead of taking the full data set, look at a subsample. It's more valuable if you have a size of a data set which allows you to work very quickly, try out different ideas. And then only over time, when you think you can know this is the right thing, and you have to make more fine-grain decisions, then you can move up to the thing. 
 
-![The greatest example ever of MVP and iterative, incremental development |  by Gert Erasmus | Medium](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/1*NrrLaEFkpE8D3cy3r1Wi-w.jpeg)
+![image-20220720170106787](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220720170106787.png)
 
 
 
 ## 3. Choose a metric
-
-It’s important to be sure that the problem you’re trying to detect has a reliable signal. It’s not a good idea to use anomaly detection to alert on metrics that looked weird during that one outage that one time. One of the things we’ve learned by doing this ourselves is that metrics are weird constantly during normal system operation. You need to find metrics (or combinations of metrics) that are always normal during healthy system behavior, and always abnormal when systems are in trouble. Here “normal” and “abnormal” are in comparison with the local behavior of the metric, because if there were a reliable global good/bad you could just use a threshold.
 
 When it comes to real-world problems or business-related problems, you really need to know what it is that you want to achieve. So **what is the metric?** What kind of performance is the performance level you actually need? You should, beforehand, know what is the expected level of performance that would be OK for the application so that you can also know, do I need more data, is this already good enough, and so on, and also how to measure it. And especially in some cases, it might also be very clear what the prediction and accuracy that you are looking for is.
 

@@ -13,7 +13,7 @@
 | Maximum number of inference schedulers per model          | 1                     |
 | **Training and evaluation**                               |                       |
 | Maximum number of data points in training data            | 1 million data points |
-| Maximum number of data points in evaluation data          | 20K data points       |
+| Maximum number of data points in evaluation data          | 150K data points      |
 | Maximum number of components/variables in training data   | 300                   |
 | Maximum training data sliding window                      | 2880 data points      |
 | Maximum number of evaluations per model                   | 100                   |

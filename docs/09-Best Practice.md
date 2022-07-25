@@ -11,9 +11,7 @@ Not all of the problems you’ll find are solvable with anomaly detection. This 
 
 If you can get close to that, you might have a pretty good shot at using anomaly detection to solve your problem.
 
-
-
-![The anomaly detection and the classification learning schemas | Download  Scientific Diagram](https://www.researchgate.net/profile/Jean-Gabriel-Ganascia/publication/282309055/figure/fig1/AS:613923497713684@1523382176705/The-anomaly-detection-and-the-classification-learning-schemas.png)
+![image-20220725112931857](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220725112931857.png)
 
 
 
@@ -43,7 +41,7 @@ Example metrics you could check include:
 
 - Concurrency, service demand, backlog, queue length, utilization, and similar metrics of load or saturation of capacity; all also usually have characteristics that are difficult to analyze with standard statistical tools unless you find an appropriate model
 
-  ![Good vibes: Vibration sensors for industrial applications](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/STMicroelectronics-vibration-sensor-fig1.png)
+  ![image-20220725112946926](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220725112946926.png)
 
 ## 4. Evaluate properly
 

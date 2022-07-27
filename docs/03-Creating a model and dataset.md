@@ -12,7 +12,7 @@ When you create a model, the model name must be unique. The model name can conta
 
 - Max character limit: 200 characters.
 
-- Valid characters are: 0-9, a-z, A-Z, _(underscore),and -(hyphen) and it should start with an alphabet. 
+- Valid characters are: A-Z, a-z, 0-9, _(underscore), and -(hyphen). Do not start the name with an _(underscore) or -(hyphen).
 
 - Make sure that you don't have any duplicated names.
 

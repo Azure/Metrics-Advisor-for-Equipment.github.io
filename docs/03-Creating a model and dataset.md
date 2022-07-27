@@ -56,7 +56,7 @@ Type your dataset name and verify that the dataset you specified can be loaded c
 
 - Max character limit: 200 characters.
 
-- Valid characters: 0-9, a-z, A-Z, _(underscore),and -(hyphen) and it should start with an alphabet. 
+- Valid characters: A-Z, a-z, 0-9, _(underscore), and -(hyphen). Do not start the name with an _(underscore) or -(hyphen).
 
 - Make sure that you don't have any duplicated names.
 

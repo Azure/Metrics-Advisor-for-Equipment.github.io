@@ -31,7 +31,8 @@ To build and use an anomaly detection model with Metrics Advisor for Equipment, 
 6. [Reviewing inference results](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/06-Reviewing%20inference%20results.md).
 7. [Configuring alerts and getting notifications using a hook](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/07-Configure%20alerts%20an%20get%20notifications%20using%20a%20hook.md).
 8. [Quota](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/08-Quota.md).
-8. Best Practice.
+9. [Best Practice](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/09-Best%20Practice.md).
+10. 
 
 The Metrics Advisor for Equipment will help you streamline steps 3 to 7. 
 

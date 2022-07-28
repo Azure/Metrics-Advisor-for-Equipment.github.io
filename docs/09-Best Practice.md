@@ -13,10 +13,10 @@ You need a clear and unambiguous definition of the problem you’re trying to de
   - **Human defined rules/Features**
     How did you define your anomalies? Do you have sort of human-defined rules to recognize anomalies? Those rules could be used to guide the model if you have one. What features are used in your current approaches? We would like to know your featurization and selection process.
 
-  - **Label Data for experiments**
-    Will the label be provided, and how did you get those labels?  In the first step, we hope you can provide us with data with labels that could be easier for us to validate and fine-tune the model efficiently.
+  - **Label data for experiments**
+    Will the label be provided, and how did you get those labels?  In the first step, If you have data with labels that could be easier for you to validate and fine-tune the model efficiently.
 
-  - **Evaluation Criteria**
+  - **Evaluation criteria**
     We usually want to analyze the difference between our model and your current model/method. Studying those differences could give us a rough estimation of the accuracy. Still, we want to know your opinion on the proposed evaluation criteria.
 
   - **Expectation**

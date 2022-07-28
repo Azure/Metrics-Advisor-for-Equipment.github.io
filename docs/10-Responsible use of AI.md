@@ -41,7 +41,7 @@ Data drifting is a common pitfall that would impact the model’s anomaly detect
 The optimal retraining frequency could differ by data granularity, equipment types, feature combinations, customers’ own success criteria, we’d recommend users to experiment different retraining cycles and have the SMEs evaluate the model performance.
 
 
-# Other limitations
+## 6. Other limitations
 * **Highly variable sensors/equipment**: Currently our model may not be suitable for cases where the sensor data pattern is highly variable because our model requires enough data to learn the pattern in order to make predictions.
 
 * **High frequency data**: In the past, we have found that our model tends to perform better when the input data’s granularity is greater than 1 sec. When the raw data is at low granularity – like one data point per second or even sub-second – a common practice is to aggregate (sum/average/sample) it to a higher granularity. 

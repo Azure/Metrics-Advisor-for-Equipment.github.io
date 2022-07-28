@@ -4,11 +4,13 @@
 
 On the visualization main page you'll find your inference list, both active and inactive.
 
-Click **view details**
+A max of 10,000 data points and 180 days are kept for inferences.
+
+![image-20220720145236177](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220720145236177.png)
 
 On the right panel detail page you'll find details about the inference summaries. You'll also find alert configurations about the inference itself.
 
-![image](https://user-images.githubusercontent.com/36343326/175203452-7422b3d6-8cda-4df7-ba3c-22d0e4714260.png)
+![image-20220720145323391](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220720145323391.png)
 
 ## 2. Anomaly score
 

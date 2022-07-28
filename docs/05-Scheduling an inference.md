@@ -1,83 +1,101 @@
-# ⭐Scheduling inference
+# ⭐Scheduling a streaming inference
 
-After you create a model, you can use it to monitor your asset in real-time. To use your model to monitor your asset, you do the following.
+After you create a model, you can use it to monitor your asset in streaming. To use your model to monitor your asset, you do the following.
 
-## 1. Create an near real time inference
 
-When the model status is completed, click the button to create a inference.
-![image](https://user-images.githubusercontent.com/36343326/176591157-ca84e705-aead-420e-990d-590f925ef756.png)
 
-![image](https://user-images.githubusercontent.com/36343326/176591110-d887bd68-3241-43a3-8b6d-6f557bbc1f2a.png)
+## 1. Before scheduling
 
-## 2. Set alert configuration
+:white_check_mark:The data being used to inference the model: This inference dataset should have the same schema and data granularity as the training data set for the model.
 
-Set alert configuration, specify alert name and sensitivity, and  inference snoozing windows.
-![image](https://user-images.githubusercontent.com/36343326/176591239-1aab9a06-0d90-4d13-8f2c-37edab1b1d92.png)
 
-Select or create new hooks for alert.
 
-![image](https://user-images.githubusercontent.com/36343326/176645158-90e62e49-b68a-4678-bfe1-65ed9661b770.png)
+## 2. Schedule a streaming inference
 
-| Parameter       | Description                                                  |
-| --------------- | ------------------------------------------------------------ |
-| Snoozing window | If an event that would trigger an alert occurs during the selected snoozing time, the alert will not be generated even if there is an anomaly. |
-| Sensitivity     | From 1 ~ 100, to define detector's sensitivity. The bigger the number the more sensitive to anomalies. |
+When the model status is completed, click the button to schedule a streaming inference to start collecting data and detecting anomalies.
 
-## 3. Inference parameters
+![image-20220719162552094](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220719162552094.png)
+
+## 3. Set alert configuration
+
+Set alert configuration, specify alert name and sensitivity, and alert correlation and suppression.
+![image-20220715155849989](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715155849989.png)
+
+Select or create new hooks for the alert.
+
+![image-20220715160532687](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715160532687.png)
+
+| Parameter                         | Description                                                  |
+| --------------------------------- | ------------------------------------------------------------ |
+| Alert Correlation and Suppression | Correlated anomalies if they occur within [x] data points of each other.<br />Send one alert for correlated anomalies.<br/>Send an alert for each anomaly: get notifications for new anomalies by receiving alerts at hooks. |
+| Sensitivity                       | From 1 ~ 100, to define detector's sensitivity. The bigger the number the more sensitive to anomalies. Set a lower sensitivity to get notified only when severe anomalies are detected. Set a higher sensitivity to detect anomalies that are less severe. |
+
+## 4. Streaming Inference parameters
 
 Specify the name for the inference and the time period that your model performs inference on the data coming from your pipeline.
+
+` Inference start time`: This start time can't be in the past. The first timestamp equal to or greater than the start time given will be used. Your data source must have data at the specified start time and the number of data points available must equal to or greater than your training sliding window (model_name’s sliding window = xxx).
+
+`Data delay Offset` (this is an optional field): the amount of time (in seconds) you expect the data to be delayed for inference. For example, your source data comes every 5 minutes, so by default (i.e., data delay offset In seconds = 0) the inference schedule assumes that records with a timestamp of 01:30:00 will be ready for inference by 01:35:00, records with a timestamp of 01:35:00 will be ready at 01:40:00, and so on. If you expect a 10-minute data delay (i.e., data delay offset In seconds = 600), then the scheduler will inference records with a timestamp of 01:30:00 at 01:45:00, inference records with a timestamp of 01:35:00 at 01:50:00, and so on.
+
+:warning:Metrics Advisor for Equipment uses UTC time that specifies when to start running the inference to detect anomalies.
+
 For the dataset, select or create an inference dataset.
 
-![image](https://user-images.githubusercontent.com/36343326/176644652-a9e9993b-6381-461d-ab04-7397c6663bff.png)
+![image-20220715160559270](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715160559270.png)
 
-## 4. Use existing inference
+## 5. Update a paused inference
 
-If users already created some real-time inference which is running in other models, users could reuse this inference id in a new trained model to perform inference.
+If users already created a streaming inference that is running in other models, users could replace the trained model with a paused inference. Previous data will be kept, and anomalies that were detected with the old model will still be visible next to newly detected anomalies in the same inference data. Updating the model is only recommended if there weren't any significant differences in the training parameters.
 
-Select from existing real-time inferences by inference name and Metrics Advisor for Equipment will pre-fill the detection settings    (sensitivity and Snoozing window all use existing inference and do not allow changes) in the portal and trigger inference starting from the current timestamp (None of the information for the selected inference is editable in this step).
-![image](https://user-images.githubusercontent.com/36343326/176644500-84af22bd-370d-4e37-9d2e-aef42e21bea3.png)
+:warning: If an inference isn't listed here, make sure to pause it first. The inference will restart and be streaming immediately after updating.
+
+
+![image-20220715160627676](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220715160627676.png)
 
 ![image](https://user-images.githubusercontent.com/36343326/176591367-fe6aa6e0-11a7-4854-aa98-74e79bc13c41.png)
 
 ![image](https://user-images.githubusercontent.com/36343326/176591438-dfbad83b-c300-41c1-a692-de23ce6c99b3.png)
 
-## 5. Set a replay
+## 6. Set a replay
 
-After a model is doing real-time inference, users could choose to schedule a replay. This will trigger a backfill on your selected timestamp immediately to fix a failed inference or to override the existing data.
+After a model is doing streaming inference, users could choose to schedule a replay. This will trigger a backfill on your selected timestamp immediately to fix a failed inference or to override the existing data.
 
-Schedule replay/backfill for an existing real-time inference.
+Replay: overwrite the data in a historical time range by running the inference with its current settings.
+
+A max of 2000 data points can be replayed. For example, with a data frequency interval of 1 minute, you can replay a time range of about 1 day. 
+
+Schedule replay/backfill for an existing streaming inference.
 Select start date and time and Select end date and time.
-![image](https://user-images.githubusercontent.com/36343326/176645839-c3fe65b1-ad9f-4211-8fc7-30ba96ab5c3d.png)
 
-Replay is re-triggered only on selected range.
+The current replay must finish before creating a new one. Wait until the evaluation completes before creating a replay. 
+Replay is re-triggered only on the selected range.![image](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/176645839-c3fe65b1-ad9f-4211-8fc7-30ba96ab5c3d.png)
 
-## 6. Manage inference schedules
 
-- **Setting inference as inactive**
-
-This will halt the inference process.
-
-From the Model details, under inference tab, choose **inactive.**
-
-- **Setting inference as active**
-
-This will resume a stopped inference schedule.
-From the Model details, under inference tab, choose **active**.
-
-- **Deleting an inactive inference**
-
-From the Model details, under inference tab, choose **Delete**.
 
 ## 7. Inference detail
 
-Starting the inference process. Click the **model name**, then the **Inference detail** tab gives you a chance review inference details such as the inference name, the dataset, and inference start time.
+Once start the inference process. Click the **model name**, and then the **Inference detail** tab allows you to review inference details such as the inference name, the dataset, and inference start time.
 
-There are two kinds of inference status.
+There are three kinds of inference status. 
 
-| status   | Description                                     |
-| -------- | ----------------------------------------------- |
-| Active   | Inference is in processing.                     |
-| Inactive | Inference is paused, you can restart inference. |
-| Inactive | Inference is failed for some reason.            |
+| status   | Description                                                  |
+| -------- | ------------------------------------------------------------ |
+| Active   | Streaming Inference is in processing.                        |
+| Inactive | Streaming Inference is paused by users or Inference is failed for some reason. If Inference is paused by users, you can restart inference. |
+
+There are three kinds of actions for streaming inference. 
+
+- **Pause**
+
+This will halt the inference process. You could stop the streaming inference from destroying incurring costs. From the Model details, under the inference tab, choose **restart.**
+
+- **Restart**
+
+This will resume a stopped inference schedule. From the Model details, under the inference tab, choose **Pause**.
+
+- **Deleting a paused inference**
+
+When you don’t have any more use for your streaming inference,  you can delete a stopped streaming inference by choosing **Delete**.
 
 You can click the **View details** button for the error messages when you find the training inference status gets to **Inactive**.

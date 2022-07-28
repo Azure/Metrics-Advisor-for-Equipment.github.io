@@ -1,25 +1,29 @@
-# Metrics Advisor for equipment (private preview)🌞
+# Metrics Advisor for Equipment (private preview)🌞
 
-Metrics Advisor for equipment is a new product feature under the [Azure Metrics Advisor ](https://azure.microsoft.com/en-us/services/metrics-advisor/)service. While the existing Metrics Advisor service targets AIOps use cases, Metrics Advisor for equipment is designed to provide Predictive Maintenance for critical physical assets (e.g., oil rigs, automotive engines, aircrafts) thru multivariate anomaly detection AI capabilities. After users trained Metrics Advisor for equipment models with their historical equipment sensor data, they can then initiate real-time equipment health monitoring, receive alerts when the models detected anomalous patterns, and determine the best actions to prevent potential losses as early as possible. Specifically, Metrics Advisor for equipment’s ability to scale, outstanding AI prediction accuracy, and low cost to implement and maintain are perceived as the core value drivers by our customers.
+## ⭐Introduction
+
+Metrics Advisor for Equipment is a new product feature under the Azure Metrics Advisor service. While the existing Metrics Advisor service targets AIOps use cases, Metrics Advisor for Equipment is designed to provide Predictive Maintenance for critical physical assets (e.g., oil rigs, automotive engines, aircraft) thru multivariate anomaly detection AI capabilities. After users train Metrics Advisor for Equipment models with their historical equipment sensor data, they can initiate real-time equipment health monitoring, receive alerts when the models detect anomalous patterns, and determine the best actions to prevent potential losses as early as possible. Specifically, Metrics Advisor for Equipment’s ability to scale, outstanding AI prediction accuracy, and low cost to implement and maintain are perceived as the core value drivers by our customers.
 
 ![image-20220712171530144](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image-20220712171530144.png)
 
-## ⭐How to use **multivariate** anomaly detection
+## ⭐Metrics Advisor for Equipment capabilities
 
-If your goal is to detect system level anomalies from a group of time series data, use multivariate anomaly detection. Particularly, when any individual time series won't tell you much, and you have to look at all signals (a group of time series) holistically to determine a system level issue. For example, you have an expensive physical asset like turbines, equipment on an oil rig, or a milk drier. Each of these assets has tens or hundreds of different types of sensors. You would have to look at all those time series signals from those sensors to decide whether there is system level issue. Also if your scenario has the keyword like predicative maintenance, equipment health, then it is likely the multivariate feature will be a great fit.
+If your goal is to detect system-level anomalies from a group of time series data, use multivariate anomaly detection. Particularly when any individual time series won't tell you much, and you have to look at all signals (a group of time series) holistically to determine a system-level issue. For example, you have an expensive physical asset like turbines, equipment on an oil rig, or milk drier. Each of these assets has tens or hundreds of different types of sensors. You would have to look at all those time series signals from those sensors to decide whether there is a system-level issue. Also, if your scenario has keywords like predictive maintenance and equipment health, then the multivariate feature will likely be a great fit.
 
-![image-20220712171646579](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image-20220712171646579.png)
+![image-20220714175904958](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220714175904958.png)
 
 
 
 ## ⭐Value propositions
 
-- Easy for use✔️: No data science knowledge needed, users can leverage no code experience to create models and set up inferencing and alert with a few clicks, customers and partners can build this AI capability into their own solutions.
-- Scalability✔️: Multivariate Metrics Advisor can be used across 300 pieces of equipment and sensors located across the world.
-- Cost Effectiveness✔️: Compared with custom build model, significantly lower the model building cost and shorten the time to market. You don't need to have a few data scientists building and tuning models for a few weeks and then go production. Instead, the whole process can be done in hours instead of days or weeks. Multivariate Metrics Advisor is priced based on usage, so training and inferencing can be set up and automated for cost-effective model deployment.
-- Accuracy✔️: State of the art AI model created by Microsoft research and AI platform data scientists. While not all equipment issues can be seen in the data, Multivariate Metrics Advisor can find key abnormal equipment behavior with best-in-class detection algorithms and multiple signals analyzed in a group as opposed to being watched individually, dependencies and inter-correlations between signals have now been accounted for.
+- Easy for use✔️: No data science knowledge is needed; users can leverage no code experience to create models and set up inferencing and alert with a few clicks; customers and partners can build this AI capability into their own solutions.
+- Scalability✔️: Multivariate Metrics Advisor can be used across 300 pieces of equipment and sensors worldwide.
+- Cost Effectiveness✔️: Compared with a custom build model, significantly lower the model building cost and shorten the time to market. You don't need to have a few data scientists building and tuning models for a few weeks and then go to production. Instead, the whole process can be done in hours instead of days or weeks. Multivariate Metrics Advisor is priced based on usage, so training and inferencing can be set up and automated for cost-effective model deployment.
+- Accuracy✔️: State-of-the-art AI model created by Microsoft Research and AI platform data scientists. While not all equipment issues can be seen in the data, Multivariate Metrics Advisor can find critical abnormal equipment behavior with best-in-class detection algorithms and multiple signals analyzed in a group as opposed to being watched individually. Dependencies and inter-correlations between signals have now been accounted for.
 
-## ⭐Get familiar with new multivariate detection flow
+## ⭐How does Metrics Advisor for Equipment work
+
+To build and use an anomaly detection model with Metrics Advisor for Equipment, you need to go through the following steps:
 
 1. [Setting up your Azure account and getting started with Metrics Advisor studio](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/01-Setting%20up%20your%20Azure%20account.md).
 2. [Preprocessing your data](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/02-Preprocessing%20your%20data.md).
@@ -31,10 +35,20 @@ If your goal is to detect system level anomalies from a group of time series dat
 8. [Quota](https://github.com/Azure/Metrics-Advisor-for-Equipment/blob/main/docs/08-Quota.md).
 8. Best Practice.
 
-## ⭐Other references
+The Metrics Advisor for Equipment will help you streamline steps 3 to 7. 
 
-* Reference architecture of building predictive maintenance with Metrics Advisor's MV feature
-* Azure Metrics Advisor: [Azure Metrics Advisor Doc](https://docs.microsoft.com/en-us/azure/cognitive-services/metrics-advisor/)
+## ⭐Support
+
+Product-related issues (e.g. bugs, feature requests) can be created in the [IcM]( https://portal.microsofticm.com/imp/v3/incidents/create?tmpl=72q3D3).
+
+Maintainer: Jinruishao@microsoft.com
+
+
+
+## Other references
+
+* Reference architecture of building predictive maintenance with Metrics Advisor for Equipment
+* Metrics Advisor for Equipment: [Metrics Advisor for Equipment](https://ma-adel-dev.azurewebsites.net/)
 * Anomaly Detector: [Anomaly Detector Doc](https://docs.microsoft.com/en-us/azure/cognitive-services/anomaly-detector/)
 * MVAD Blog: [Introducing Multivariate Anomaly Detection](https://techcommunity.microsoft.com/t5/azure-ai/introducing-multivariate-anomaly-detection/ba-p/2260679)
 * MVAD Paper: [Multivariate time series Anomaly Detection via Graph Attention Network](https://arxiv.org/abs/2009.02040)

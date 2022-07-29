@@ -37,7 +37,7 @@ As the model learns normal patterns from historical data, the training data shou
 **In general, the missing value ratio of training data should be under 20%.** Too much missing data may end up with automatically filled values (usually linear values or constant values) being learned as normal patterns. That may result in real (not missing) data points being detected as anomalies.
 
 
-### 4.  Streaming Inference Data volume
+## 4.  Streaming inference data volume
 
 The underlying model of this AI system has millions of parameters. It needs a minimum number of data points to learn an optimal set of parameters. **The empirical rule is that you need to provide 15,000 or more data points (timestamps) per variable to train the model for good accuracy.** In general, the more the training data, better the accuracy. However, in cases when you're not able to accrue that much data, we still encourage you to experiment with less data and see if the compromised accuracy is still acceptable.
 

@@ -23,6 +23,9 @@ This system does not accept labeled data from customers during model training, b
 
 Our model only output data insights that aim at complementing human knowledge in decision making or situation diagnosing, so **the raw output should not be directly used for any automated decision-making process/pipeline** (i.e., without any human oversight or post-processing). 
 
+Here is a high-level workflow that indicates when SMEs should be involved and their core responsibilitie in those steps.  
+![Alt text](https://assets.digitalocean.com/articles/alligator/boo.svg "a title")
+
 ### 2. Variable selection
 
 Choosing the right input data is crucial to the success of using this AI system for predictive maintenance. It may take customers multiple trial and error iterations to find the right combination of inputs. Thus we make no claims to guarantee results, success is highly dependent on the relevancy of your data to the equipment issues.
@@ -35,6 +38,8 @@ Some of our successful customers even set up an experimentation pipeline to cont
 As the model learns normal patterns from historical data, the training data should represent the overall normal state of the system. It's hard for the model to learn these types of patterns if the training data is full of anomalies. An empirical threshold of abnormal rate is 1% and below for good accuracy.
 
 **In general, the missing value ratio of training data should be under 20%.** Too much missing data may end up with automatically filled values (usually linear values or constant values) being learned as normal patterns. That may result in real (not missing) data points being detected as anomalies.
+
+For more details on data quality requirements, please refer to [Preprocessing your data](https://azure.github.io/Metrics-Advisor-for-Equipment/docs/02-Preprocessing%20your%20data.html).
 
 
 ### 4.  Streaming inference data volume

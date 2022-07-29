@@ -24,7 +24,7 @@ This system does not accept labeled data from customers during model training, b
 Our model only output data insights that aim at complementing human knowledge in decision making or situation diagnosing, so **the raw output should not be directly used for any automated decision-making process/pipeline** (i.e., without any human oversight or post-processing). 
 
 Here is a high-level workflow that indicates when SMEs should be involved and their core responsibilities in those steps.  
-![Subject Matter Expertises (SMEs) are highly recommended to be involved in feature selection, model evaluation, and ongoing alert monitoring processes.](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/High_level_workflow_RAI.png "Recommended pilot and production workflow")
+![Subject Matter Expertises (SMEs) are highly recommended to be involved in feature selection, model evaluation, and ongoing alert monitoring processes.](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/High_level_workflow_RAI.jpg "Recommended pilot and production workflow")
 
 
 ### 2. Variable selection

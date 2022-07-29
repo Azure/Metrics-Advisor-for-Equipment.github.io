@@ -4,15 +4,12 @@
 
 Metrics Advisor for Equipment is a new product feature under the Azure Metrics Advisor service. While the existing Metrics Advisor service targets AIOps use cases, Metrics Advisor for Equipment is designed to provide Predictive Maintenance for critical physical assets (e.g., oil rigs, automotive engines, aircraft) thru multivariate anomaly detection AI capabilities. After users train Metrics Advisor for Equipment models with their historical equipment sensor data, they can initiate real-time equipment health monitoring, receive alerts when the models detect anomalous patterns, and determine the best actions to prevent potential losses as early as possible. Specifically, Metrics Advisor for Equipment’s ability to scale, outstanding AI prediction accuracy, and low cost to implement and maintain are perceived as the core value drivers by our customers.
 
-![image-20220712171530144](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image-20220712171530144.png)
 
 ## ⭐Metrics Advisor for Equipment capabilities
 
 If your goal is to detect system-level anomalies from a group of time series data, use multivariate anomaly detection. Particularly when any individual time series won't tell you much, and you have to look at all signals (a group of time series) holistically to determine a system-level issue. For example, you have an expensive physical asset like turbines, equipment on an oil rig, or milk drier. Each of these assets has tens or hundreds of different types of sensors. You would have to look at all those time series signals from those sensors to decide whether there is a system-level issue. Also, if your scenario has keywords like predictive maintenance and equipment health, then the multivariate feature will likely be a great fit.
 
 ![image-20220714175904958](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/image-20220714175904958.png)
-
-
 
 ## ⭐Value propositions
 

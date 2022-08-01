@@ -20,7 +20,7 @@ Here are the **32 APIs** in Metrics Advisor for Equipment:
 
 ## **Datasets** (4 APIs)
 
-A dataset in Metrics Advisor for Equipment contains the metadata describing where the data is and what the data actually looks like. Specifically, it contains the location of the data source, the data schema, and other information. A dataset also contains any tags associated with the ingested data.
+A dataset in Metrics Advisor for Equipment contains the metadata describing where the data is and what the data actually looks like. **Specifically, it contains the location of the data source, the data schema, and other information.** The dataset you created can be used for model training, evaluation, and/or real-time streaming inference.
 
 | HTTP Method | API Path | Description | 
 | :----------- | :-------- | :----------- | 
@@ -32,6 +32,8 @@ A dataset in Metrics Advisor for Equipment contains the metadata describing wher
 
 ## **Models** (4 APIs)
 
+A Metrics Advisor for Equipment model is a machine learning model that learns the patterns of normal behavior (i.e., training dataset) and detects abnormal behavior that could be potential equipment failure (or maintenance events). _On the backend, we will divide your training dataset into train & test sets and return the training and validaiton loss scores for your reference._
+
 | HTTP Method | API Path | Description | 
 | :----------- | :-------- | :----------- |  
 | PUT | `/multivariate/models/{modelName}` | **Create** and train a model.| 
@@ -42,7 +44,7 @@ A dataset in Metrics Advisor for Equipment contains the metadata describing wher
 
 ## **Evaluations** (4 APIs)
 
-An evaluation is the process of using different dataset(s) to test the performance a trained model. 
+An evaluation is the process of using different dataset(s) to test the performance a trained model. You are highly recommended to review and tune the evaluation results with subject matter expertises (SMEs) at your company.
 
 | HTTP Method | API Path | Description | 
 | :----------- | :-------- | :----------- | 
@@ -65,7 +67,7 @@ A **hook** is a channel to receive alert notifications.
 | PATCH | `/hooks/{hookName}` | **Update** a hook. _Updatable properties differ by hook type._|
 
 
-An **alert configuration** allows users to set up criteria that determine which anomalies should trigger an alert and via which hook(s). This setting can later be applied to a streaming inference schedule.
+An **alert configuration** allows users to set up criteria that determine which anomalies should trigger an alert and via which hook(s). This setting can later be applied to a streaming inference schedule. You are highly recommended to evaluate the model first and consult subject matter expertises (SMEs) at your company when setting up alert configurations. 
 
 | HTTP Method | API Path | Description | 
 | :----------- | :-------- | :----------- | 

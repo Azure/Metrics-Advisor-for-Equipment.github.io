@@ -61,8 +61,6 @@ Follow the below instructions to find Metrics Advisor service on the Azure porta
 
 1. Confirm and select **Review + Create**.
 
-    :::image type="content" source="media/logic-apps-tutorial/logic-app-connector-demo-two.png" alt-text="Still image showing the correct values for creating Form Recognizer resource.":::
-
 1. Azure will run a quick validation check, after a few seconds you should see a green banner that says **Validation Passed**.
 
 1. Once the validation banner appears, select the **Create** button from the bottom-left corner.
@@ -85,6 +83,66 @@ Follow the below instructions to find Metrics Advisor service on the Azure porta
 That's it! You're now ready to start scaling predictive maintenance using Azure Metrics Advisor for Equipment.
 
 ## 2. Prepare data and create a dataset
+
+Goal for this step: 
+
+API Request sample::
+
+    "parameters": {
+    "endpoint": "{endpoint}", # Replace with the endpoint URL of your Metrics Advisorr resource [Get your endpoint URL and keys.](#get-endpoint-url-and-keys) 
+    "apiVersion": "2022-07-10-preview",
+    "Ocp-Apim-Subscription-Key": "{API key}",
+    "Content-Type": "application/json",
+    "datasetName": "prod_controlValve_5min_v1",
+    "body": {
+      "datasetDescription": "Prod data for control valves; aligned to 5min granularity.",
+      "dataSourceInfo": {
+        "dataSourceType": "SqlServer",
+        "authenticationType": "ManagedIdentity",
+        "serverName": "{enter_your_sql_server_name}",
+        "databaseName": "equipment_db_prod",
+        "tableName": "preprocessed_controlvalve_sensor_values"
+      },
+      "dataSchema": {
+        "dataSchemaType": "LongTable",
+        "timestampColumnName": "eventTimeStamp",
+        "variableColumnName": "sensorName",
+        "valueColumnName": "sensorValue"
+      },
+      "dataGranularityNumber": 5,
+      "dataGranularityUnit": "Minutes"
+    }
+
+Best Practices: 
+- How to align my data to a single data granularity? 
+
+
+
+Parameters: 
+
+| Required/Optional |Parameters | Description | Value | 
+| :----------- | :----------- | :----------- |:----------- |
+| Required | datasetName | Unique identifier of a dataset. | <li>Case-sensitive</li><li>Valid characters are: A-Z, a-z, 0-9, _(underscore), and -(hyphen). Name starts with an _(underscore) or -(hyphen) will not be accepted</li>|
+| Optional | datasetDescription | Provide more information about this dataset. |
+| Required | dataGranularityNumber | (Together with dataGranularityUnit) The frequency interval at which new records are added to your data.  | <li>int32</li><li>Make sure that each variable has at most one data point within each interval</li>|
+| Required | dataGranularityUnit | (Together with dataGranularityNumber) The unit of your data frequency interval | Units currently supported: Minutes, Hours, Days, Weeks, Months, Years |
+| **dataSourceInfo** | | |
+| Required | dataSourceType | Type of your data scource  | Currently only "SqlServer" is supported |
+| Required | authenticationType | Method to authenticate Metrics Advisor for EQuipment to access your data source | Currently only "ManagedIdentity" is supported |
+| Required | serverName | Name of a SQL Server |
+| Required | databaseName | Name of a SQL Database | case-sensitive |
+| Required | tableName | Name of a SQL table or SQL view | case-sensitive | 
+|**dataSchema**| | 
+| Required | dataSchemaType | Indicates how your data is formatted. <li>`LongTable`: A long-form data table has a single column that stores all the variables</li><li>`WideTable`: A wide-form data table spreads a variable across several columns</li> | Currently only "LongTable" is supported | 
+| Required | timestampColumnName | Header of the column that contains datetime values | case-sensitive |
+| Required | variableColumnName | Header of the column that contains the name of the variable for each data point | case-sensitive |
+| Required | valueColumnName | Header of the column that contains numeric values | case-sensitive |
+
+
+
+
+
+Portal View: 
 
 
 ## 3. Train a model

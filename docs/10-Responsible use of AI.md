@@ -52,7 +52,7 @@ When setting up an inference schedule for continuous real-time monitoring, you n
 
 For example, during streaming inference if you'd like to on ONE new timestamp, the data file could contain only the leading slidingWindow plus ONE data point; then you could move on and create another zip file with the same number of data points (3 * `slidingWindow` + 1) but moving ONE step to the "right" side and submit for another inference job.
 
-Any data at timestamps beyond or "earlier" the leading `slidingWindow` won't impact the inference result at all and may only cause performance downgrade. If the inference schedule cannot fetch the amount of data points requried (e.g., during to missing data), you may receive a `NotEnoughInput` error and detection results will not be returned. 
+Any data at timestamps beyond or "earlier" the leading `slidingWindow` won't impact the inference result at all and may only cause performance downgrade. If the inference schedule cannot fetch the amount of data points required (e.g.., during to missing data), you may receive a `NotEnoughInput` error and detection results will not be returned. 
 
 
 ### 5. Data recency
@@ -70,7 +70,7 @@ The optimal retraining frequency could differ by data granularity, equipment typ
         * Easier alignment to even distribution on time, which is a protocol of the API input.
         * Increased tolerance of random noise.
         * Fewer data points and fewer API transactions.
-    * The downside of aggregatio: subtle changes within lower granularity are not considered, which might lead to missing important anomalies.
+    * The downside of aggregation: subtle changes within lower granularity are not considered, which might lead to missing important anomalies.
 
 
 ## Other references

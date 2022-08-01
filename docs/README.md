@@ -3,6 +3,7 @@
 ## ⭐Introduction
 
 Metrics Advisor for Equipment is a new product feature under the Azure Metrics Advisor service. While the existing Metrics Advisor service targets AIOps use cases, Metrics Advisor for Equipment is designed to provide Predictive Maintenance for critical physical assets (e.g., oil rigs, automotive engines, aircraft) thru multivariate anomaly detection AI capabilities. After users train Metrics Advisor for Equipment models with their historical equipment sensor data, they can initiate real-time equipment health monitoring, receive alerts when the models detect anomalous patterns, and determine the best actions to prevent potential losses as early as possible. Specifically, Metrics Advisor for Equipment’s ability to scale, outstanding AI prediction accuracy, and low cost to implement and maintain are perceived as the core value drivers by our customers.
+![image](https://user-images.githubusercontent.com/36343326/182091038-e25cef70-96f0-43bb-953d-daa0613a9565.png)
 
 
 ## ⭐Metrics Advisor for Equipment capabilities

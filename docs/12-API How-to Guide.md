@@ -10,13 +10,15 @@ The current API version is **2022-07-10-preview**.
 
 In the following sections you will :
   1. [(Prerequisites) Create a Metrics Advisor resource in the Azure portal.](#1-prerequisites-create-a-metrics-advisor-resource-in-the-azure-portal)
-  2. [Prepare data and create a dataset.](#2-prepare-data-and-create-a-dataset)
-  3. [Train a Metrics Advisor for Equipment model.](#3-train-a-model)
-  4. [Evaluate the model performance and download the evaluation results.](#4-evaluate-model-performance)
-  5. [Post-process evaluation results and determine the desired alert settings.](#5-post-process-evaluation-results-and-determine-the-desired-alert-settings)
-  6. [Configure and start an inference schedule.](#6-configure-and-start-an-inference-schedule)
-  7. [Get streaming inference results and diagnose alerts.](#7-get-streaming-inference-results-and-diagnose-alerts)
-  8. [Trigger a replay on an existing inference schedule to backfill/refresh detection results for a historical time period.](#8-trigger-a-replay-on-an-existing-inference-schedule)
+  1. Prepare nad preprocess your data.
+  1. [Create a dataset.](#2-prepare-data-and-create-a-dataset)
+    `[PUT] https://{endpoint}/datasets/{datasetName}`
+  1. [Train a Metrics Advisor for Equipment model.](#3-train-a-model)
+  1. [Evaluate the model performance and download the evaluation results.](#4-evaluate-model-performance)
+  1. [Post-process evaluation results and determine the desired alert settings.](#5-post-process-evaluation-results-and-determine-the-desired-alert-settings)
+  1. [Configure and start an inference schedule.](#6-configure-and-start-an-inference-schedule)
+  1. [Get streaming inference results and diagnose alerts.](#7-get-streaming-inference-results-and-diagnose-alerts)
+  1. [Trigger a replay on an existing inference schedule to backfill/refresh detection results for a historical time period.](#8-trigger-a-replay-on-an-existing-inference-schedule)
 
 
 
@@ -105,9 +107,9 @@ That's it! You're now ready to start scaling predictive maintenance using Azure 
       "dataSourceInfo": {
         "dataSourceType": "SqlServer",
         "authenticationType": "ManagedIdentity",
-        "serverName": "{enter_your_sql_server_name}", // Replace with your Azure SQL server name
-        "databaseName": "equipment_db_prod", // Replace with your database name (must be in the server provided above)
-        "tableName": "preprocessed_controlvalve_sensor_values" // Replace with your SQL table or SQL view name (must be in the database provided above)
+        "serverName": "{your_sql_server_name}", // Replace with your Azure SQL server name
+        "databaseName": "{your_database_name}", // Replace with your database name (must be in the server provided above)
+        "tableName": "{your_sql_table_name}" // Replace with your SQL table or SQL view name (must be in the database provided above)
       },
       "dataSchema": {
         "dataSchemaType": "LongTable",
@@ -135,9 +137,9 @@ That's it! You're now ready to start scaling predictive maintenance using Azure 
         "dataSourceInfo": {
           "dataSourceType": "SqlServer",
           "authenticationType": "ManagedIdentity",
-          "serverName": "{enter_your_sql_server_name}",
-          "databaseName": "equipment_db_prod",
-          "tableName": "preprocessed_controlvalve_sensor_values"
+          "serverName": "{your_sql_server_name}",
+          "databaseName": "{your_database_name}",
+          "tableName": "{your_sql_table_name}"
         },
         "dataSchema": {
           "dataSchemaType": "LongTable",
@@ -157,9 +159,9 @@ That's it! You're now ready to start scaling predictive maintenance using Azure 
         "dataSourceInfo": {
           "dataSourceType": "SqlServer",
           "authenticationType": "ManagedIdentity",
-          "serverName": "{enter_your_sql_server_name}",
-          "databaseName": "equipment_db_prod",
-          "tableName": "preprocessed_controlvalve_sensor_values"
+          "serverName": "{your_sql_server_name}",
+          "databaseName": "{your_database_name}",
+          "tableName": "{your_sql_table_name}"
         },
         "dataSchema": {
           "dataSchemaType": "LongTable",
@@ -179,13 +181,14 @@ That's it! You're now ready to start scaling predictive maintenance using Azure 
 - How to align my data to a single data granularity? 
   - Make sure that each variable has at most one data point within each interval.
 - How do I find my SQL server, database, and table names?
-- 
+  - 
+  - If you do not have an Azure SQL database, [create a single database](#https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-portal).
 
 
 
-### Parameter petails 
+### Parameter details 
 
-#### URI parameters
+#### URI parameter
 
 `datasetName`: Unique identifier of a dataset. _Cannot be changed once a dataset has been created._
   - Type: string
@@ -193,7 +196,7 @@ That's it! You're now ready to start scaling predictive maintenance using Azure 
   - Character length: [1, 200]
   - Valid characters: A-Z, a-z, 0-9, _(underscore), and -(hyphen). Name starts with an _(underscore) or -(hyphen) will not be accepted.
 
-#### Query parameters
+#### Query parameter
 `apiVersion`: The current API version is **2022-07-10-preview**.
 
 #### Request body parameters
@@ -206,7 +209,7 @@ The request accepts the following data in JSON format.
 | PUT | dataGranularityUnit | (Together with dataGranularityNumber) The unit of your data frequency interval. | string | Valid values: Minutes, Hours, Days, Weeks, Months, Years. |
 | **dataSourceInfo** | 
 | PUT | dataSourceType | Type of your data scource. | string | Valid value: "SqlServer" |
-| PUT | authenticationType | Method to authenticate Metrics Advisor for EQuipment to access your data source. | string | Valid value: "ManagedIdentity" | 
+| PUT | authenticationType | Method to authenticate Metrics Advisor for Equipment to access your data source. | string | Valid value: "ManagedIdentity" | 
 | PUT (if dataSourceType = SqlServer ) | serverName | Name of a SQL Server. | string | Case-sensitive: No|
 | PUT (if dataSourceType = SqlServer ) | databaseName | Name of a SQL Database. | string | Case-sensitive: Yes|
 | PUT (if dataSourceType = SqlServer ) | tableName | Name of a SQL table or SQL view. | string | Case-sensitive: Yes| 

@@ -84,60 +84,137 @@ That's it! You're now ready to start scaling predictive maintenance using Azure 
 
 ## 2. Prepare data and create a dataset
 
-Goal for this step: 
+### Goal for this step 
 
-API Request sample::
 
+### REST API samples
+
+`[PUT] https://{endpoint}/datasets/{datasetName}`
+
+```json
+// Sample Request
+{
     "parameters": {
-    "endpoint": "{endpoint}", # Replace with the endpoint URL of your Metrics Advisorr resource [Get your endpoint URL and keys.](#get-endpoint-url-and-keys) 
-    "apiVersion": "2022-07-10-preview",
-    "Ocp-Apim-Subscription-Key": "{API key}",
-    "Content-Type": "application/json",
-    "datasetName": "prod_controlValve_5min_v1",
+      "endpoint": "{endpoint}", // Replace with your Metrics Advisor resource endpoint URL  
+      "apiVersion": "2022-07-10-preview",
+      "Ocp-Apim-Subscription-Key": "{API key}", // Replace with your Metrics Advisor resource key
+      "Content-Type": "application/json",
+      "datasetName": "prod_controlValve_5min_v1", // Unique and case-sensitive. Valid characters are: A-Z, a-z, 0-9, _(underscore), and -(hyphen).
     "body": {
       "datasetDescription": "Prod data for control valves; aligned to 5min granularity.",
       "dataSourceInfo": {
         "dataSourceType": "SqlServer",
         "authenticationType": "ManagedIdentity",
-        "serverName": "{enter_your_sql_server_name}",
-        "databaseName": "equipment_db_prod",
-        "tableName": "preprocessed_controlvalve_sensor_values"
+        "serverName": "{enter_your_sql_server_name}", // Replace with your Azure SQL server name
+        "databaseName": "equipment_db_prod", // Replace with your database name (must be in the server provided above)
+        "tableName": "preprocessed_controlvalve_sensor_values" // Replace with your SQL table or SQL view name (must be in the database provided above)
       },
       "dataSchema": {
         "dataSchemaType": "LongTable",
-        "timestampColumnName": "eventTimeStamp",
-        "variableColumnName": "sensorName",
-        "valueColumnName": "sensorValue"
+        "timestampColumnName": "eventTimeStamp", // Replace with the header of the column that contains datetime values
+        "variableColumnName": "sensorName", // Replace with the header of the column that contains the names of your input variables
+        "valueColumnName": "sensorValue" // Replace with the header of the column that contains numeric values
       },
       "dataGranularityNumber": 5,
       "dataGranularityUnit": "Minutes"
     }
+  }
+}
+```
 
-Best Practices: 
+
+```json
+// Sample Response
+
+{  
+  "responses": { // You will get either a 201 or 200 reponse
+    "201": { 
+      "body": {
+        "datasetName": "prod_controlValve_5min_v1",
+        "datasetDescription": "Prod data for control valves; aligned to 5min granularity.",
+        "dataSourceInfo": {
+          "dataSourceType": "SqlServer",
+          "authenticationType": "ManagedIdentity",
+          "serverName": "{enter_your_sql_server_name}",
+          "databaseName": "equipment_db_prod",
+          "tableName": "preprocessed_controlvalve_sensor_values"
+        },
+        "dataSchema": {
+          "dataSchemaType": "LongTable",
+          "timestampColumnName": "eventTimeStamp",
+          "variableColumnName": "sensorName",
+          "valueColumnName": "sensorValue"
+        },
+        "dataGranularityNumber": 5,
+        "dataGranularityUnit": "Minutes",
+        "createdTime": "2022-07-15T13:10:02.493Z"
+      }
+    },
+    "200": {
+      "body": {
+        "datasetName": "prod_controlValve_5min_v1",
+        "datasetDescription": "Prod data for control valves; aligned to 5min granularity.",
+        "dataSourceInfo": {
+          "dataSourceType": "SqlServer",
+          "authenticationType": "ManagedIdentity",
+          "serverName": "{enter_your_sql_server_name}",
+          "databaseName": "equipment_db_prod",
+          "tableName": "preprocessed_controlvalve_sensor_values"
+        },
+        "dataSchema": {
+          "dataSchemaType": "LongTable",
+          "timestampColumnName": "eventTimeStamp",
+          "variableColumnName": "sensorName",
+          "valueColumnName": "sensorValue"
+        },
+        "dataGranularityNumber": 5,
+        "dataGranularityUnit": "Minutes",
+        "createdTime": "2022-07-15T13:10:02.493Z"
+      }
+    }
+  }
+}
+```
+### FAQ and best practices 
 - How to align my data to a single data granularity? 
+  - Make sure that each variable has at most one data point within each interval.
+- How do I find my SQL server, database, and table names?
+- 
 
 
 
-Parameters: 
+### Parameter petails 
 
-| Required/Optional |Parameters | Description | Value | 
-| :----------- | :----------- | :----------- |:----------- |
-| Required | datasetName | Unique identifier of a dataset. | <li>Case-sensitive</li><li>Valid characters are: A-Z, a-z, 0-9, _(underscore), and -(hyphen). Name starts with an _(underscore) or -(hyphen) will not be accepted</li>|
-| Optional | datasetDescription | Provide more information about this dataset. |
-| Required | dataGranularityNumber | (Together with dataGranularityUnit) The frequency interval at which new records are added to your data.  | <li>int32</li><li>Make sure that each variable has at most one data point within each interval</li>|
-| Required | dataGranularityUnit | (Together with dataGranularityNumber) The unit of your data frequency interval | Units currently supported: Minutes, Hours, Days, Weeks, Months, Years |
-| **dataSourceInfo** | | |
-| Required | dataSourceType | Type of your data scource  | Currently only "SqlServer" is supported |
-| Required | authenticationType | Method to authenticate Metrics Advisor for EQuipment to access your data source | Currently only "ManagedIdentity" is supported |
-| Required | serverName | Name of a SQL Server |
-| Required | databaseName | Name of a SQL Database | case-sensitive |
-| Required | tableName | Name of a SQL table or SQL view | case-sensitive | 
+#### URI parameters
+
+`datasetName`: Unique identifier of a dataset. _Cannot be changed once a dataset has been created._
+  - Type: string
+  - Case-sensitive: Yes
+  - Character length: [1, 200]
+  - Valid characters: A-Z, a-z, 0-9, _(underscore), and -(hyphen). Name starts with an _(underscore) or -(hyphen) will not be accepted.
+
+#### Query parameters
+`apiVersion`: The current API version is **2022-07-10-preview**.
+
+#### Request body parameters
+The request accepts the following data in JSON format.
+
+| **Required for** |**Parameters** | **Description** | **Type** | **Pattern** |
+| :----------- | :----------- | :----------- | :----------- | :----------- |
+| Optional | datasetDescription | Provide more information about this dataset. | string | Character length: [0, 1024]
+| PUT | dataGranularityNumber | (Together with dataGranularityUnit) The frequency interval at which new records are added to your data.  | int32 | |
+| PUT | dataGranularityUnit | (Together with dataGranularityNumber) The unit of your data frequency interval. | string | Valid values: Minutes, Hours, Days, Weeks, Months, Years. |
+| **dataSourceInfo** | 
+| PUT | dataSourceType | Type of your data scource. | string | Valid value: "SqlServer" |
+| PUT | authenticationType | Method to authenticate Metrics Advisor for EQuipment to access your data source. | string | Valid value: "ManagedIdentity" | 
+| PUT (if dataSourceType = SqlServer ) | serverName | Name of a SQL Server. | string | Case-sensitive: No|
+| PUT (if dataSourceType = SqlServer ) | databaseName | Name of a SQL Database. | string | Case-sensitive: Yes|
+| PUT (if dataSourceType = SqlServer ) | tableName | Name of a SQL table or SQL view. | string | Case-sensitive: Yes| 
 |**dataSchema**| | 
-| Required | dataSchemaType | Indicates how your data is formatted. <li>`LongTable`: A long-form data table has a single column that stores all the variables</li><li>`WideTable`: A wide-form data table spreads a variable across several columns</li> | Currently only "LongTable" is supported | 
-| Required | timestampColumnName | Header of the column that contains datetime values | case-sensitive |
-| Required | variableColumnName | Header of the column that contains the name of the variable for each data point | case-sensitive |
-| Required | valueColumnName | Header of the column that contains numeric values | case-sensitive |
-
+| PUT | dataSchemaType | Indicates how your data is formatted. <li>`LongTable`: A long-form data table has a single column that stores all the variables</li><li>`WideTable`: A wide-form data table spreads a variable across several columns</li> | string | Valid value: "LongTable" | 
+| PUT  | timestampColumnName | Header of the column that contains datetime values | string | Case-sensitive: Yes|
+| PUT | variableColumnName | Header of the column that contains the the names of your input variables | string | Case-sensitive: Yes|
+| PUT (if dataSchemaType = LongTable ) | valueColumnName | Header of the column that contains numeric values | string | Case-sensitive: Yes|
 
 
 

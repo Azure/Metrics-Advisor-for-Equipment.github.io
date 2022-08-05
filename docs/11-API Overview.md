@@ -99,3 +99,9 @@ A **replay** allows you to inference a historical time range with settings from 
 | GET | `/inference/replays/{replayName}` | **Get** replay info including associated inference schedule, replay time range, replay job status, etc.| 
 | GET | `/inference/replays[?skip][&maxpagesize][&sortBy][&orderBy][&status][&scheduleName][&topPerSchedule]` | **List** replay jobs in a subscription. | 
 | DELETE | `/inference/replays/{replayName}` | **Delete** a replay job in a subscription. _This action doesn't revert the inference results in the replay time range._|
+
+
+## Next steps
+* [REST API How-to Guide](/docs/12-API%20How-to%20Guide.md)
+* [Metrics Advisor for Equipment Quotas and Limits](/docs/08-Quota.md)
+* [Responsible Use of AI](/docs/10-Responsible%20use%20of%20AI.md)

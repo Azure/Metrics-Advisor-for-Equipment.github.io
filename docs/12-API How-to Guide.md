@@ -10,9 +10,9 @@ The current API version is **2022-07-10-preview**.
 
 In the following sections you will :
   1. [(Prerequisites) Create a Metrics Advisor resource in the Azure portal.](#1-prerequisites-create-a-metrics-advisor-resource-in-the-azure-portal)
-  1. Prepare nad preprocess your data.
+  1. Prepare and preprocess your data.
   1. [Create a dataset.](#2-prepare-data-and-create-a-dataset)
-    `[PUT] https://{endpoint}/datasets/{datasetName}`
+    - `[PUT] https://{endpoint}/datasets/{datasetName}`
   1. [Train a Metrics Advisor for Equipment model.](#3-train-a-model)
   1. [Evaluate the model performance and download the evaluation results.](#4-evaluate-model-performance)
   1. [Post-process evaluation results and determine the desired alert settings.](#5-post-process-evaluation-results-and-determine-the-desired-alert-settings)
@@ -24,9 +24,9 @@ In the following sections you will :
 
 ## 1. (Prerequisites) Create a Metrics Advisor resource in the Azure portal
 Here are three quick steps you need to take before using the Azure Metrics Advisor for Equipment fuctionalities: 
-1. [Find Metrics Advisor service on the Azure portal.](#find-metrics-advisor-service-on-the-azure-portal)
-2. [Create a Metrics Advisor resource.](#create-a-resource)
-3. [Get your endpoint URL and keys.](#get-endpoint-url-and-keys)
+- [Find Metrics Advisor service on the Azure portal.](#find-metrics-advisor-service-on-the-azure-portal)
+- [Create a Metrics Advisor resource.](#create-a-resource)
+- [Get your endpoint URL and keys.](#get-endpoint-url-and-keys)
 
 Let's get started:
 
@@ -91,15 +91,15 @@ That's it! You're now ready to start scaling predictive maintenance using Azure 
 
 ### REST API samples
 
-`[PUT] https://{endpoint}/datasets/{datasetName}`
+`[PUT] https://{endpoint}/datasets/{datasetName}` - **Create/add** a dataset for training, evaluation, or real-time inference.
 
+#### Sample Request
 ```json
-// Sample Request
 {
     "parameters": {
-      "endpoint": "{endpoint}", // Replace with your Metrics Advisor resource endpoint URL  
+      "endpoint": "{endpoint}", // Your Metrics Advisor resource endpoint URL  
       "apiVersion": "2022-07-10-preview",
-      "Ocp-Apim-Subscription-Key": "{API key}", // Replace with your Metrics Advisor resource key
+      "Ocp-Apim-Subscription-Key": "{API key}", // Your Metrics Advisor resource key
       "Content-Type": "application/json",
       "datasetName": "prod_controlValve_5min_v1", // Unique and case-sensitive. Valid characters are: A-Z, a-z, 0-9, _(underscore), and -(hyphen).
     "body": {
@@ -107,15 +107,15 @@ That's it! You're now ready to start scaling predictive maintenance using Azure 
       "dataSourceInfo": {
         "dataSourceType": "SqlServer",
         "authenticationType": "ManagedIdentity",
-        "serverName": "{your_sql_server_name}", // Replace with your Azure SQL server name
-        "databaseName": "{your_database_name}", // Replace with your database name (must be in the server provided above)
-        "tableName": "{your_sql_table_name}" // Replace with your SQL table or SQL view name (must be in the database provided above)
+        "serverName": "{your_sql_server_name}", // Name of the Azure SQL server with your training, evaluation, and/or inference data
+        "databaseName": "{your_database_name}", // Your Azure SQL database name (must be in the above server)
+        "tableName": "{your_sql_table_name}" //Your Azure SQL table / SQL view name (must be in the above database)
       },
       "dataSchema": {
         "dataSchemaType": "LongTable",
-        "timestampColumnName": "eventTimeStamp", // Replace with the header of the column that contains datetime values
-        "variableColumnName": "sensorName", // Replace with the header of the column that contains the names of your input variables
-        "valueColumnName": "sensorValue" // Replace with the header of the column that contains numeric values
+        "timestampColumnName": "eventTimeStamp", // Replace with header of the column that contains datetime values
+        "variableColumnName": "sensorName", // Replace with header of the column that contains the names of your input variables
+        "valueColumnName": "sensorValue" // Replace with header of the column that contains numeric values
       },
       "dataGranularityNumber": 5,
       "dataGranularityUnit": "Minutes"
@@ -124,64 +124,14 @@ That's it! You're now ready to start scaling predictive maintenance using Azure 
 }
 ```
 
+#### Response
+You will get either a 201 or 200 reponse is the request was successful.
 
-```json
-// Sample Response
-
-{  
-  "responses": { // You will get either a 201 or 200 reponse
-    "201": { 
-      "body": {
-        "datasetName": "prod_controlValve_5min_v1",
-        "datasetDescription": "Prod data for control valves; aligned to 5min granularity.",
-        "dataSourceInfo": {
-          "dataSourceType": "SqlServer",
-          "authenticationType": "ManagedIdentity",
-          "serverName": "{your_sql_server_name}",
-          "databaseName": "{your_database_name}",
-          "tableName": "{your_sql_table_name}"
-        },
-        "dataSchema": {
-          "dataSchemaType": "LongTable",
-          "timestampColumnName": "eventTimeStamp",
-          "variableColumnName": "sensorName",
-          "valueColumnName": "sensorValue"
-        },
-        "dataGranularityNumber": 5,
-        "dataGranularityUnit": "Minutes",
-        "createdTime": "2022-07-15T13:10:02.493Z"
-      }
-    },
-    "200": {
-      "body": {
-        "datasetName": "prod_controlValve_5min_v1",
-        "datasetDescription": "Prod data for control valves; aligned to 5min granularity.",
-        "dataSourceInfo": {
-          "dataSourceType": "SqlServer",
-          "authenticationType": "ManagedIdentity",
-          "serverName": "{your_sql_server_name}",
-          "databaseName": "{your_database_name}",
-          "tableName": "{your_sql_table_name}"
-        },
-        "dataSchema": {
-          "dataSchemaType": "LongTable",
-          "timestampColumnName": "eventTimeStamp",
-          "variableColumnName": "sensorName",
-          "valueColumnName": "sensorValue"
-        },
-        "dataGranularityNumber": 5,
-        "dataGranularityUnit": "Minutes",
-        "createdTime": "2022-07-15T13:10:02.493Z"
-      }
-    }
-  }
-}
-```
 ### FAQ and best practices 
 - How to align my data to a single data granularity? 
   - Make sure that each variable has at most one data point within each interval.
 - How do I find my SQL server, database, and table names?
-  - 
+  - retj
   - If you do not have an Azure SQL database, [create a single database](#https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-portal).
 
 

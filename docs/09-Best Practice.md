@@ -1,4 +1,4 @@
-# ⭐Best practice and other insights
+# ⭐Best practices and other insights
 
 
 

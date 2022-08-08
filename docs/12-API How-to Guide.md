@@ -144,7 +144,7 @@ You will get either a 201 or 200 reponse if the request was successful.
     - For instance, the “on” and “off” of equipment status could be transformed into “0” and “1”, which could help the model learn better about the correlations between different signals.
 - **How to align my data to a single data granularity?** 
   - Timestamps should be properly aligned for all your variables through aggregation or re-indexing. 
-    - For example, your sensors record readings every minute but may not always at the exact same second, then you should align them to the same minute (see below). ![Align data](#https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/Align_data.png)
+    - For example, your sensors record readings every minute but may not always at the exact same second, then you should align them to the same minute (see below). ![Align data](#https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/Align_data.png "Align data to the granularity you specified.")
   - In cases where your sensors’ readings come at different frequencies, some users prefer to convert time series data with different frequencies into the same frequency. 
     - For example, if some of your sensors record data every 5 minutes and others record every 10 minutes, then you can aggregate all data to 10-min intervals by taking the sum/mean/min/max etc. over a 10-min span for sensors that originally have 5-min frequency. Alternatively, Metrics Advisor for Equipment will also help you fill in the missing data points when joining variables with different granularity, you could specify the fill-in method including linear, previous, subsequent, zero, or a fixed number at the [Train a model](#3-train-a-model) step.
 

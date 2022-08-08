@@ -150,9 +150,12 @@ You will get either a 201 or 200 reponse if the request was successful.
 
 
 - **What's the difference bewteen long and wide tables?**
+   - `LongTable`: A long-form data table has a single column that stores all the variables. Data stored in this format will have repeated values in the timestamps column.
+   - `WideTable`: A wide-form data table spreads variables across several columns. Data stored in this format will NOT have repeated values in the timestamps column.
+![LongTable vs. WideTable](#https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/Long_Wide_Table.png)
 
 
-### 2.4 Related APIs you may need:
+### 2.4 Related APIs you may need
 - `[GET] /datasets/{datasetName}`: **Get** dataset info including data source type, data schema, data granularity, etc.
 - `[GET] /datasets[?skip][&maxpagesize][&sortBy][&orderBy]`: **List** models in a Metrics Advisor resource based on 
 - `[DELETE] /datasets/{datasetName}` | **Delete** a dataset in a Metrics Advisor resource. _This action doesn't delete the data in the source system._
@@ -169,7 +172,31 @@ You will get either a 201 or 200 reponse if the request was successful.
 
 **Query parameter**
 
+**Required**
+
 `apiVersion`: The current API version is **2022-07-10-preview**.
+
+**Optional**
+>**_NOTE:_**
+> These optional parameters are only applicable when you try to get a list of datasets.
+
+`skip`: The number of records to skip from the list of records based on the sorting field and ordering method specified. 
+  - Type: int32
+  - Default value (i.e., if not otherwise specified in the URL): 0
+  - Minimum value: 0
+
+`maxpagesize`: The maximum number of records to be returned per page. If more records are requested via the API, @nextLink will contain the link to the next page.
+  - Type: int32
+  - Default value (i.e., if not otherwise specified in the URL): 10
+  - Minimum value: 1
+
+`sortBy`: The name of the field on which you want to sort records. 
+  - Type: string
+  - Default value (i.e., if not otherwise specified in the URL): `createdTime`
+
+`orderBy`: Determines whether the records will be returned in descending or ascending order.
+ - Type: string
+ - Default value (i.e., if not otherwise specified in the URL): DESCENDING
 
 **Request body parameters**
 
@@ -187,7 +214,7 @@ The request accepts the following data in JSON format.
 | PUT (if dataSourceType = SqlServer ) | databaseName | Name of a SQL Database. | string | Case-sensitive: Yes|
 | PUT (if dataSourceType = SqlServer ) | tableName | Name of a SQL table or SQL view. | string | Case-sensitive: Yes| 
 |**dataSchema**| | 
-| PUT | dataSchemaType | Indicates how your data is formatted. <ul><li>`LongTable`: A long-form data table has a single column that stores all the variables</li><li>`WideTable`: A wide-form data table spreads a variable across several columns</li></ul> | string | Valid value: "LongTable" | 
+| PUT | dataSchemaType | Indicates how your data is formatted. <ul><li>`LongTable`: A long-form data table has a single column that stores all the variables</li><li>`WideTable`: A wide-form data table spreads variables across several columns</li></ul> | string | Valid value: "LongTable" | 
 | PUT  | timestampColumnName | Header of the column that contains datetime values | string | Case-sensitive: Yes|
 | PUT | variableColumnName | Header of the column that contains the the names of your input variables | string | Case-sensitive: Yes|
 | PUT (if dataSchemaType = LongTable ) | valueColumnName | Header of the column that contains numeric values | string | Case-sensitive: Yes|

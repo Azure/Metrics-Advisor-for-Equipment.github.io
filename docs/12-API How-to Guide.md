@@ -136,7 +136,7 @@ You will get either a 201 or 200 reponse if the request was successful.
 - **How do I find my SQL server, database, and table names?**
   - You can follow the below steps to locate your SQL server, database, and table names. 
   - If you do not have an Azure SQL database, [create a single database](#https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-portal).
-- **Anything pitfalls I should avoid to successfully add a datset?**
+- **What are the key things I should keep in mind when preparing my data?**
   - Make sure that each variable has _at most_ one data point within each interval.
   - *Exclude* data when equipment/sensors are off or out-of-service.
   - *Exclude* data before or after equipment/sensors restart. There usually will be irregular fluctuations right after a piece of equipment or a sensor restarts so including these data for model training may negatively impact the model’s performance.

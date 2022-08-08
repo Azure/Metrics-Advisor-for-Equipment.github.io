@@ -10,9 +10,7 @@ The current API version is **2022-07-10-preview**.
 
 In the following sections you will :
   1. [(Prerequisites) Create a Metrics Advisor resource in the Azure portal.](#1-prerequisites-create-a-metrics-advisor-resource-in-the-azure-portal)
-  1. Prepare and preprocess your data.
-  1. [Create a dataset.](#2-prepare-data-and-create-a-dataset)
-    - `[PUT] https://{endpoint}/datasets/{datasetName}`
+  1. [Prepare data and create a dataset.](#2-prepare-data-and-create-a-dataset)
   1. [Train a Metrics Advisor for Equipment model.](#3-train-a-model)
   1. [Evaluate the model performance and download the evaluation results.](#4-evaluate-model-performance)
   1. [Post-process evaluation results and determine the desired alert settings.](#5-post-process-evaluation-results-and-determine-the-desired-alert-settings)
@@ -86,14 +84,20 @@ That's it! You're now ready to start scaling predictive maintenance using Azure 
 
 ## 2. Prepare data and create a dataset
 
-### Goal for this step 
+### 2.1 Goal for this step 
+* Preprocess your data according to the schema requriements. [Learn how to preprocess your data](#/docs/02-Preprocessing%20your%20data.md)
+* Add the preprocess data to a dataset on Metrics Advsior for Equipment service so that you can use it for future model training, model evaluation, and/or real-time streaming inference.
 
+### 2.2 REST API samples
+For example, if you'd like to add a dataset that contains preprocessed data that is - 
+- stored in Azure SQL
+- in long-form format
+- with 5-min data granularity
 
-### REST API samples
+You can call `[PUT] https://{endpoint}/datasets/{datasetName}` and enter your information following the request sample below to add a dataset.
 
-`[PUT] https://{endpoint}/datasets/{datasetName}` - **Create/add** a dataset for training, evaluation, or real-time inference.
+**Sample Request**
 
-#### Sample Request
 ```json
 {
     "parameters": {
@@ -124,21 +128,38 @@ That's it! You're now ready to start scaling predictive maintenance using Azure 
 }
 ```
 
-#### Response
-You will get either a 201 or 200 reponse is the request was successful.
+**Response**
 
-### FAQ and best practices 
-- How to align my data to a single data granularity? 
-  - Make sure that each variable has at most one data point within each interval.
-- How do I find my SQL server, database, and table names?
-  - retj
+You will get either a 201 or 200 reponse if the request was successful.
+
+### 2.3 FAQ and best practices 
+- **How do I find my SQL server, database, and table names?**
+  - You can follow the below steps to locate your SQL server, database, and table names. 
   - If you do not have an Azure SQL database, [create a single database](#https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-portal).
+- **Anything pitfalls I should avoid to successfully add a datset?**
+  - Make sure that each variable has _at most_ one data point within each interval.
+  - *Exclude* data when equipment/sensors are off or out-of-service.
+  - *Exclude* data before or after equipment/sensors restart. There usually will be irregular fluctuations right after a piece of equipment or a sensor restarts so including these data for model training may negatively impact the model’s performance.
+  - Only *numerical* data is acceptable for Multivariate Anomaly Detector, but if there's categorical data in your dataset, we recommend you transform them into numerical values.  
+    - For instance, the “on” and “off” of equipment status could be transformed into “0” and “1”, which could help the model learn better about the correlations between different signals.
+- **How to align my data to a single data granularity?** 
+  - Timestamps should be properly aligned for all your variables through aggregation or re-indexing. 
+    - For example, your sensors record readings every minute but may not always at the exact same second, then you should align them to the same minute (see below). ![Align data](#https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/Align_data.png)
+  - In cases where your sensors’ readings come at different frequencies, some users prefer to convert time series data with different frequencies into the same frequency. 
+    - For example, if some of your sensors record data every 5 minutes and others record every 10 minutes, then you can aggregate all data to 10-min intervals by taking the sum/mean/min/max etc. over a 10-min span for sensors that originally have 5-min frequency. Alternatively, Metrics Advisor for Equipment will also help you fill in the missing data points when joining variables with different granularity, you could specify the fill-in method including linear, previous, subsequent, zero, or a fixed number at the [Train a model](#3-train-a-model) step.
 
 
+- **What's the difference bewteen long and wide tables?**
 
-### Parameter details 
 
-#### URI parameter
+### 2.4 Related APIs you may need:
+- `[GET] /datasets/{datasetName}`: **Get** dataset info including data source type, data schema, data granularity, etc.
+- `[GET] /datasets[?skip][&maxpagesize][&sortBy][&orderBy]`: **List** models in a Metrics Advisor resource based on 
+- `[DELETE] /datasets/{datasetName}` | **Delete** a dataset in a Metrics Advisor resource. _This action doesn't delete the data in the source system._
+
+### 2.5 Parameter details 
+
+**URI parameter**
 
 `datasetName`: Unique identifier of a dataset. _Cannot be changed once a dataset has been created._
   - Type: string
@@ -146,10 +167,12 @@ You will get either a 201 or 200 reponse is the request was successful.
   - Character length: [1, 200]
   - Valid characters: A-Z, a-z, 0-9, _(underscore), and -(hyphen). Name starts with an _(underscore) or -(hyphen) will not be accepted.
 
-#### Query parameter
+**Query parameter**
+
 `apiVersion`: The current API version is **2022-07-10-preview**.
 
-#### Request body parameters
+**Request body parameters**
+
 The request accepts the following data in JSON format.
 
 | **Required for** |**Parameters** | **Description** | **Type** | **Pattern** |
@@ -164,15 +187,11 @@ The request accepts the following data in JSON format.
 | PUT (if dataSourceType = SqlServer ) | databaseName | Name of a SQL Database. | string | Case-sensitive: Yes|
 | PUT (if dataSourceType = SqlServer ) | tableName | Name of a SQL table or SQL view. | string | Case-sensitive: Yes| 
 |**dataSchema**| | 
-| PUT | dataSchemaType | Indicates how your data is formatted. <li>`LongTable`: A long-form data table has a single column that stores all the variables</li><li>`WideTable`: A wide-form data table spreads a variable across several columns</li> | string | Valid value: "LongTable" | 
+| PUT | dataSchemaType | Indicates how your data is formatted. <ul><li>`LongTable`: A long-form data table has a single column that stores all the variables</li><li>`WideTable`: A wide-form data table spreads a variable across several columns</li></ul> | string | Valid value: "LongTable" | 
 | PUT  | timestampColumnName | Header of the column that contains datetime values | string | Case-sensitive: Yes|
 | PUT | variableColumnName | Header of the column that contains the the names of your input variables | string | Case-sensitive: Yes|
 | PUT (if dataSchemaType = LongTable ) | valueColumnName | Header of the column that contains numeric values | string | Case-sensitive: Yes|
 
-
-
-
-Portal View: 
 
 
 ## 3. Train a model

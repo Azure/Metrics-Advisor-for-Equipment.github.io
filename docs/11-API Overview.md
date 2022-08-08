@@ -25,9 +25,9 @@ A dataset in Metrics Advisor for Equipment contains the metadata describing wher
 | HTTP Method | API Path | Description | 
 | :----------- | :-------- | :----------- | 
 | PUT | `/datasets/{datasetName}` | **Create/add** a dataset for training, evaluation, or real-time inference.| 
-| GET | `/datasets/{datasetName}` | **Get** dataset ianfo including data source type, data schema, data granularity, etc.| 
-| GET | `/datasets[?skip][&maxpagesize][&sortBy][&orderBy]` | **List** models in a subscription. | 
-| DELETE | `/datasets/{datasetName}` | **Delete** a dataset in a subscription. _This action doesn't delete the data in the source system._|
+| GET | `/datasets/{datasetName}` | **Get** dataset info including data source type, data schema, data granularity, etc.| 
+| GET | `/datasets[?skip][&maxpagesize][&sortBy][&orderBy]` | **List** models in a Metrics Advisor resource. | 
+| DELETE | `/datasets/{datasetName}` | **Delete** a dataset in a Metrics Advisor resource. _This action doesn't delete the data in the source system._|
 
 
 ## **Models** (4 APIs)
@@ -38,8 +38,8 @@ A Metrics Advisor for Equipment model is a machine learning model that learns th
 | :----------- | :-------- | :----------- |  
 | PUT | `/multivariate/models/{modelName}` | **Create** and train a model.| 
 | GET | `/multivariate/models/{modelName}` | **Get** model info including training dataset, training time range(s), variables being used, training job status, etc.| 
-| GET | `/multivariate/models[?skip][&maxpagesize][&sortBy][&orderBy][&status][&datasetNames][&topPerDataset]` | **List** models in a subscription. | 
-| DELETE | `/multivariate/models/{modelName}` | **Delete** a model in a subscription.|
+| GET | `/multivariate/models[?skip][&maxpagesize][&sortBy][&orderBy][&status][&datasetNames][&topPerDataset]` | **List** models in a Metrics Advisor resource. | 
+| DELETE | `/multivariate/models/{modelName}` | **Delete** a model in a Metrics Advisor resource.|
 
 
 ## **Evaluations** (4 APIs)
@@ -50,8 +50,8 @@ An evaluation is the process of using different dataset(s) to test the performan
 | :----------- | :-------- | :----------- | 
 | PUT | `/multivariate/evaluations/{evaluationName}` | **Create** a model evaluation. | 
 | GET | `/multivariate/evaluations/{evaluationName}` | **Get** model evaluation info including model evaluated, evaluation dataset, evaluation time range, evaluation job status, etc. | 
-| GET | `/multivariate/evaluations[?skip][&maxpagesize][&sortBy][&orderBy][&status][&modelNames][&topPerModel]` | **List** model evaluations in a subscription. | 
-| DELETE | `/multivariate/evaluations/{evaluationName}` | **Delete** an evaluation in a subscription. |
+| GET | `/multivariate/evaluations[?skip][&maxpagesize][&sortBy][&orderBy][&status][&modelNames][&topPerModel]` | **List** model evaluations in a Metrics Advisor resource. | 
+| DELETE | `/multivariate/evaluations/{evaluationName}` | **Delete** an evaluation in a Metrics Advisor resource. |
 
 
 ## **Hooks and Alert Configurations** (10 APIs)
@@ -62,8 +62,8 @@ A **hook** is a channel to receive alert notifications.
 | :----------- | :-------- | :----------- | 
 | PUT | `/hooks/{hookName}` | **Create** a hook. | 
 | GET | `/hooks/{hookName}` | **Get** hook info including hook type and associated set up details. | 
-| GET | `/hooks[?skip][&maxapgesize][&sortBy][&orderBy]` | **List** hooks in a subscription. | 
-| DELETE | `/hooks/{hookName}` | **Delete** a hook in a subscription. |
+| GET | `/hooks[?skip][&maxapgesize][&sortBy][&orderBy]` | **List** hooks in a Metrics Advisor resource. | 
+| DELETE | `/hooks/{hookName}` | **Delete** a hook in a Metrics Advisor resource. |
 | PATCH | `/hooks/{hookName}` | **Update** a hook. _Updatable properties differ by hook type._|
 
 
@@ -73,8 +73,8 @@ An **alert configuration** allows users to set up criteria that determine which 
 | :----------- | :-------- | :----------- | 
 | PUT | `/alertConfigs/{alertConfigName}` | **Create** an alert configuration. | 
 | GET | `/alertConfigs/{alertConfigName}` | **Get** alert configuration info including alert configuration type and associated settings. | 
-| GET | `/alertConfigs[?skip][&maxapgesize][&sortBy][&orderBy]` | **List** alert configurations in a subscription. | 
-| DELETE | `/alertConfigs/{alertConfigName}` | **Delete** an alert configuration in a subscription. |
+| GET | `/alertConfigs[?skip][&maxapgesize][&sortBy][&orderBy]` | **List** alert configurations in a Metrics Advisor resource. | 
+| DELETE | `/alertConfigs/{alertConfigName}` | **Delete** an alert configuration in a Metrics Advisor resource. |
 | PATCH | `/alertConfigs/{alertConfigName}` | **Update** an alert configuration. _Updatable properties differ by alert configuraiton type._ | 
 
 
@@ -86,8 +86,8 @@ An **inference schedule** sets up a streaming inference pipeline to analyze inco
 | :----------- | :-------- | :----------- | 
 | PUT | `/inference/schedules/{scheduleName}` | **Create** an inference schedule.| 
 | GET | `/inference/schedules/{scheduleName}` | **Get** inference schedule info including model used, dataset used, data delay offset (if applicable), schedule start time , alert configurations, etc.| 
-| GET | `/inference/schedules[?skip][&maxpagesize][&sortBy][&orderBy][&status][&modelNames][&topPerModel]` | **List** inference schedules in a subscription. | 
-| DELETE | `/inference/schedules/{scheduleName}` | **Delete** an inference schedule in a subscription.|
+| GET | `/inference/schedules[?skip][&maxpagesize][&sortBy][&orderBy][&status][&modelNames][&topPerModel]` | **List** inference schedules in a Metrics Advisor resource. | 
+| DELETE | `/inference/schedules/{scheduleName}` | **Delete** an inference schedule in a Metrics Advisor resource.|
 | PATCH | `/inference/schedules/{scheduleName}` | **Pause/resume or update** selected properties of an inference schedule. _Updatable properties: inference status, model to be inferenced with, data delay offset, alert configurations._| 
 | GET | `/inference/schedules/{scheduleName}/getHistory` | **Retrieve detected anomalies** over a historical time period. |
 
@@ -97,8 +97,8 @@ A **replay** allows you to inference a historical time range with settings from 
 | :----------- | :-------- | :----------- |  
 | PUT | `/inference/replays/{replayName}` | **Create** a replay on an inference schedule.| 
 | GET | `/inference/replays/{replayName}` | **Get** replay info including associated inference schedule, replay time range, replay job status, etc.| 
-| GET | `/inference/replays[?skip][&maxpagesize][&sortBy][&orderBy][&status][&scheduleName][&topPerSchedule]` | **List** replay jobs in a subscription. | 
-| DELETE | `/inference/replays/{replayName}` | **Delete** a replay job in a subscription. _This action doesn't revert the inference results in the replay time range._|
+| GET | `/inference/replays[?skip][&maxpagesize][&sortBy][&orderBy][&status][&scheduleName][&topPerSchedule]` | **List** replay jobs in a Metrics Advisor resource. | 
+| DELETE | `/inference/replays/{replayName}` | **Delete** a replay job in a Metrics Advisor resource. _This action doesn't revert the inference results in the replay time range._|
 
 
 ## Next steps

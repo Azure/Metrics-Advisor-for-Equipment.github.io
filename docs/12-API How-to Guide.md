@@ -133,9 +133,10 @@ You can call `[PUT] https://{endpoint}/datasets/{datasetName}` and enter your in
 You will get either a 201 or 200 reponse if the request was successful.
 
 ### 2.3 FAQ and best practices 
-- **How do I find my SQL server, database, and table names?**
-  - You can follow the below steps to locate your SQL server, database, and table names. 
-  - If you do not have an Azure SQL database, [create a single database](https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-portal).
+- **How do I find my SQL server name?**
+  - In cases where you are not able to get an answer from your data engineering team, you can follow the below steps to locate your SQL server with a known database name. 
+  ![Get_SQLServer_Name](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/Get_SQLServer_Name.png "Get_SQLServer_Name")
+  - If you do not have an Azure SQL database yet, [create a single database](https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-portal).
 - **What are the key things I should keep in mind when preparing my data?**
   - Make sure that each variable has _at most_ one data point within each interval.
   - *Exclude* data when equipment/sensors are off or out-of-service.
@@ -161,7 +162,7 @@ You will get either a 201 or 200 reponse if the request was successful.
 ### 2.4 Related APIs you may need
 - `[GET] /datasets/{datasetName}`: **Get** dataset info including data source type, data schema, data granularity, etc.
 - `[GET] /datasets[?skip][&maxpagesize][&sortBy][&orderBy]`: **List** models in a Metrics Advisor resource based on 
-- `[DELETE] /datasets/{datasetName}` | **Delete** a dataset in a Metrics Advisor resource. _This action doesn't delete the data in the source system._
+- `[DELETE] /datasets/{datasetName}`: **Delete** a dataset in a Metrics Advisor resource. _This action doesn't delete the data in the source system._
 
 ### 2.5 Parameter details 
 

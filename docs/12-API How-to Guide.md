@@ -307,10 +307,53 @@ The request accepts the following data in JSON format.
   - *Exclude* data when equipment/sensors are off or out-of-service.
   - *Exclude* data before or after equipment/sensors restart. There usually will be irregular fluctuations right after a piece of equipment or a sensor restarts so including these data for model training may negatively impact the model’s performance.
 
-- **How can I determine the `slidingWindow` for my model?**
-  - 
+
+- **How will `slidingWindow` be used and what to consider when determining the `slidingWindow` for my model?**
+  - `slidingWindow` contorls how many previous data points get used to determine if the next data point is an anomaly. For examle, if you set slidingWindow = k, then at least k+1 points should be accessible from the source file during **inference** to get valid detection results. Otherwise, you may get a "NotEnoughData" error. 
+  - Please keep two things in mind when choosing a `slidingWindow` value:
+    1. **The properties of your data.** When your data is periodic, you could set the length of 1 - 3 cycles as the slidingWindow. When your data is at a high frequency (i.e., small data granularity) like minute-level or second-level, you could set a relatively higher value of slidingWindow.
+    1. **The trade-off between training/inference time and performance gain**. A larger slidingWindow may cause longer training/inference time. There is no guarantee that larger slidingWindows will lead to accuracy gains. A small slidingWindow may cause the model difficult to converge to an optimal solution. For example, it is hard to detect anomalies when slidingWindow has only two points.
+
 
 - **What's the difference between Inner and Outer alignMode?**
+  - `Inner` mode returns results on timestamps where EVERY variable has a value (i.e. the intersection of all variables). `Outer` mode returns results on timestamps where ANY variable has a value (i.e. the union of all variables).
+  - Here is an example to explain different `alignModel` values:
+
+    *Variable-1*
+
+    |timestamp | value|
+    ----------| -----|
+    |2020-11-01| 1  
+    |2020-11-02| 2  
+    |2020-11-04| 4  
+    |2020-11-05| 5
+
+    *Variable-2*
+
+    timestamp | value  
+    --------- | -
+    2020-11-01| 1  
+    2020-11-02| 2  
+    2020-11-03| 3  
+    2020-11-04| 4
+
+    *`Inner` join (i.e., take the intersection of the two variables)*
+
+    timestamp | Variable-1 | Variable-2
+    ----------| - | -
+    2020-11-01| 1 | 1
+    2020-11-02| 2 | 2
+    2020-11-04| 4 | 4
+
+    *`Outer` join (i.e., take the union of the two variables)*
+
+    timestamp | Variable-1 | Variable-2
+    --------- | - | -
+    2020-11-01| 1 | 1
+    2020-11-02| 2 | 2
+    2020-11-03| `nan` | 3
+    2020-11-04| 4 | 4
+    2020-11-05| 5 | `nan`
 
 - **Are there any quota limits on the number of models I can create?**
   - Yes, for detailed numeberst please refer to the [Quotas and Limits](#/docs/08-Quota.md) page for the latest information. 
@@ -323,7 +366,7 @@ The request accepts the following data in JSON format.
 
 
 
-## 4. Check model status
+## 4. Check model training status
 
 ### 4.1 Goal for this step 
 
@@ -332,15 +375,25 @@ As the create model API is asynchronous, the model will not be ready to use imme
 - by model name, which will list information about the specific model.
 
 ### 4.2 REST API samples
-To check the status and details of a list of models, you can call `[GET] /multivariate/models[?skip][&maxpagesize][&sortBy][&orderBy][&status][&datasetNames][&topPerDataset]` and apply filters and/or sorting methods of your choice to this list. 
 
-For example, if you'd like to get all the **top 2** models that are currently in **CREATED** status and were trained based on 2 datasets: **prod_controlValve_5min_v1** and **prod_controlValve_10min_v1**. Moreover, you'd the like the output to be arranged by modelName in DESCENDING order and only get one model each time. Your request URL will look like: `https://{endpoint}/metricsadvisor/adel/multivariate/models?api-version=2022-07-10-preview&skip=0&maxpagesize=1&sortBy=modelName&orderBy=DESCENDING&status=CREATED&datasetNames=prod_controlValve_5min_v1,prod_controlValve_10min_v1&topPerDataset=2`
+#### 4.2.1 Get a list of models 
+
+To check the status and details of a list of models, you can call `[GET] /multivariate/models` and apply filters and/or sorting methods of your choice to this list. 
+
+For example, if you'd like to list:
+- the **top 2** models that are in **CREATED** status, and 
+- were trained with **prod_controlValve_5min_v1** or **prod_controlValve_10min_v1**, and 
+- arrange the output by **modelName** in **DESCENDING** order, and 
+- only return one model each time
+
+Your request URL will look like: 
+
+`https://{endpoint}/metricsadvisor/adel/multivariate/models?api-version=2022-07-10-preview&skip=0&maxpagesize=1&sortBy=modelName&orderBy=DESCENDING&status=CREATED&datasetNames=prod_controlValve_5min_v1,prod_controlValve_10min_v1&topPerDataset=2`
 
 Here is a sample of the **response** you would get: 
 
 ```json
 // Sample response
-
 {
   "responses": {
     "200": {
@@ -381,18 +434,21 @@ Here is a sample of the **response** you would get:
             "createdTime": "2022-07-16T08:21:24.409Z"
           }
         ],
-        "nextLink": "https://{endpoint}/metricsadvisor/adel/multivariate/models?api-version=2022-07-10-preview&skip=1&maxpagesize=1&sortBy=modelName&orderBy=DESCENDING&status=CREATED&datasetNames=prod_controlValve_5min_v1,prod_controlValve_10min_v1&topPerDataset=2"
+        "nextLink": "https://{endpoint}/metricsadvisor/adel/multivariate/models?api-version=2022-07-10-preview&skip=1&maxpagesize=1&sortBy=modelName&orderBy=DESCENDING&status=CREATED&datasetNames=prod_controlValve_5min_v1,prod_controlValve_10min_v1&topPerDataset=2" // use this link to get more results
       }
     }
   }
 }
 ```
 
-To get the status and details with a model name, you can use `[GET] /https://{endpoint}/multivariate/models/{modelName}`.
+#### 4.2.2 Get a model by model name 
 
-Here is a sample **response**: 
+To get the status and details of a specific model with its model name, you can use `[GET] /https://{endpoint}/multivariate/models/{modelName}`.
+
+Here is a sample **response** if you try to get the details for a `COMPLETED` model: 
 
 ```json
+// Sample response
 {
   "responses": {
     "200": {
@@ -416,8 +472,8 @@ Here is a sample **response**:
           "fillNAMethod": "Customized",
           "paddingValue": 0
         },
-        "diagnosticsInfo": {
-          "modelState": {
+        "diagnosticsInfo": { // Summarizes information about the model and each variable being used.
+          "modelState": { // Summarizes information about a model training process.
             "epochIds": [
               10,
               20,
@@ -467,7 +523,7 @@ Here is a sample **response**:
               0.3327946662902832
             ]
           },
-          "variableStates": [
+          "variableStates": [ //Summarizes information about the variables being used and the anomaly detection results for each timestamp.
             {
               "variable": "temperature_delta",
               "filledNARatio": 0,
@@ -484,7 +540,7 @@ Here is a sample **response**:
             },
             {
               "variable": "travel_minimumValue",
-              "filledNARatio": 0.9573031135531136,
+              "filledNARatio": 0.9573031135531136, // filledNARatio > 0 indicates that there are missing values for this varaible at the tiem of training
               "effectiveCount": 25089,
               "firstTimestamp": "2022-03-17T08:00:00.000Z",
               "lastTimestamp": "2022-06-15T15:05:00.000Z"
@@ -557,6 +613,14 @@ Here is a sample **response**:
   - Type: string
   - Default value: -1 (the full list of models will be returned for all the dataset name(s) in your filter)
 
+**Response parameters**
+
+Besides what you've input when creating the model, here is a list of additional parameters you would see in the API response: 
+
+
+| **Parameters** | **Description** | **Type** | **Pattern** |
+| :----------- | :----------- | :----------- | :----------- |
+| epochIds |  How many epochs the model has been trained out of a total of 100 epochs. | int32 | |
 
 ### 4.4 FAQ and best practices 
 
@@ -564,7 +628,6 @@ Here is a sample **response**:
 ### 4.5 Related APIs you may need
 - `[PUT] /multivariate/models/{modelName}`: **Create** and train a model. 
 - `[DELETE] /multivariate/models/{modelName}`: **Delete** a model in a Metrics Advisor resource.
-
 
 
 

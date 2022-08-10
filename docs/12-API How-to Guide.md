@@ -12,11 +12,12 @@ In the following sections you will :
   1. [(Prerequisites) Create a Metrics Advisor resource in the Azure portal.](#1-prerequisites-create-a-metrics-advisor-resource-in-the-azure-portal)
   1. [Prepare data and create a dataset.](#2-prepare-data-and-create-a-dataset)
   1. [Train a Metrics Advisor for Equipment model.](#3-train-a-model)
-  1. [Evaluate the model performance and download the evaluation results.](#4-evaluate-model-performance)
-  1. [Post-process evaluation results and determine the desired alert settings.](#5-post-process-evaluation-results-and-determine-the-desired-alert-settings)
-  1. [Configure and start an inference schedule.](#6-configure-and-start-an-inference-schedule)
-  1. [Get streaming inference results and diagnose alerts.](#7-get-streaming-inference-results-and-diagnose-alerts)
-  1. [Trigger a replay on an existing inference schedule to backfill/refresh detection results for a historical time period.](#8-trigger-a-replay-on-an-existing-inference-schedule)
+  1. [Check model status training status.](#4-check-model-status)
+  1. [Evaluate the model performance and download the evaluation results.](#5-evaluate-model-performance)
+  1. [Post-process evaluation results and determine the desired alert settings.](#6-post-process-evaluation-results-and-determine-the-desired-alert-settings)
+  1. [Configure and start an inference schedule.](#7-configure-and-start-an-inference-schedule)
+  1. [Get streaming inference results and diagnose alerts.](#8-get-streaming-inference-results-and-diagnose-alerts)
+  1. [Trigger a replay on an existing inference schedule to backfill/refresh detection results for a historical time period.](#9-trigger-a-replay-on-an-existing-inference-schedule)
 
 
 
@@ -100,14 +101,14 @@ You can call `[PUT] https://{endpoint}/datasets/{datasetName}` and enter your in
 
 ```json
 {
-    "parameters": {
-      "endpoint": "{endpoint}", // Your Metrics Advisor resource endpoint URL  
-      "apiVersion": "2022-07-10-preview",
-      "Ocp-Apim-Subscription-Key": "{API key}", // Your Metrics Advisor resource key
-      "Content-Type": "application/json",
-      "datasetName": "prod_controlValve_5min_v1", // Unique and case-sensitive. Valid characters are: A-Z, a-z, 0-9, _(underscore), and -(hyphen).
+  "parameters": {
+    "endpoint": "{endpoint}", // Your Metrics Advisor resource endpoint URL  
+    "apiVersion": "2022-07-10-preview",
+    "Ocp-Apim-Subscription-Key": "{API key}", // Your Metrics Advisor resource key
+    "Content-Type": "application/json",
+    "datasetName": "prod_controlValve_5min_v1", // Unique and case-sensitive. Valid characters are: A-Z, a-z, 0-9, _(underscore), and -(hyphen).
     "body": {
-      "datasetDescription": "Prod data for control valves; aligned to 5min granularity.",
+      "datasetDescription": "{Optional field to add more details}",
       "dataSourceInfo": {
         "dataSourceType": "SqlServer",
         "authenticationType": "ManagedIdentity",
@@ -132,39 +133,14 @@ You can call `[PUT] https://{endpoint}/datasets/{datasetName}` and enter your in
 
 You will get either a 201 or 200 reponse if the request was successful.
 
-### 2.3 FAQ and best practices 
-- **How do I find my SQL server name?**
-  - In cases where you are not able to get an answer from your data engineering team, you can follow the below steps to locate your SQL server with a known database name. 
-  ![Get_SQLServer_Name](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/Get_SQLServer_Name.png "Get_SQLServer_Name")
-  - If you do not have an Azure SQL database yet, [create a single database](https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-portal).
-- **What are the key things I should keep in mind when preparing my data?**
-  - Make sure that each variable has _at most_ one data point within each interval.
-  - *Exclude* data when equipment/sensors are off or out-of-service.
-  - *Exclude* data before or after equipment/sensors restart. There usually will be irregular fluctuations right after a piece of equipment or a sensor restarts so including these data for model training may negatively impact the model’s performance.
-  - Only *numerical* data is acceptable for Multivariate Anomaly Detector, but if there's categorical data in your dataset, we recommend you transform them into numerical values.  
-    - For instance, the “on” and “off” of equipment status could be transformed into “0” and “1”, which could help the model learn better about the correlations between different signals.
-- **How to align my data to a single data granularity?** 
-  - Timestamps should be properly aligned for all your variables through aggregation or re-indexing. 
-    - For example, your sensors record readings every minute but may not always at the exact same second, then you should align them to the same minute (see below). 
-    
-    ![Align data](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/Align_data.png "Align data to the granularity you specified.")
-  - In cases where your sensors’ readings come at different frequencies, some users prefer to convert time series data with different frequencies into the same frequency. 
-    - For example, if some of your sensors record data every 5 minutes and others record every 10 minutes, then you can aggregate all data to 10-min intervals by taking the sum/mean/min/max etc. over a 10-min span for sensors that originally have 5-min frequency. Alternatively, Metrics Advisor for Equipment will also help you fill in the missing data points when joining variables with different granularity, you could specify the fill-in method including linear, previous, subsequent, zero, or a fixed number at the [Train a model](#3-train-a-model) step.
 
+### 2.3 Parameter details 
 
-- **What's the difference bewteen long and wide tables?**
-   - `LongTable`: A long-form data table has a single column that stores all the variables. Data stored in this format will have repeated values in the timestamps column.
-   - `WideTable`: A wide-form data table spreads variables across several columns. Data stored in this format will NOT have repeated values in the timestamps column.
+**Request headers**
 
-  ![LongTable vs. WideTable](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/Long_Wide_Tables.png "Compare long-form data table and wide-form data table.")
+`Ocp-Apim-Subscription-Key`: Your Metrics Advisor resource key. This subscription key provides you access to this API.
 
-
-### 2.4 Related APIs you may need
-- `[GET] /datasets/{datasetName}`: **Get** dataset info including data source type, data schema, data granularity, etc.
-- `[GET] /datasets[?skip][&maxpagesize][&sortBy][&orderBy]`: **List** models in a Metrics Advisor resource based on 
-- `[DELETE] /datasets/{datasetName}`: **Delete** a dataset in a Metrics Advisor resource. _This action doesn't delete the data in the source system._
-
-### 2.5 Parameter details 
+`Content-Type`: Media type of the body sent to the API.
 
 **URI parameter**
 
@@ -180,9 +156,376 @@ You will get either a 201 or 200 reponse if the request was successful.
 
 `apiVersion`: The current API version is **2022-07-10-preview**.
 
+
+**Request body parameters**
+
+The request accepts the following data in JSON format.
+
+| **Parameters** | **Description** | **Type** | **Pattern** |
+| :----------- | :----------- | :----------- | :----------- |
+| datasetDescription | _Optional._ Provide more information about this dataset. | string | Character length: [0, 1024]
+| dataGranularityNumber | _Required._ (Together with dataGranularityUnit) The frequency interval at which new records are added to your data.  | int32 | |
+| dataGranularityUnit | _Required._ (Together with dataGranularityNumber) The unit of your data frequency interval. | string | Valid values: Minutes, Hours, Days, Weeks, Months, Years. |
+| **dataSourceInfo** | 
+| dataSourceType | _Required._ Type of your data scource. | string | Valid value: `SqlServer` |
+| authenticationType | _Required._ Method to authenticate Metrics Advisor for Equipment to access your data source. | string | Valid value: `ManagedIdentity` | 
+| serverName | _Required if dataSourceType = SqlServer._ Name of a SQL Server. | string | Case-sensitive: No|
+| databaseName | _Required if dataSourceType = SqlServer._ Name of a SQL Database. | string | Case-sensitive: Yes|
+| tableName | _Required if dataSourceType = SqlServer._ Name of a SQL table or SQL view. | string | Case-sensitive: Yes| 
+|**dataSchema**| | 
+| dataSchemaType | _Required._ Indicates how your data is formatted. <ul><li>`LongTable`: A long-form data table has a single column that stores all the variables</li><li>`WideTable`: A wide-form data table spreads variables across several columns</li></ul> | string | Valid value: "LongTable" | 
+| timestampColumnName | _Required._ Header of the column that contains datetime values | string | Case-sensitive: Yes|
+| variableColumnName | _Required if dataSchemaType = LongTable._ Header of the column that contains the the names of your input variables | string | Case-sensitive: Yes|
+| valueColumnName | _Required if dataSchemaType = LongTable._ Header of the column that contains numeric values | string | Case-sensitive: Yes|
+
+
+### 2.4 FAQ and best practices 
+- **How do I find my SQL server name?**
+  - In cases where you are not able to get an answer from your data engineering team, you can follow the below steps to locate your SQL server with a known database name. 
+  ![Get_SQLServer_Name](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/Get_SQLServer_Name.png "Get_SQLServer_Name")
+  - If you do not have an Azure SQL database yet, [create a single database](https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-portal).
+
+- **What are the key things I should keep in mind when preparing my data?**
+  - Make sure that each variable has _at most_ one data point within each interval.
+  - Only *numerical* data is acceptable for Multivariate Anomaly Detector, but if there's categorical data in your dataset, we recommend you transform them into numerical values.  
+    - For instance, the “on” and “off” of equipment status could be transformed into “0” and “1”, which could help the model learn better about the correlations between different signals.
+  - (Optional) Some of our users have developed more advanced ways to generate features to achieve the best possible outcome. These advanced methods are highly dependent on your business context and may require rounds of experimentation to identify the optimal feature set. To learn more, check out this [best pracice blog](#https://techcommunity.microsoft.com/t5/ai-cognitive-services-blog/4-sets-of-best-practices-to-use-multivariate-anomaly-detector/ba-p/3490848). 
+
+- **How to align my data to a single data granularity?** 
+  - Timestamps should be properly aligned for all your variables through aggregation or re-indexing. 
+    - For example, your sensors record readings every minute but may not always at the exact same second, then you should align them to the same minute (see below). 
+    
+    ![Align data](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/Align_data.png "Align data to the granularity you specified.")
+
+  - In cases where your sensors’ readings come at different frequencies, some users prefer to convert time series data with different frequencies into the same frequency. 
+    - For example, if some of your sensors record data every 5 minutes and others record every 10 minutes, then you can aggregate all data to 10-min intervals by taking the sum/mean/min/max etc. over a 10-min span for sensors that originally have 5-min frequency. 
+    - Alternatively, Metrics Advisor for Equipment will also help you fill in the missing data points when joining variables with different granularity, you could specify the fill-in method including linear, previous, subsequent, zero, or a fixed number at the [Train a model](#3-train-a-model) step.
+
+
+- **What's the difference bewteen long and wide tables?**
+   - `LongTable`: A long-form data table has a single column that stores all the variables. Data stored in this format will have repeated values in the timestamps column.
+   - `WideTable`: A wide-form data table spreads variables across several columns. Data stored in this format will NOT have repeated values in the timestamps column.
+
+  ![LongTable vs. WideTable](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/Long_Wide_Tables.png "Compare long-form data table and wide-form data table.")
+
+
+### 2.5 Related APIs you may need
+- `[GET] /datasets/{datasetName}`: **Get** dataset info including data source type, data schema, data granularity, etc.
+- `[GET] /datasets[?skip][&maxpagesize][&sortBy][&orderBy]`: **List** models in a Metrics Advisor resource based on 
+- `[DELETE] /datasets/{datasetName}`: **Delete** a dataset in a Metrics Advisor resource. _This action doesn't delete the data in the source system._
+
+
+
+## 3. Train a model
+
+### 3.1 Goal for this step 
+
+Train a Metrics Advisor for Equipment model with the training dataset you've added. 
+* For training data size, the maximum number of timestamps is 1000000, and a recommended minimum number is 15000 timestamps.
+
+### 3.2 REST API samples
+For example, if you'd like to train a model with the dataset your just added in step two above, you can call `[PUT] https://{endpoint}/multivariate/models/{modelName}` to create the model and start the model training process.
+
+**Sample Request**
+
+```json
+{
+  "parameters": {
+    "endpoint": "{endpoint}", // Your Metrics Advisor resource endpoint URL  
+    "apiVersion": "2022-07-10-preview",
+    "Ocp-Apim-Subscription-Key": "{API key}", // Your Metrics Advisor resource key
+    "Content-Type": "application/json",
+    "modelName": "controlValve_5min_v1_model", // Unique and case-sensitive. Valid characters are: A-Z, a-z, 0-9, _(underscore), and -(hyphen).
+    "body": {
+      "modelDescription": "{Optional field to add more details}",
+      "datasetName": "prod_controlValve_5min_v1",
+      "trainingTimeRangeList": [
+        {
+          "startTime": "2022-03-17T08:00:00.000Z",
+          "endTime": "2022-05-01T08:00:00.000Z"
+        },
+        {
+          "startTime": "2022-05-02T08:00:00.000Z",
+          "endTime": "2022-06-16T08:00:00.000Z"
+        }
+      ], // You can exclude certain time ranges for training here
+      "slidingWindow": 300,
+      "alignPolicy": {
+        "alignMode": "Outer",
+        "fillNAMethod": "Customized",
+        "paddingValue": 0
+      }
+    }
+  }
+}
+```
+
+**Response**
+
+You will get either a 201 or 200 reponse if the request was successful.
+
+
+### 3.3 Parameter details 
+
+**Request headers**
+
+`Ocp-Apim-Subscription-Key`: Your Metrics Advisor resource key. This subscription key provides you access to this API.
+
+`Content-Type`: Media type of the body sent to the API.
+
+**URI parameter**
+
+`modelName`: Unique identifier of a dataset. _Cannot be changed once a dataset has been created._
+  - Type: string
+  - Case-sensitive: Yes
+  - Character length: [1, 200]
+  - Valid characters: A-Z, a-z, 0-9, _(underscore), and -(hyphen). Name starts with an _(underscore) or -(hyphen) will not be accepted.
+
+**Query parameter**
+
+**Required**
+
+`apiVersion`: The current API version is **2022-07-10-preview**.
+
+**Request body parameters**
+
+The request accepts the following data in JSON format.
+
+| **Parameters** | **Description** | **Type** | **Pattern** |
+| :----------- | :----------- | :----------- | :----------- |
+| modelDescription | _Optional._ Provide more information about this model. | string | Character length: [0, 1024]|
+| datasetName | _Required._ Data to be used for model training. | string | Case-sensitive: Yes |
+| trainingTimeRangeList | _Required._ A list of time ranges used for model training. Both the start and end timestamps are inclusive. | string | |
+| slidingWindow | _Optional._ Controls how many previous data points get used to determine if the next data point is an anomaly. | int32 | <ul><li>Value range: [28, 2880]</li><li>Default value: 300</li></ul> |
+| alignMode | _Optional._ How to align variables to the same data frequency interval before further processing. Inner mode returns results on timestamps where EVERY variable has a value. Outer mode returns results on timestamps where ANY variable has a value. | string | Default value: Outer |
+| fillNAMethod | _Optional._ How to populate any missing values in the dataset. <ul><li>`Linear`: Fill `nan` values by linear interpolation.</li><li>`Previous`: Fill with the last valid value. E.g., [1, 2, nan, 3, nan, 4] -> [1, 2, 2, 3, 3, 4]</li><li>`Subsequent`: Fill with the next valid value. E.g., [1, 2, nan, 3, nan, 4] -> [1, 2, 3, 3, 4, 4]</li><li>`Customized`: Fill nan values with a specified valid value specified in `paddingValue` </li></ul>| string | Default value: Linear|
+| paddingValue | _Optional._ Specify the value to be used for Customized fillNAMethod. **This is required if you chose Customized fillNAMethod** but optional for other methods. | float32 | |
+
+
+### 3.4 FAQ and best practices 
+- **What types of timestamps / time ranges should I exclude for model training?**
+  - *Exclude* data when equipment/sensors are off or out-of-service.
+  - *Exclude* data before or after equipment/sensors restart. There usually will be irregular fluctuations right after a piece of equipment or a sensor restarts so including these data for model training may negatively impact the model’s performance.
+
+- **How can I determine the `slidingWindow` for my model?**
+  - 
+
+- **What's the difference between Inner and Outer alignMode?**
+
+- **Are there any quota limits on the number of models I can create?**
+  - Yes, for detailed numeberst please refer to the [Quotas and Limits](#/docs/08-Quota.md) page for the latest information. 
+
+
+### 3.5 Related APIs you may need
+- `[GET] /multivariate/models/{modelName}`: **Get** model info including training dataset, training time range(s), variables being used, training job status, etc.
+- `[GET] /multivariate/models[?skip][&maxpagesize][&sortBy][&orderBy][&status][&datasetNames][&topPerDataset]`: **List** models in a Metrics Advisor resource. 
+- `[DELETE] /multivariate/models/{modelName}`: **Delete** a model in a Metrics Advisor resource.
+
+
+
+## 4. Check model status
+
+### 4.1 Goal for this step 
+
+As the create model API is asynchronous, the model will not be ready to use immediately after you called create model API. Rather, you can query the status of models in two ways: 
+- by API key, which will list all the models, or 
+- by model name, which will list information about the specific model.
+
+### 4.2 REST API samples
+To check the status and details of a list of models, you can call `[GET] /multivariate/models[?skip][&maxpagesize][&sortBy][&orderBy][&status][&datasetNames][&topPerDataset]` and apply filters and/or sorting methods of your choice to this list. 
+
+For example, if you'd like to get all the **top 2** models that are currently in **CREATED** status and were trained based on 2 datasets: **prod_controlValve_5min_v1** and **prod_controlValve_10min_v1**. Moreover, you'd the like the output to be arranged by modelName in DESCENDING order and only get one model each time. Your request URL will look like: `https://{endpoint}/metricsadvisor/adel/multivariate/models?api-version=2022-07-10-preview&skip=0&maxpagesize=1&sortBy=modelName&orderBy=DESCENDING&status=CREATED&datasetNames=prod_controlValve_5min_v1,prod_controlValve_10min_v1&topPerDataset=2`
+
+Here is a sample of the **response** you would get: 
+
+```json
+// Sample response
+
+{
+  "responses": {
+    "200": {
+      "body": {
+        "value": [
+          {
+            "modelName": "controlValve_5min_v1_model",
+            "modelDescription": "Control valve model trained with 3-month data (excl. planned maintenance in May).",
+            "datasetName": "prod_controlValve_5min_v1",
+            "trainingTimeRangeList": [
+              {
+                "startTime": "2022-03-17T08:00:00.000Z",
+                "endTime": "2022-05-01T08:00:00.000Z"
+              },
+              {
+                "startTime": "2022-05-02T08:00:00.000Z",
+                "endTime": "2022-06-16T08:00:00.000Z"
+              }
+            ],
+            "slidingWindow": 300,
+            "alignPolicy": {
+              "alignMode": "Outer",
+              "fillNAMethod": "Customized",
+              "paddingValue": 0
+            },
+            "diagnosticsInfo": {
+              "modelState": {
+                "epochIds": [],
+                "trainLosses": [],
+                "validationLosses": [],
+                "latenciesInSeconds": []
+              },
+              "variableStates": []
+            },
+            "status": "CREATED",
+            "statusUpdatedTime": "2022-07-16T08:21:24.409Z",
+            "errors": [],
+            "createdTime": "2022-07-16T08:21:24.409Z"
+          }
+        ],
+        "nextLink": "https://{endpoint}/metricsadvisor/adel/multivariate/models?api-version=2022-07-10-preview&skip=1&maxpagesize=1&sortBy=modelName&orderBy=DESCENDING&status=CREATED&datasetNames=prod_controlValve_5min_v1,prod_controlValve_10min_v1&topPerDataset=2"
+      }
+    }
+  }
+}
+```
+
+To get the status and details with a model name, you can use `[GET] /https://{endpoint}/multivariate/models/{modelName}`.
+
+Here is a sample **response**: 
+
+```json
+{
+  "responses": {
+    "200": {
+      "body": {
+        "modelName": "controlValve_5min_v1_model",
+        "modelDescription": "Control valve model trained with 3-month data (excl. planned maintenance in May).",
+        "datasetName": "prod_controlValve_5min_v1",
+        "trainingTimeRangeList": [
+          {
+            "startTime": "2022-03-17T08:00:00.000Z",
+            "endTime": "2022-05-01T08:00:00.000Z"
+          },
+          {
+            "startTime": "2022-05-02T08:00:00.000Z",
+            "endTime": "2022-06-16T08:00:00.000Z"
+          }
+        ],
+        "slidingWindow": 300,
+        "alignPolicy": {
+          "alignMode": "Outer",
+          "fillNAMethod": "Customized",
+          "paddingValue": 0
+        },
+        "diagnosticsInfo": {
+          "modelState": {
+            "epochIds": [
+              10,
+              20,
+              30,
+              40,
+              50,
+              60,
+              70,
+              80,
+              90,
+              100
+            ],
+            "trainLosses": [
+              0.6291328072547913,
+              0.1671326905488968,
+              0.12354248017072678,
+              0.1025966405868533,
+              0.0958492755889896,
+              0.09069952368736267,
+              0.08686016499996185,
+              0.0860302299260931,
+              0.0828735455870684,
+              0.08235538005828857
+            ],
+            "validationLosses": [
+              1.9232804775238037,
+              1.0645641088485718,
+              0.6031560301780701,
+              0.5302737951278687,
+              0.4698025286197664,
+              0.4395163357257843,
+              0.4182931482799006,
+              0.4057914316654053,
+              0.4056498706340729,
+              0.3849248886108984
+            ],
+            "latenciesInSeconds": [
+              0.3398594856262207,
+              0.3659665584564209,
+              0.37360644340515137,
+              0.3513407707214355,
+              0.3370304107666056,
+              0.31876277923583984,
+              0.3283309936523475,
+              0.3503587245941162,
+              0.30800247192382812,
+              0.3327946662902832
+            ]
+          },
+          "variableStates": [
+            {
+              "variable": "temperature_delta",
+              "filledNARatio": 0,
+              "effectiveCount": 26208,
+              "firstTimestamp": "2022-03-17T08:00:00.000Z",
+              "lastTimestamp": "2022-06-16T08:00:00.000Z"
+            },
+            {
+              "variable": "pressure_delta",
+              "filledNARatio": 0,
+              "effectiveCount": 26208,
+              "firstTimestamp": "2022-03-17T08:00:00.000Z",
+              "lastTimestamp": "2022-06-16T08:00:00.000Z"
+            },
+            {
+              "variable": "travel_minimumValue",
+              "filledNARatio": 0.9573031135531136,
+              "effectiveCount": 25089,
+              "firstTimestamp": "2022-03-17T08:00:00.000Z",
+              "lastTimestamp": "2022-06-15T15:05:00.000Z"
+            }
+          ]
+        },
+        "status": "COMPLETED",
+        "statusUpdatedTime": "2022-07-16T08:59:56.592Z",
+        "errors": [],
+        "createdTime": "2022-07-16T08:21:24.409Z"
+      }
+    }
+  }
+}
+```
+
+### 4.3 Parameter details 
+
+**Request headers**
+
+`Ocp-Apim-Subscription-Key`: Your Metrics Advisor resource key. This subscription key provides you access to this API.
+
+`Content-Type`: Media type of the body sent to the API.
+
+**URI parameter**
+
+`modelName`: Unique identifier of a dataset. _Cannot be changed once a dataset has been created._
+  - Type: string
+  - Case-sensitive: Yes
+  - Character length: [1, 200]
+  - Valid characters: A-Z, a-z, 0-9, _(underscore), and -(hyphen). Name starts with an _(underscore) or -(hyphen) will not be accepted.
+
+**Query parameter**
+
+**Required**
+
+`apiVersion`: The current API version is **2022-07-10-preview**.
+
 **Optional**
 >**_NOTE:_**
-> These optional parameters are only applicable when you try to get a list of datasets.
+> These optional parameters are only applicable when you try to get a list of models.
 
 `skip`: The number of records to skip from the list of records based on the sorting field and ordering method specified. 
   - Type: int32
@@ -199,45 +542,42 @@ You will get either a 201 or 200 reponse if the request was successful.
   - Default value (i.e., if not otherwise specified in the URL): `createdTime`
 
 `orderBy`: Determines whether the records will be returned in descending or ascending order.
- - Type: string
- - Default value (i.e., if not otherwise specified in the URL): DESCENDING
+  - Type: string
+  - Default value (i.e., if not otherwise specified in the URL): DESCENDING
 
-**Request body parameters**
+`status`: Filter model evaluations by one of the evaluation statuses: CREATED, RUNNING, COMPLETED, or FAILED.
+  - Type: string
+  - Default value: all statuses will be returned unless otherwise specified in the URL.
 
-The request accepts the following data in JSON format.
+`datasetNames`: Filter models by a list of training dataset name(s). For each dataset, by default the list of models are ranked by descending model created time (UTC).
+  - Type: string
+  - Pattern: comma-separated, no space allowed
 
-| **Required for** |**Parameters** | **Description** | **Type** | **Pattern** |
-| :----------- | :----------- | :----------- | :----------- | :----------- |
-| Optional | datasetDescription | Provide more information about this dataset. | string | Character length: [0, 1024]
-| PUT | dataGranularityNumber | (Together with dataGranularityUnit) The frequency interval at which new records are added to your data.  | int32 | |
-| PUT | dataGranularityUnit | (Together with dataGranularityNumber) The unit of your data frequency interval. | string | Valid values: Minutes, Hours, Days, Weeks, Months, Years. |
-| **dataSourceInfo** | 
-| PUT | dataSourceType | Type of your data scource. | string | Valid value: "SqlServer" |
-| PUT | authenticationType | Method to authenticate Metrics Advisor for Equipment to access your data source. | string | Valid value: "ManagedIdentity" | 
-| PUT (if dataSourceType = SqlServer ) | serverName | Name of a SQL Server. | string | Case-sensitive: No|
-| PUT (if dataSourceType = SqlServer ) | databaseName | Name of a SQL Database. | string | Case-sensitive: Yes|
-| PUT (if dataSourceType = SqlServer ) | tableName | Name of a SQL table or SQL view. | string | Case-sensitive: Yes| 
-|**dataSchema**| | 
-| PUT | dataSchemaType | Indicates how your data is formatted. <ul><li>`LongTable`: A long-form data table has a single column that stores all the variables</li><li>`WideTable`: A wide-form data table spreads variables across several columns</li></ul> | string | Valid value: "LongTable" | 
-| PUT  | timestampColumnName | Header of the column that contains datetime values | string | Case-sensitive: Yes|
-| PUT | variableColumnName | Header of the column that contains the the names of your input variables | string | Case-sensitive: Yes|
-| PUT (if dataSchemaType = LongTable ) | valueColumnName | Header of the column that contains numeric values | string | Case-sensitive: Yes|
+`topPerDataset`: The total number of models to be returned per dataset, ordered by created time descending.
+  - Type: string
+  - Default value: -1 (the full list of models will be returned for all the dataset name(s) in your filter)
 
 
-
-## 3. Train a model
-
-
-## 4. Evaluate model performance
+### 4.4 FAQ and best practices 
 
 
-## 5. Post-process evaluation results and determine the desired alert settings
+### 4.5 Related APIs you may need
+- `[PUT] /multivariate/models/{modelName}`: **Create** and train a model. 
+- `[DELETE] /multivariate/models/{modelName}`: **Delete** a model in a Metrics Advisor resource.
 
 
-## 6. Configure and start an inference schedule
 
 
-## 7. Get streaming inference results and diagnose alerts
+## 5. Evaluate model performance
 
 
-## 8. Trigger a replay on an existing inference schedule
+## 6. Post-process evaluation results and determine the desired alert settings
+
+
+## 7. Configure and start an inference schedule
+
+
+## 8. Get streaming inference results and diagnose alerts
+
+
+## 9. Trigger a replay on an existing inference schedule

@@ -106,7 +106,7 @@ You can call `[PUT] https://{endpoint}/datasets/{datasetName}` and enter your in
     "apiVersion": "2022-07-10-preview",
     "Ocp-Apim-Subscription-Key": "{API key}", // Your Metrics Advisor resource key
     "Content-Type": "application/json",
-    "datasetName": "prod_controlValve_5min_v1", // Unique and case-sensitive. Valid characters are: A-Z, a-z, 0-9, _(underscore), and -(hyphen).
+    "datasetName": "prod_controlValve_5min_v1", // Unique and case-sensitive
     "body": {
       "datasetDescription": "{Optional field to add more details}",
       "dataSourceInfo": {
@@ -163,20 +163,20 @@ The request accepts the following data in JSON format.
 
 | **Parameters** | **Description** | **Type** | **Pattern** |
 | :----------- | :----------- | :----------- | :----------- |
-| datasetDescription | _Optional._ Provide more information about this dataset. | string | Character length: [0, 1024]
-| dataGranularityNumber | _Required._ (Together with dataGranularityUnit) The frequency interval at which new records are added to your data.  | int32 | |
-| dataGranularityUnit | _Required._ (Together with dataGranularityNumber) The unit of your data frequency interval. | string | Valid values: Minutes, Hours, Days, Weeks, Months, Years. |
+| `datasetDescription` | _Optional._ Provide more information about this dataset. | string | Character length: [0, 1024]
+| `dataGranularityNumber` | _Required._ (Together with dataGranularityUnit) The frequency interval at which new records are added to your data.  | int32 | |
+| `dataGranularityUnit` | _Required._ (Together with dataGranularityNumber) The unit of your data frequency interval. | string | Valid values: Minutes, Hours, Days, Weeks, Months, Years. |
 | **dataSourceInfo** | 
-| dataSourceType | _Required._ Type of your data scource. | string | Valid value: `SqlServer` |
-| authenticationType | _Required._ Method to authenticate Metrics Advisor for Equipment to access your data source. | string | Valid value: `ManagedIdentity` | 
-| serverName | _Required if dataSourceType = SqlServer._ Name of a SQL Server. | string | Case-sensitive: No|
-| databaseName | _Required if dataSourceType = SqlServer._ Name of a SQL Database. | string | Case-sensitive: Yes|
-| tableName | _Required if dataSourceType = SqlServer._ Name of a SQL table or SQL view. | string | Case-sensitive: Yes| 
+| `dataSourceType` | _Required._ Type of your data scource. | string | Valid value: `SqlServer` |
+| `authenticationType` | _Required._ Method to authenticate Metrics Advisor for Equipment to access your data source. | string | Valid value: `ManagedIdentity` | 
+| `serverName` | _Required if dataSourceType = SqlServer._ Name of a SQL Server. | string | Case-sensitive: No|
+| `databaseName` | _Required if dataSourceType = SqlServer._ Name of a SQL Database. | string | Case-sensitive: Yes|
+| `tableName` | _Required if dataSourceType = SqlServer._ Name of a SQL table or SQL view. | string | Case-sensitive: Yes| 
 |**dataSchema**| | 
-| dataSchemaType | _Required._ Indicates how your data is formatted. <ul><li>`LongTable`: A long-form data table has a single column that stores all the variables</li><li>`WideTable`: A wide-form data table spreads variables across several columns</li></ul> | string | Valid value: "LongTable" | 
-| timestampColumnName | _Required._ Header of the column that contains datetime values | string | Case-sensitive: Yes|
-| variableColumnName | _Required if dataSchemaType = LongTable._ Header of the column that contains the the names of your input variables | string | Case-sensitive: Yes|
-| valueColumnName | _Required if dataSchemaType = LongTable._ Header of the column that contains numeric values | string | Case-sensitive: Yes|
+| `dataSchemaType` | _Required._ Indicates how your data is formatted. <ul><li>`LongTable`: A long-form data table has a single column that stores all the variables</li><li>`WideTable`: A wide-form data table spreads variables across several columns</li></ul> | string | Valid value: "LongTable" | 
+| `timestampColumnName` | _Required._ Header of the column that contains datetime values | string | Case-sensitive: Yes|
+| `variableColumnName` | _Required if dataSchemaType = LongTable._ Header of the column that contains the the names of your input variables | string | Case-sensitive: Yes|
+| `valueColumnName` | _Required if dataSchemaType = LongTable._ Header of the column that contains numeric values | string | Case-sensitive: Yes|
 
 
 ### 2.4 FAQ and best practices 
@@ -235,7 +235,7 @@ For example, if you'd like to train a model with the dataset your just added in 
     "apiVersion": "2022-07-10-preview",
     "Ocp-Apim-Subscription-Key": "{API key}", // Your Metrics Advisor resource key
     "Content-Type": "application/json",
-    "modelName": "controlValve_5min_v1_model", // Unique and case-sensitive. Valid characters are: A-Z, a-z, 0-9, _(underscore), and -(hyphen).
+    "modelName": "controlValve_5min_v1_model", // Unique and case-sensitive
     "body": {
       "modelDescription": "{Optional field to add more details}",
       "datasetName": "prod_controlValve_5min_v1",
@@ -293,13 +293,13 @@ The request accepts the following data in JSON format.
 
 | **Parameters** | **Description** | **Type** | **Pattern** |
 | :----------- | :----------- | :----------- | :----------- |
-| modelDescription | _Optional._ Provide more information about this model. | string | Character length: [0, 1024]|
-| datasetName | _Required._ Data to be used for model training. | string | Case-sensitive: Yes |
-| trainingTimeRangeList | _Required._ A list of time ranges used for model training. Both the start and end timestamps are inclusive. | string | |
-| slidingWindow | _Optional._ Controls how many previous data points get used to determine if the next data point is an anomaly. | int32 | <ul><li>Value range: [28, 2880]</li><li>Default value: 300</li></ul> |
-| alignMode | _Optional._ How to align variables to the same data frequency interval before further processing. Inner mode returns results on timestamps where EVERY variable has a value. Outer mode returns results on timestamps where ANY variable has a value. | string | Default value: Outer |
-| fillNAMethod | _Optional._ How to populate any missing values in the dataset. <ul><li>`Linear`: Fill `nan` values by linear interpolation.</li><li>`Previous`: Fill with the last valid value. E.g., [1, 2, nan, 3, nan, 4] -> [1, 2, 2, 3, 3, 4]</li><li>`Subsequent`: Fill with the next valid value. E.g., [1, 2, nan, 3, nan, 4] -> [1, 2, 3, 3, 4, 4]</li><li>`Customized`: Fill nan values with a specified valid value specified in `paddingValue` </li></ul>| string | Default value: Linear|
-| paddingValue | _Optional._ Specify the value to be used for Customized fillNAMethod. **This is required if you chose Customized fillNAMethod** but optional for other methods. | float32 | |
+| `modelDescription` | _Optional._ Provide more information about this model. | string | Character length: [0, 1024]|
+| `datasetName` | _Required._ Data to be used for model training. | string | Case-sensitive: Yes |
+| `trainingTimeRangeList` | _Required._ A list of time ranges used for model training. Both the start and end timestamps are inclusive. | string | |
+| `slidingWindow` | _Optional._ Controls how many previous data points get used to determine if the next data point is an anomaly. | int32 | <ul><li>Value range: [28, 2880]</li><li>Default value: 300</li></ul> |
+| `alignMode` | _Optional._ How to align variables to the same data frequency interval before further processing. Inner mode returns results on timestamps where EVERY variable has a value. Outer mode returns results on timestamps where ANY variable has a value. | string | Default value: Outer |
+| `fillNAMethod` | _Optional._ How to populate any missing values in the dataset. <ul><li>`Linear`: Fill `nan` values by linear interpolation.</li><li>`Previous`: Fill with the last valid value. E.g., [1, 2, nan, 3, nan, 4] -> [1, 2, 2, 3, 3, 4]</li><li>`Subsequent`: Fill with the next valid value. E.g., [1, 2, nan, 3, nan, 4] -> [1, 2, 3, 3, 4, 4]</li><li>`Customized`: Fill nan values with a specified valid value specified in `paddingValue` </li></ul>| string | Default value: Linear|
+| `paddingValue` | _Optional._ Specify the value to be used for Customized fillNAMethod. **This is required if you chose Customized fillNAMethod** but optional for other methods. | float32 | |
 
 
 ### 3.4 FAQ and best practices 
@@ -308,7 +308,18 @@ The request accepts the following data in JSON format.
   - *Exclude* data before or after equipment/sensors restart. There usually will be irregular fluctuations right after a piece of equipment or a sensor restarts so including these data for model training may negatively impact the model’s performance.
 
 
-- **How will `slidingWindow` be used and what to consider when determining the `slidingWindow` for my model?**
+- **How will `slidingWindow` be used?**
+  - Let's take a look at two scenarios. Suppose you have set `slidingWindow` = 1,440, and your input data is at one-minute granularity.
+
+    - **During streaming inference**: You want to predict whether the ONE data point at `2021-01-03T00:00:00Z `is anomalous. Your `startTime` and `endTime` will be the same value ("2021-01-03T00:00:00Z"). Your inference data source, however, must contain at least `(1,440 * 2) + 1` timestamps. Given thant 1,440 = 60 * 24, so your input data must start from at latest `2021-01-01T00:00:00Z`. 
+      - Metrics Advisor for Equipment will take the leading data before the target data point ("2021-01-03T00:00:00Z") to decide whether the target is an anomaly. The length of the needed leading data is `2 * slidingWindow` or 2 * 1,440 in this case. We take twice the length ofyour sliding windown to prevent errors due to missing values in your leading data.
+
+    - **During model evaluation**: You've provided a time range for the model to inference, and thus the `endTime` will be greater than `startTime`. Inference in such scenarios is performed in a "moving window" manner. 
+      - For example, Metrics Advisor for Equipment will use data from `2021-01-01T00:00:00Z` to `2021-01-02T23:59:00Z` (inclusive) to determine whether data at `2021-01-03T00:00:00Z` is an anomaly. Then it moves forward and uses data from `2021-01-01T00:01:00Z` to `2021-01-03T00:00:00Z` (inclusive) to determine whether data at `2021-01-03T00:01:00Z` is an anomaly. It moves on in the same manner (taking 2 * 1,440 data points to compare) until the last timestamp specified by `endTime` (or the actual last timestamp). 
+      - Therefore, the number of timestamps in your evaluation dataset should ideally be greater than or equal to `slidingWindow` + (`endTime` - `startTime`).
+
+
+- **How to determine the `slidingWindow` value for my model?**
   - `slidingWindow` contorls how many previous data points get used to determine if the next data point is an anomaly. For examle, if you set slidingWindow = k, then at least k+1 points should be accessible from the source file during **inference** to get valid detection results. Otherwise, you may get a "NotEnoughData" error. 
   - Please keep two things in mind when choosing a `slidingWindow` value:
     1. **The properties of your data.** When your data is periodic, you could set the length of 1 - 3 cycles as the slidingWindow. When your data is at a high frequency (i.e., small data granularity) like minute-level or second-level, you could set a relatively higher value of slidingWindow.
@@ -371,8 +382,8 @@ The request accepts the following data in JSON format.
 ### 4.1 Goal for this step 
 
 As the create model API is asynchronous, the model will not be ready to use immediately after you called create model API. Rather, you can query the status of models in two ways: 
-- by API key, which will list all the models, or 
-- by model name, which will list information about the specific model.
+- by [API key](#421-get-a-list-of-models), which will list all the models, or 
+- by [model name](#422-get-a-model-by-model-name), which will list information about the specific model.
 
 ### 4.2 REST API samples
 
@@ -434,7 +445,8 @@ Here is a sample of the **response** you would get:
             "createdTime": "2022-07-16T08:21:24.409Z"
           }
         ],
-        "nextLink": "https://{endpoint}/metricsadvisor/adel/multivariate/models?api-version=2022-07-10-preview&skip=1&maxpagesize=1&sortBy=modelName&orderBy=DESCENDING&status=CREATED&datasetNames=prod_controlValve_5min_v1,prod_controlValve_10min_v1&topPerDataset=2" // use this link to get more results
+        // use nextLink to get more results
+        "nextLink": "https://{endpoint}/metricsadvisor/adel/multivariate/models?api-version=2022-07-10-preview&skip=1&maxpagesize=1&sortBy=modelName&orderBy=DESCENDING&status=CREATED&datasetNames=prod_controlValve_5min_v1,prod_controlValve_10min_v1&topPerDataset=2" 
       }
     }
   }
@@ -472,8 +484,9 @@ Here is a sample **response** if you try to get the details for a `COMPLETED` mo
           "fillNAMethod": "Customized",
           "paddingValue": 0
         },
-        "diagnosticsInfo": { // Summarizes information about the model and each variable being used.
-          "modelState": { // Summarizes information about a model training process.
+        "diagnosticsInfo": {
+          "modelState": { 
+            // Summarizes information about a model training process
             "epochIds": [
               10,
               20,
@@ -523,7 +536,8 @@ Here is a sample **response** if you try to get the details for a `COMPLETED` mo
               0.3327946662902832
             ]
           },
-          "variableStates": [ //Summarizes information about the variables being used and the anomaly detection results for each timestamp.
+          "variableStates": [ 
+            //Summarizes information about the variables being used and the anomaly detection results for each timestamp
             {
               "variable": "temperature_delta",
               "filledNARatio": 0,
@@ -563,9 +577,10 @@ Here is a sample **response** if you try to get the details for a `COMPLETED` mo
 
 `Ocp-Apim-Subscription-Key`: Your Metrics Advisor resource key. This subscription key provides you access to this API.
 
-`Content-Type`: Media type of the body sent to the API.
 
 **URI parameter**
+>**_NOTE:_**
+> This is only applicable when you try to get a spcific model by its name.
 
 `modelName`: Unique identifier of a dataset. _Cannot be changed once a dataset has been created._
   - Type: string
@@ -615,20 +630,37 @@ Here is a sample **response** if you try to get the details for a `COMPLETED` mo
 
 **Response parameters**
 
-Besides what you've input when creating the model, here is a list of additional parameters you would see in the API response: 
+Besides what you've input when creating the model, here is a list of additional read-only parameters you would see in the API response: 
 
 
-| **Parameters** | **Description** | **Type** | **Pattern** |
-| :----------- | :----------- | :----------- | :----------- |
-| epochIds |  How many epochs the model has been trained out of a total of 100 epochs. | int32 | |
+| **Parameters** | **Description** | **Type** | 
+| :----------- | :----------- | :----------- | 
+| **modelState**|  
+| `epochIds` |  How many epochs the model has been trained out of a total of 100 epochs. For example, if the returned epochIds is [10, 20, 30, 40, 50], it means that the model has completed its 50th training epoch, i.e., the training process is 50% completed. | int32[] | 
+| `latenciesInSeconds` |  The time cost (in seconds) for every 10 epochs, which can help you estimate the training completion time. In the [sample response](#422-get-a-model-by-model-name) above, the 10th epoch takes approximately 0.33 second. | float32[] | |
+| `trainLosses` |  Indicates how well the model fits the training data. | float32[] | 
+| `validationLosses` |  Indicates how well the model fits the test data. | float32[] | 
+| **variableStates**| 
+| `variable` | The name of the variable being used for model training. | string |
+| `filledNARatio` | Proportion of `NaN` values filled for the variable. For example, if 1000 timestamps was used for training and a given variable only have values for 900 timestamps, then the filledNARatio for this variable is 0.1. | float32 |
+| `effectiveCount` | Number of valid data points for the variable. For example, if 1000 timestamps was used for training and a given variable only have values for 900 timestamps, then the effectiveCount for this variable is 900. | int32 |
+| `firstTimestamp` | The first timestamp taken from the data source for a given variable. Different variables may have a different firstTimestamp due to missing values. | timestamp |
+| `lastTimestamp` | The last timestamp taken from the data source for a given variable. Different variables may have a different lastTimestamp due to missing values. | timestamp |
+| `status`| Current status of the model training job. | string |
+| `statusUpdatedTime`| The UTC time at which the training status of the model was last updated (if applicable). For instance, the time at which the model status changed from RUNNING to COMPLETED. | timestamp |
+| `errors`| Errors during data processing and training.| ErrorResponse property (error codes and messages)|
+| `createdTime` | The UTC time at which the model was created. | timestamp |
 
 ### 4.4 FAQ and best practices 
-
+- **How to estimate which model is best to use according to training loss and validation loss?**
+  - Generally speaking, it's hard to decide which model is the best without a labeled dataset. However, we can leverage the training and validation losses to have a rough estimation and discard those bad models. 
+    - First, check whether training losses converge. Divergent losses often indicate poor quality of the model. 
+    - Second, loss values may help identify whether underfitting or overfitting occurs. Models that are underfitting or overfitting may not have desired performance. 
+    - Third, although the definition of the loss function doesn't reflect the detection performance directly, loss values may be an auxiliary tool to estimate model quality. Low loss value is a necessary condition for a good model, thus we may discard models with high loss values.
 
 ### 4.5 Related APIs you may need
 - `[PUT] /multivariate/models/{modelName}`: **Create** and train a model. 
 - `[DELETE] /multivariate/models/{modelName}`: **Delete** a model in a Metrics Advisor resource.
-
 
 
 ## 5. Evaluate model performance

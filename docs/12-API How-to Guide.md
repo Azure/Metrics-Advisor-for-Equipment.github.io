@@ -12,7 +12,7 @@ In the following sections you will :
   1. [(Prerequisites) Create a Metrics Advisor resource in the Azure portal.](#1-prerequisites-create-a-metrics-advisor-resource-in-the-azure-portal)
   1. [Prepare data and create a dataset.](#2-prepare-data-and-create-a-dataset)
   1. [Train a Metrics Advisor for Equipment model.](#3-train-a-model)
-  1. [Check model status training status.](#4-check-model-status)
+  1. [Check model status training status.](#4-check-model-training-status)
   1. [Evaluate the model performance and download the evaluation results.](#5-evaluate-model-performance)
   1. [Post-process evaluation results and determine the desired alert settings.](#6-post-process-evaluation-results-and-determine-the-desired-alert-settings)
   1. [Configure and start an inference schedule.](#7-configure-and-start-an-inference-schedule)
@@ -180,33 +180,40 @@ The request accepts the following data in JSON format.
 
 
 ### 2.4 FAQ and best practices 
-- **How do I find my SQL server name?**
-  - In cases where you are not able to get an answer from your data engineering team, you can follow the below steps to locate your SQL server with a known database name. 
+
+**Q: How do I find my SQL server name?**
+
+A: In cases where you are not able to get an answer from your data engineering team, you can follow the below steps to locate your SQL server with a known database name. 
   ![Get_SQLServer_Name](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/Get_SQLServer_Name.png "Get_SQLServer_Name")
-  - If you do not have an Azure SQL database yet, [create a single database](https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-portal).
 
-- **What are the key things I should keep in mind when preparing my data?**
-  - Make sure that each variable has _at most_ one data point within each interval.
-  - Only *numerical* data is acceptable for Multivariate Anomaly Detector, but if there's categorical data in your dataset, we recommend you transform them into numerical values.  
-    - For instance, the “on” and “off” of equipment status could be transformed into “0” and “1”, which could help the model learn better about the correlations between different signals.
-  - (Optional) Some of our users have developed more advanced ways to generate features to achieve the best possible outcome. These advanced methods are highly dependent on your business context and may require rounds of experimentation to identify the optimal feature set. To learn more, check out this [best pracice blog](#https://techcommunity.microsoft.com/t5/ai-cognitive-services-blog/4-sets-of-best-practices-to-use-multivariate-anomaly-detector/ba-p/3490848). 
+If you do not have an Azure SQL database yet, [create a single database](https://docs.microsoft.com/en-us/azure/azure-sql/database/single-database-create-quickstart?view=azuresql&tabs=azure-portal).
 
-- **How to align my data to a single data granularity?** 
-  - Timestamps should be properly aligned for all your variables through aggregation or re-indexing. 
-    - For example, your sensors record readings every minute but may not always at the exact same second, then you should align them to the same minute (see below). 
-    
-    ![Align data](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/Align_data.png "Align data to the granularity you specified.")
+**Q: What are the key things I should keep in mind when preparing my data?**
 
-  - In cases where your sensors’ readings come at different frequencies, some users prefer to convert time series data with different frequencies into the same frequency. 
-    - For example, if some of your sensors record data every 5 minutes and others record every 10 minutes, then you can aggregate all data to 10-min intervals by taking the sum/mean/min/max etc. over a 10-min span for sensors that originally have 5-min frequency. 
-    - Alternatively, Metrics Advisor for Equipment will also help you fill in the missing data points when joining variables with different granularity, you could specify the fill-in method including linear, previous, subsequent, zero, or a fixed number at the [Train a model](#3-train-a-model) step.
+A: Here are three key things you should keep in mind: 
+- Make sure that each variable has _at most_ one data point within each interval.
+- Only *numerical* data is acceptable for Multivariate Anomaly Detector, but if there's categorical data in your dataset, we recommend you transform them into numerical values.  
+  - For instance, the “on” and “off” of equipment status could be transformed into “0” and “1”, which could help the model learn better about the correlations between different signals.
+- (Optional) Some of our users have developed more advanced ways to generate features to achieve the best possible outcome. These advanced methods are highly dependent on your business context and may require rounds of experimentation to identify the optimal feature set. To learn more, check out this [best pracice blog](#https://techcommunity.microsoft.com/t5/ai-cognitive-services-blog/4-sets-of-best-practices-to-use-multivariate-anomaly-detector/ba-p/3490848). 
+
+**Q: How to align my data to a single data granularity?** 
+
+A: Timestamps should be properly aligned for all your variables through aggregation or re-indexing. For example, your sensors record readings every minute but may not always at the exact same second, then you should align them to the same minute (see below). 
+![Align data](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/Align_data.png "Align data to the granularity you specified.")
+
+In cases where your sensors’ readings come at different frequencies, some users prefer to convert time series data with different frequencies into the same frequency. 
+
+- For example, if some of your sensors record data every 5 minutes and others record every 10 minutes, then you can aggregate all data to 10-min intervals by taking the sum/mean/min/max etc. over a 10-min span for sensors that originally have 5-min frequency. 
+- Alternatively, Metrics Advisor for Equipment will also help you fill in the missing data points when joining variables with different granularity, you could specify the fill-in method including linear, previous, subsequent, zero, or a fixed number at the [Train a model](#3-train-a-model) step.
 
 
-- **What's the difference bewteen long and wide tables?**
-   - `LongTable`: A long-form data table has a single column that stores all the variables. Data stored in this format will have repeated values in the timestamps column.
-   - `WideTable`: A wide-form data table spreads variables across several columns. Data stored in this format will NOT have repeated values in the timestamps column.
+**Q: What's the difference bewteen long and wide tables?**
 
-  ![LongTable vs. WideTable](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/Long_Wide_Tables.png "Compare long-form data table and wide-form data table.")
+A: 
+- `LongTable`: A long-form data table has a single column that stores all the variables. Data stored in this format will have repeated values in the timestamps column.
+- `WideTable`: A wide-form data table spreads variables across several columns. Data stored in this format will NOT have repeated values in the timestamps column.
+
+![LongTable vs. WideTable](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/Long_Wide_Tables.png "Compare long-form data table and wide-form data table.")
 
 
 ### 2.5 Related APIs you may need
@@ -295,7 +302,7 @@ The request accepts the following data in JSON format.
 | :----------- | :----------- | :----------- | :----------- |
 | `modelDescription` | _Optional._ Provide more information about this model. | string | Character length: [0, 1024]|
 | `datasetName` | _Required._ Data to be used for model training. | string | Case-sensitive: Yes |
-| `trainingTimeRangeList` | _Required._ A list of time ranges used for model training. Both the start and end timestamps are inclusive. | string | |
+| `trainingTimeRangeList` | _Required._ A list of time ranges used for model training. Both the start and end timestamps are inclusive. | string | `yyyy-MM-ddTHH:mm:ss`; conform to `ISO 8601` standard |
 | `slidingWindow` | _Optional._ Controls how many previous data points get used to determine if the next data point is an anomaly. | int32 | <ul><li>Value range: [28, 2880]</li><li>Default value: 300</li></ul> |
 | `alignMode` | _Optional._ How to align variables to the same data frequency interval before further processing. Inner mode returns results on timestamps where EVERY variable has a value. Outer mode returns results on timestamps where ANY variable has a value. | string | Default value: Outer |
 | `fillNAMethod` | _Optional._ How to populate any missing values in the dataset. <ul><li>`Linear`: Fill `nan` values by linear interpolation.</li><li>`Previous`: Fill with the last valid value. E.g., [1, 2, nan, 3, nan, 4] -> [1, 2, 2, 3, 3, 4]</li><li>`Subsequent`: Fill with the next valid value. E.g., [1, 2, nan, 3, nan, 4] -> [1, 2, 3, 3, 4, 4]</li><li>`Customized`: Fill nan values with a specified valid value specified in `paddingValue` </li></ul>| string | Default value: Linear|
@@ -303,71 +310,82 @@ The request accepts the following data in JSON format.
 
 
 ### 3.4 FAQ and best practices 
-- **What types of timestamps / time ranges should I exclude for model training?**
-  - *Exclude* data when equipment/sensors are off or out-of-service.
-  - *Exclude* data before or after equipment/sensors restart. There usually will be irregular fluctuations right after a piece of equipment or a sensor restarts so including these data for model training may negatively impact the model’s performance.
+
+**Q: What types of timestamps / time ranges should I exclude for model training?**
+
+A: There are two types of data you should exclude from training to reduce noise:
+- *Exclude* data when equipment/sensors are off or out-of-service.
+- *Exclude* data before or after equipment/sensors restart. There usually will be irregular fluctuations right after a piece of equipment or a sensor restarts so including these data for model training may negatively impact the model’s performance.
 
 
-- **How will `slidingWindow` be used?**
-  - Let's take a look at two scenarios. Suppose you have set `slidingWindow` = 1,440, and your input data is at one-minute granularity.
+**Q: How will `slidingWindow` be used?**
 
-    - **During streaming inference**: You want to predict whether the ONE data point at `2021-01-03T00:00:00Z `is anomalous. Your `startTime` and `endTime` will be the same value ("2021-01-03T00:00:00Z"). Your inference data source, however, must contain at least `(1,440 * 2) + 1` timestamps. Given thant 1,440 = 60 * 24, so your input data must start from at latest `2021-01-01T00:00:00Z`. 
-      - Metrics Advisor for Equipment will take the leading data before the target data point ("2021-01-03T00:00:00Z") to decide whether the target is an anomaly. The length of the needed leading data is `2 * slidingWindow` or 2 * 1,440 in this case. We take twice the length ofyour sliding windown to prevent errors due to missing values in your leading data.
+A: `slidingWindow` will also be used in streming inference and model evaluation. Let's take a look at these two scenarios separately. 
 
-    - **During model evaluation**: You've provided a time range for the model to inference, and thus the `endTime` will be greater than `startTime`. Inference in such scenarios is performed in a "moving window" manner. 
-      - For example, Metrics Advisor for Equipment will use data from `2021-01-01T00:00:00Z` to `2021-01-02T23:59:00Z` (inclusive) to determine whether data at `2021-01-03T00:00:00Z` is an anomaly. Then it moves forward and uses data from `2021-01-01T00:01:00Z` to `2021-01-03T00:00:00Z` (inclusive) to determine whether data at `2021-01-03T00:01:00Z` is an anomaly. It moves on in the same manner (taking 2 * 1,440 data points to compare) until the last timestamp specified by `endTime` (or the actual last timestamp). 
-      - Therefore, the number of timestamps in your evaluation dataset should ideally be greater than or equal to `slidingWindow` + (`endTime` - `startTime`).
+Suppose you have set `slidingWindow` = 1,440, and your input data is at one-minute granularity.
 
+- **During streaming inference**: You want to predict whether the ONE data point at `2021-01-03T00:00:00Z `is anomalous. Your `startTime` and `endTime` will be the same value ("2021-01-03T00:00:00Z"). Your inference data source, however, must contain at least `(1,440 * 2) + 1` timestamps. Given thant 1,440 = 60 * 24, so your input data must start from at latest `2021-01-01T00:00:00Z`. 
+  - Metrics Advisor for Equipment will take the leading data before the target data point ("2021-01-03T00:00:00Z") to decide whether the target is an anomaly. The length of the needed leading data is `2 * slidingWindow` or 2 * 1,440 in this case. We take twice the length ofyour sliding windown to prevent errors due to missing values in your leading data.
 
-- **How to determine the `slidingWindow` value for my model?**
-  - `slidingWindow` contorls how many previous data points get used to determine if the next data point is an anomaly. For examle, if you set slidingWindow = k, then at least k+1 points should be accessible from the source file during **inference** to get valid detection results. Otherwise, you may get a "NotEnoughData" error. 
-  - Please keep two things in mind when choosing a `slidingWindow` value:
-    1. **The properties of your data.** When your data is periodic, you could set the length of 1 - 3 cycles as the slidingWindow. When your data is at a high frequency (i.e., small data granularity) like minute-level or second-level, you could set a relatively higher value of slidingWindow.
-    1. **The trade-off between training/inference time and performance gain**. A larger slidingWindow may cause longer training/inference time. There is no guarantee that larger slidingWindows will lead to accuracy gains. A small slidingWindow may cause the model difficult to converge to an optimal solution. For example, it is hard to detect anomalies when slidingWindow has only two points.
+- **During model evaluation**: You've provided a time range for the model to inference, and thus the `endTime` will be greater than `startTime`. Inference in such scenarios is performed in a "moving window" manner. 
+  - For example, Metrics Advisor for Equipment will use data from `2021-01-01T00:00:00Z` to `2021-01-02T23:59:00Z` (inclusive) to determine whether data at `2021-01-03T00:00:00Z` is an anomaly. Then it moves forward and uses data from `2021-01-01T00:01:00Z` to `2021-01-03T00:00:00Z` (inclusive) to determine whether data at `2021-01-03T00:01:00Z` is an anomaly. It moves on in the same manner (taking 2 * 1,440 data points to compare) until the last timestamp specified by `endTime` (or the actual last timestamp). 
+  - Therefore, the number of timestamps in your evaluation dataset should ideally be greater than or equal to `slidingWindow` + (`endTime` - `startTime`).
 
 
-- **What's the difference between Inner and Outer alignMode?**
-  - `Inner` mode returns results on timestamps where EVERY variable has a value (i.e. the intersection of all variables). `Outer` mode returns results on timestamps where ANY variable has a value (i.e. the union of all variables).
-  - Here is an example to explain different `alignModel` values:
+**Q: How to determine the `slidingWindow` value for my model?**
 
-    *Variable-1*
+A: `slidingWindow` contorls how many previous data points get used to determine if the next data point is an anomaly. For examle, if you set slidingWindow = k, then at least k+1 points should be accessible from the source file during **inference** to get valid detection results. Otherwise, you may get a "NotEnoughData" error. 
 
-    |timestamp | value|
-    ----------| -----|
-    |2020-11-01| 1  
-    |2020-11-02| 2  
-    |2020-11-04| 4  
-    |2020-11-05| 5
+Please keep two things in mind when choosing a `slidingWindow` value:
+1. **The properties of your data.** When your data is periodic, you could set the length of 1 - 3 cycles as the slidingWindow. When your data is at a high frequency (i.e., small data granularity) like minute-level or second-level, you could set a relatively higher value of slidingWindow.
+1. **The trade-off between training/inference time and performance gain**. A larger slidingWindow may cause longer training/inference time. There is no guarantee that larger slidingWindows will lead to accuracy gains. A small slidingWindow may cause the model difficult to converge to an optimal solution. For example, it is hard to detect anomalies when slidingWindow has only two points.
 
-    *Variable-2*
 
-    timestamp | value  
-    --------- | -
-    2020-11-01| 1  
-    2020-11-02| 2  
-    2020-11-03| 3  
-    2020-11-04| 4
+**Q:What's the difference between Inner and Outer alignMode?**
 
-    *`Inner` join (i.e., take the intersection of the two variables)*
+A: `Inner` mode returns results on timestamps where EVERY variable has a value (i.e. the intersection of all variables). `Outer` mode returns results on timestamps where ANY variable has a value (i.e. the union of all variables).
 
-    timestamp | Variable-1 | Variable-2
-    ----------| - | -
-    2020-11-01| 1 | 1
-    2020-11-02| 2 | 2
-    2020-11-04| 4 | 4
+Here is an example to explain different `alignModel` values:
 
-    *`Outer` join (i.e., take the union of the two variables)*
+*Variable-1*
 
-    timestamp | Variable-1 | Variable-2
-    --------- | - | -
-    2020-11-01| 1 | 1
-    2020-11-02| 2 | 2
-    2020-11-03| `nan` | 3
-    2020-11-04| 4 | 4
-    2020-11-05| 5 | `nan`
+|timestamp | value|
+----------| -----|
+|2020-11-01| 1  
+|2020-11-02| 2  
+|2020-11-04| 4  
+|2020-11-05| 5
 
-- **Are there any quota limits on the number of models I can create?**
-  - Yes, for detailed numeberst please refer to the [Quotas and Limits](#/docs/08-Quota.md) page for the latest information. 
+*Variable-2*
+
+timestamp | value  
+--------- | -
+2020-11-01| 1  
+2020-11-02| 2  
+2020-11-03| 3  
+2020-11-04| 4
+
+*`Inner` join (i.e., take the intersection of the two variables)*
+
+timestamp | Variable-1 | Variable-2
+----------| - | -
+2020-11-01| 1 | 1
+2020-11-02| 2 | 2
+2020-11-04| 4 | 4
+
+*`Outer` join (i.e., take the union of the two variables)*
+
+timestamp | Variable-1 | Variable-2
+--------- | - | -
+2020-11-01| 1 | 1
+2020-11-02| 2 | 2
+2020-11-03| `nan` | 3
+2020-11-04| 4 | 4
+2020-11-05| 5 | `nan`
+
+**Q: Is there a limit on the number of models I can create?**
+
+A: Yes, for detailed numebers please refer to the [Quotas and Limits](#/docs/08-Quota.md) page for the latest information. 
 
 
 ### 3.5 Related APIs you may need
@@ -652,11 +670,13 @@ Besides what you've input when creating the model, here is a list of additional 
 | `createdTime` | The UTC time at which the model was created. | timestamp |
 
 ### 4.4 FAQ and best practices 
-- **How to estimate which model is best to use according to training loss and validation loss?**
-  - Generally speaking, it's hard to decide which model is the best without a labeled dataset. However, we can leverage the training and validation losses to have a rough estimation and discard those bad models. 
-    - First, check whether training losses converge. Divergent losses often indicate poor quality of the model. 
-    - Second, loss values may help identify whether underfitting or overfitting occurs. Models that are underfitting or overfitting may not have desired performance. 
-    - Third, although the definition of the loss function doesn't reflect the detection performance directly, loss values may be an auxiliary tool to estimate model quality. Low loss value is a necessary condition for a good model, thus we may discard models with high loss values.
+**Q：How to estimate which model is best to use according to training loss and validation loss?**
+
+A: Generally speaking, it's hard to decide which model is the best without a labeled dataset. However, we can leverage the training and validation losses to have a rough estimation and discard those bad models. 
+
+- First, check whether training losses converge. Divergent losses often indicate poor quality of the model. 
+- Second, loss values may help identify whether underfitting or overfitting occurs. Models that are underfitting or overfitting may not have desired performance. 
+- Third, although the definition of the loss function doesn't reflect the detection performance directly, loss values may be an auxiliary tool to estimate model quality. Low loss value is a necessary condition for a good model, thus we may discard models with high loss values.
 
 ### 4.5 Related APIs you may need
 - `[PUT] /multivariate/models/{modelName}`: **Create** and train a model. 
@@ -665,6 +685,97 @@ Besides what you've input when creating the model, here is a list of additional 
 
 ## 5. Evaluate model performance
 
+### 5.1 Goal for this step 
+
+Now that you've successfully trained a model, we highly recommend you test the quality of a trained model on a new set of data and inspect the detected anomalies by creating a model evaluation. 
+
+The results of a model evaluation can be [visually inspected](#/docs/04-Creating%20an%20evaluation%20and%20reviewing%20evaluation%20results.md) and further processed by applied filters based on your business needs, which we will talk more in [Step 6: Post-process evaluation results and determine the desired alert settings](#6-post-process-evaluation-results-and-determine-the-desired-alert-settings). 
+
+Let's first start with creating an evaluation job.
+
+### 5.2 REST API samples
+
+For example, you've trained a model this data from March 2022 to June 2022 and now you'd like to test the model performance with some new data from the past month (in this case, June-16 to July-15). 
+
+To create an evaluation job, you can call `[PUT] multivariate/evaluations/{evaluationName}` and kick off the model evaluation process.
+
+**Sample Request**
+
+```json
+{
+  "parameters": {
+    "endpoint": "{endpoint}", // Your Metrics Advisor resource endpoint URL  
+    "apiVersion": "2022-07-10-preview",
+    "Ocp-Apim-Subscription-Key": "{API key}", // Your Metrics Advisor resource key
+    "Content-Type": "application/json",
+    "evaluationName": "prod_controlValve_5min_v1_model_evaluation", // Unique and case-sensitive
+    "body": {
+      "evaluationDescription": "{Optional field to add more details}",
+      "modelName": "controlValve_5min_v1_model",
+      "datasetName": "prod_controlValve_5min_v1", // Ensure this dataset has the same schema as your training dataset
+      "startTime": "2022-06-16T08:05:00.000Z", 
+      "endTime": "2022-07-15T08:00:00.000Z"
+      // Both the start and end timestamps are inclusive
+    }
+  }
+}
+```
+**Response**
+
+You will get either a 201 or 200 reponse if the request was successful.
+
+
+### 5.3 Parameter details 
+
+**Request headers**
+
+`Ocp-Apim-Subscription-Key`: Your Metrics Advisor resource key. This subscription key provides you access to this API.
+
+`Content-Type`: Media type of the body sent to the API.
+
+**URI parameter**
+
+`evaluationName`: Unique identifier of a dataset. _Cannot be changed once a dataset has been created._
+  - Type: string
+  - Case-sensitive: Yes
+  - Character length: [1, 200]
+  - Valid characters: A-Z, a-z, 0-9, _(underscore), and -(hyphen). Name starts with an _(underscore) or -(hyphen) will not be accepted.
+
+**Query parameter**
+
+**Required**
+
+`apiVersion`: The current API version is **2022-07-10-preview**.
+
+**Request body parameters**
+
+The request accepts the following data in JSON format.
+
+| **Parameters** | **Description** | **Type** | **Pattern** |
+| :----------- | :----------- | :----------- | :----------- |
+| `evaluationDescription` | _Optional._ Provide more information about this model evaluation. | string | Character length: [0, 1024]|
+|`modelName` | _Required._ The trained model to be evaluated. | string | Case-sensitive: Yes| 
+| `datasetName` | _Required._ The data being used to evaluate the model. This evaluation dataset should have the same schema and data granularity as the training dataset for the model. | string | Case-sensitive: Yes |
+| `startTime` | _Required._ The first timestamp to be used for model evaluation. Ensure that this timestamp has data in your dataset. | timestamp | `yyyy-MM-ddTHH:mm:ss`; conform to `ISO 8601` standard |
+| `endTime` | _Required._ The last timestamp equal to or less than the end time given will be used for model evaluation. If endTime equals to startTime, one single data point will be processed. **Please refer to [Quotas and Limits](#/docs/08-Quota.md) for the maximum number of data points that each evaluation job can take.** | timestamp | `yyyy-MM-ddTHH:mm:ss`; conform to `ISO 8601` standard |
+
+
+### 5.4 FAQ and best practices
+**Q: Is model evaluation absolutely needed?**
+
+A: The short answer is, no. However, This step is highlight recommended for the following reasons: 
+- you can 
+
+**Q: Is there a limit on the number of evaluations I can create for each model?**
+
+A: Yes, for detailed numebers please refer to the [Quotas and Limits](#/docs/08-Quota.md) page for the latest information. 
+
+
+
+### 5.5 Related APIs you may need
+- `[GET] /multivariate/evaluations/{evaluationName}`: **Get** model evaluation info including model evaluated, evaluation dataset, evaluation time range, evaluation job status, etc. 
+- `[GET] /multivariate/evaluations[?skip][&maxpagesize][&sortBy][&orderBy][&status][&modelNames][&topPerModel]`: **List** model evaluations in a Metrics Advisor resource.
+- `[DELETE] /multivariate/evaluations/{evaluationName}`: **Delete** a evaluation in a Metrics Advisor resource.
 
 ## 6. Post-process evaluation results and determine the desired alert settings
 

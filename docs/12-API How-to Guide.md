@@ -334,7 +334,7 @@ Suppose you have set `slidingWindow` = 1,440, and your input data is at one-minu
 
 **Q: How to determine the `slidingWindow` value for my model?**
 
-A: `slidingWindow` contorls how many previous data points get used to determine if the next data point is an anomaly. For examle, if you set slidingWindow = k, then at least k+1 points should be accessible from the source file during **inference** to get valid detection results. Otherwise, you may get a "NotEnoughData" error. 
+A: `slidingWindow` contorls how many previous data points get used to determine if the next data point is an anomaly. For examle, if you set slidingWindow = k, then at least k+1 points should be accessible from the source file during **inference** to get valid detection results. Otherwise, you may get a "InsufficientHistoricalData" error. 
 
 Please keep two things in mind when choosing a `slidingWindow` value:
 1. **The properties of your data.** When your data is periodic, you could set the length of 1 - 3 cycles as the slidingWindow. When your data is at a high frequency (i.e., small data granularity) like minute-level or second-level, you could set a relatively higher value of slidingWindow.
@@ -555,7 +555,7 @@ Here is a sample **response** if you try to get the details for a `COMPLETED` mo
             ]
           },
           "variableStates": [ 
-            //Summarizes information about the variables being used and the anomaly detection results for each timestamp
+            //Summarizes detailed information about the variables being used for model training
             {
               "variable": "temperature_delta",
               "filledNARatio": 0,
@@ -600,7 +600,7 @@ Here is a sample **response** if you try to get the details for a `COMPLETED` mo
 >**_NOTE:_**
 > This is only applicable when you try to get a spcific model by its name.
 
-`modelName`: Unique identifier of a dataset. _Cannot be changed once a dataset has been created._
+`modelName`: Unique identifier of a model. _Cannot be changed once a model has been created._
   - Type: string
   - Case-sensitive: Yes
   - Character length: [1, 200]
@@ -654,8 +654,8 @@ Besides what you've input when creating the model, here is a list of additional 
 | **Parameters** | **Description** | **Type** | 
 | :----------- | :----------- | :----------- | 
 | **modelState**|  
-| `epochIds` |  How many epochs the model has been trained out of a total of 100 epochs. For example, if the returned epochIds is [10, 20, 30, 40, 50], it means that the model has completed its 50th training epoch, i.e., the training process is 50% completed. | int32[] | 
-| `latenciesInSeconds` |  The time cost (in seconds) for every 10 epochs, which can help you estimate the training completion time. In the [sample response](#422-get-a-model-by-model-name) above, the 10th epoch takes approximately 0.33 second. | float32[] | |
+| `epochIds` |  How many epochs the model has been trained out of a total of 100 epochs. For example, if the returned epochIds is [10, 20, 30, 40, 50], it means that the model has completed its 50th training epoch, i.e., the training process is 50% completed. | int32[] |
+| `latenciesInSeconds` |  The time cost (in seconds) for every 10 epochs, which can help you estimate the training completion time. In the [sample response](#422-get-a-model-by-model-name) above, the 10th epoch takes approximately 0.33 second. | float32[] |
 | `trainLosses` |  Indicates how well the model fits the training data. | float32[] | 
 | `validationLosses` |  Indicates how well the model fits the test data. | float32[] | 
 | **variableStates**| 
@@ -679,6 +679,7 @@ A: Generally speaking, it's hard to decide which model is the best without a lab
 - Third, although the definition of the loss function doesn't reflect the detection performance directly, loss values may be an auxiliary tool to estimate model quality. Low loss value is a necessary condition for a good model, thus we may discard models with high loss values.
 
 ### 4.5 Related APIs you may need
+
 - `[PUT] /multivariate/models/{modelName}`: **Create** and train a model. 
 - `[DELETE] /multivariate/models/{modelName}`: **Delete** a model in a Metrics Advisor resource.
 
@@ -735,7 +736,7 @@ You will get either a 201 or 200 reponse if the request was successful.
 
 **URI parameter**
 
-`evaluationName`: Unique identifier of a dataset. _Cannot be changed once a dataset has been created._
+`evaluationName`: Unique identifier of a model evaluation. _Cannot be changed once an evaluation has been created._
   - Type: string
   - Case-sensitive: Yes
   - Character length: [1, 200]
@@ -761,10 +762,13 @@ The request accepts the following data in JSON format.
 
 
 ### 5.4 FAQ and best practices
+
 **Q: Is model evaluation absolutely needed?**
 
-A: The short answer is, no. However, This step is highlight recommended for the following reasons: 
-- you can 
+A: Thought model evaluation is not required, this step is highlight recommended for the following reasons: 
+
+- Detailed information about abnormal equipment behavior events are provided in the evaluation output. Not only can you calculate the accuracy of the model results, but you can also partner with your subject matter experts (SMEs) to check if the explainability of the detected abnormal events meets your expectation. 
+- If you have labels, you can see how the model's predictions compare to the label data. You can also leverage this comparison to determine the optimal alert configuration in preparation for setting up a streaming inference schedule.   
 
 **Q: Is there a limit on the number of evaluations I can create for each model?**
 
@@ -773,17 +777,336 @@ A: Yes, for detailed numebers please refer to the [Quotas and Limits](#/docs/08-
 
 
 ### 5.5 Related APIs you may need
+
 - `[GET] /multivariate/evaluations/{evaluationName}`: **Get** model evaluation info including model evaluated, evaluation dataset, evaluation time range, evaluation job status, etc. 
 - `[GET] /multivariate/evaluations[?skip][&maxpagesize][&sortBy][&orderBy][&status][&modelNames][&topPerModel]`: **List** model evaluations in a Metrics Advisor resource.
-- `[DELETE] /multivariate/evaluations/{evaluationName}`: **Delete** a evaluation in a Metrics Advisor resource.
+- `[DELETE] /multivariate/evaluations/{evaluationName}`: **Delete** an evaluation in a Metrics Advisor resource.
+
+
 
 ## 6. Post-process evaluation results and determine the desired alert settings
 
+### 6.1 Goal for this step 
 
-## 7. Configure and start an inference schedule
+After your model evaluation job succeeded, you can call the `[GET] /multivariate/evaluations/{evaluationName}` to retrieve the evaluation result via an Azure Blob URL provided in the API response body. 
+
+In this section, we will also go through how to interpret the evaluation results and tune the results based on your success metrics and business needs. 
 
 
-## 8. Get streaming inference results and diagnose alerts
+### 6.2 REST API samples
 
 
-## 9. Trigger a replay on an existing inference schedule
+**Sample Response**
+
+Let's first look at a sample response when you called `[GET] /multivariate/evaluations/{evaluationName}`. Note that you can download the detailed evaluation result thru the Azure Blob URL provided in the `resultUrl` field. 
+
+```json
+// Sample response for [GET] /multivariate/evaluations/{evaluationName}
+
+{
+  "responses": {
+    "200": {
+      "body": {
+        "evaluationName": "prod_controlValve_5min_v1_model_evaluation",
+        "evaluationDescription": "Evaluate controlValve_5min_v1_model performance with 0616-0715 data.",
+        "modelName": "controlValve_5min_v1_model",
+        "datasetName": "prod_controlValve_5min_v1",
+        "startTime": "2022-06-16T08:05:00.000Z",
+        "endTime": "2022-07-15T08:00:00.000Z",
+        "status": "COMPLETED",
+        "statusUpdatedTime": "2022-07-16T14:50:29.324Z",
+        "errors": [],
+        "resultUrl": "{azure_blob_url_with_SAS_token}", // Download detailed results with this link
+        "variableStates": [
+          //Summarizes information about the variables being used for model training
+          {
+            "variable": "temperature_delta",
+            "filledNARatio": 0,
+            "effectiveCount": 8352,
+            "firstTimestamp": "2022-06-16T08:05:00.000Z",
+            "lastTimestamp": "2022-07-15T08:00:00.000Z"
+          },
+          {
+            "variable": "pressure_delta",
+            "filledNARatio": 0,
+            "effectiveCount": 8352,
+            "firstTimestamp": "2022-06-16T08:05:00.000Z",
+            "lastTimestamp": "2022-07-15T08:00:00.000Z"
+          },
+          {
+            "variable": "travel_minimumValue",
+            "filledNARatio": 0,
+            "effectiveCount": 8352,
+            "firstTimestamp": "2022-06-16T08:05:00.000Z",
+            "lastTimestamp": "2022-07-15T08:00:00.000Z"
+          }
+        ],
+        "createdTime": "2022-07-16T14:26:43.948Z"
+      }
+    }
+  }
+}
+```
+**Evaluation Result Details**
+
+The json file you downloaded with the `resultUrl` will be look like this: 
+
+```json
+
+{
+  "results": [
+    {
+      "timestamp": "2022-07-19T00:27:00.000Z",
+      "errors": [
+        {
+          "code": "InsufficientHistoricalData",
+          "message": "historical data is not enough."
+        }
+      ]
+    },
+    {
+      "timestamp": "2022-07-19T00:28:00.000Z",
+      "value": {
+        "isAnomaly": false,
+        "severity": 0,
+        "score": 0.3928471326828003
+      },
+      "errors": []
+    },
+    {
+      "timestamp": "2022-07-19T00:29:00.000Z",
+      "value": {
+        "isAnomaly": true,
+        "severity": 0.5337404608726501,
+        "score": 0.9171165823936462,
+        "interpretation": [
+          {
+            "variable": "travel_minimumValue",
+            "contributionScore": 0.6261499548828445,
+            "correlationChanges": {
+              "changedVariables": [],
+              "changedValues": []
+            }
+          },
+          {
+            "variable": "temperature_delta",
+            "contributionScore": 0.2585569577470235,
+            "correlationChanges": {
+              "changedVariables": [
+                "pressure_delta"
+              ],
+              "changedValues": [
+                0.1229392
+              ]
+            }
+          },
+          {
+            "variable": "pressure_delta",
+            "contributionScore": 0.115293087370132,
+            "correlationChanges": {
+              "changedVariables": [
+                "temperature_delta"
+              ],
+              "changedValues": [
+                0.1093203
+              ]
+            }
+          }
+          // More contributing variables
+        ]
+      },
+      "errors": []
+    }
+    // More timestamps
+  ]
+}
+```
+The results contains a few key concepts:
+
+- `InsufficientHistoricalData` error: This usually happens only with the first few timestamps because the model inferences data in a window-based manner and it requires enough historical data to make a decision. The minimum amount of historical data required depends on the size of your `slidingWindow` (see [how slidingWindow is used](#34-faq-and-best-practices)). 
+
+- `isAnomaly`: **false** indicates the current timestamp is NOT an anomaly. **true** indicates an anomaly at the current timestamp.
+
+- `score`: score is the raw output of the model on which the model makes a decision. Every timestamp should have a score, except the timestamps with InsufficientHistoricalData error.
+
+- `severity`: this field is a derived value from score and normalized into a number between 0 and 1. It indicates the relative severity of a given anomaly. Note that severity value will only be available is a timestamp has been detected as an anomly (i.e., `isAnomaly` = true). For normal timestamps, it is always 0. 
+
+- `interpretation`: this field is only available when `isAnomaly` = true for a given timestamp. Information listed aims to explain why the model detected a given timestamp as an anomaly and help you diagnose the root cause. Specifically - 
+  
+  - `variable`: Name of the top contributing variable to a given anomaly. Contributing variable are ranked in descending contributionScore order.
+
+  - `contributionScore`: Higher contribution scores indicate higher possibility of the root cause. 
+
+  - `correlationChanges`: A list of correlated variable(s) whose correlation with this contributing variable has changed significantly. This field can be empty if there were no significant correlation changes between the contributing variable and other variables. `changedVariables` contains the list of variable(s) whose correlation to the contributing variable has changed. `changedValues` contains values that indicates the extent to which the correlation(s) has changed for a given changedVariable.
+
+
+### 6.3 Best practices for tuning evaluation results
+
+First, you should decide the success metrics for the model. Metrics such as precision, true positive rate (i.e., recall), number of false positives per month, average forewarning time, etc. are commonly used ones by our customers.
+
+Then, with the success metrics in mind, you are recommended to compare the evaluation results with label data (timesamps or time ranges where true equipment failures / anomalies happened). At first, there might be too many false alerts being identified by the model. If so, you try set up different threshold on `severity` to filter out less severe anomalies and see if the rest anomalies align better with your labels. 
+
+- For example, you may have 100 timestamps with `isAnomaly` = true in the beginning, while probably only 20 of them are true anomalies. Then, you observed that more than half of the false positives have a severity lower than 0.3 while most true anomalies are above, so a threshold of 0.3 on severity could help you filter out a large portion of the false alerts. If your stakeholder only want to be notified when something serious happens, you can further raise the severity threshold to a higher value based on your business stakeholder's preference. 
+
+- Note: on our web portal and alert configuration APIs, `sensitivity` is the name of the concept that's equivalent to a severity threshold. `sensitivity` is a number between 0 and 100, and is caculated as (1 -`severity`) * 100. In general, a high sensitivity value means the model is more sensitive to outliers and is likely to identify more anomalies. A low sensitivity value usually means the model will tolerate minor outliers.
+
+Finally, once you've tested a few severity threshold (or `sensitivity` values), make a note of this number as you will need it when setting up the alert configuration for streaming inference.
+
+
+### 6.4 Related APIs you may need
+
+- `[PUT] /alertConfigs/{alertConfigName}`: **Create** an alert configuration.
+- `[GET] /multivariate/evaluations[?skip][&maxpagesize][&sortBy][&orderBy][&status][&modelNames][&topPerModel]`: **List** model evaluations in a Metrics Advisor resource.
+- `[DELETE] /multivariate/evaluations/{evaluationName}`: **Delete** an evaluation in a Metrics Advisor resource.
+
+
+## 7. Configure your hook and alert preferences
+
+### 7.1 Goal for this step 
+
+If you felt confident with the model based on the evaluation result, the next step is to configure your alert preferences before setting up a streaming inference schedule to detect anomalies with the model in real-time. 
+
+To do so, you can: 
+1. set up a hook (i.e., an alert notification channel) by using `[PUT] /hooks/{hookName}` 
+2. configure alert preference by using `[PUT] /alertConfigs/{alertConfigName}`
+Set a lower sensitivity to get notified only when severe anomalies are detected. Set a higher sensitivity to detect anomalies that are less severe.​
+
+
+### 7.2 Set up a hook 
+
+#### 7.2.1 REST API samples
+
+**Sample Request**
+
+```json
+{
+  "parameters": {
+    "endpoint": "{endpoint}",
+    "apiVersion": "2022-07-10-preview",
+    "Ocp-Apim-Subscription-Key": "{API key}",
+    "Content-Type": "application/json",
+    "hookName": "WebhookToDS",
+    "body": {
+      "hookType": "Webhook", 
+      "hookDescription": "Webhook for data scientists to receive anomaly alerts for control valves.",
+      "endpoint": "{https://datasciencecentral.contoso.example/api/AnomalyAlertControlValve}", // Replace with the endpoint to receive alerts
+      "header": {},
+      "credential": "https://contoso.key_vault.azure.example/secrets/00000000-0000-0000-0000-000000000000" // Optional if authentication is not needed
+    }
+  }
+}
+```
+**Response**
+
+You will get either a 201 or 200 reponse if the request was successful.
+
+
+#### 7.2.2 Parameter details 
+
+**Request headers**
+
+`Ocp-Apim-Subscription-Key`: Your Metrics Advisor resource key. This subscription key provides you access to this API.
+
+`Content-Type`: Media type of the body sent to the API.
+
+**URI parameter**
+
+`hookName`: Unique identifier of a hook. _Cannot be changed once a hook has been created._
+  - Type: string
+  - Case-sensitive: Yes
+  - Character length: [1, 200]
+  - Valid characters: A-Z, a-z, 0-9, _(underscore), and -(hyphen). Name starts with an _(underscore) or -(hyphen) will not be accepted.
+
+**Query parameter**
+
+**Required**
+
+`apiVersion`: The current API version is **2022-07-10-preview**.
+
+**Request body parameters**
+
+The request accepts the following data in JSON format.
+
+| **Parameters** | **Description** | **Type** | **Pattern** |
+| :----------- | :----------- | :----------- | :----------- |
+| `hookType`| _Required._ The type of the notification channel to receive alert. Only Webhook is supported in the current version. | string| |
+| `hookDescription`| _Optional._ Detailed description of a hook.| string||
+| `endpoint`| _Required._ The API address to be called when an alert is triggered. MUST be Https.
+| `header`| _Optional._ Custom headers in the API call. A string map include key-value pairs.| key-value pair(s) | For example, a header could be {"Content-Type": "application/json"}
+| `credential`| _Optional._ For authenticating to the endpoint. Optional if authentication is not needed. | string | URL |
+
+### 7.3 Configure alert preferences
+
+#### 7.3.1 REST API samples
+
+**Sample Request**
+
+```json
+{
+  "parameters": {
+    "endpoint": "{endpoint}",
+    "apiVersion": "2022-07-10-preview",
+    "Ocp-Apim-Subscription-Key": "{API key}",
+    "Content-Type": "application/json",
+    "hookName": "WebhookToDS",
+    "body": {
+      "hookType": "Webhook", 
+      "hookDescription": "Webhook for data scientists to receive anomaly alerts for control valves.",
+      "endpoint": "{https://datasciencecentral.contoso.example/api/AnomalyAlertControlValve}", // Replace with the endpoint to receive alerts
+      "header": {},
+      "credential": "https://contoso.key_vault.azure.example/secrets/00000000-0000-0000-0000-000000000000" // Optional if authentication is not needed
+    }
+  }
+}
+```
+**Response**
+
+You will get either a 201 or 200 reponse if the request was successful.
+
+
+#### 7.2.2 Parameter details 
+
+**Request headers**
+
+`Ocp-Apim-Subscription-Key`: Your Metrics Advisor resource key. This subscription key provides you access to this API.
+
+`Content-Type`: Media type of the body sent to the API.
+
+**URI parameter**
+
+`hookName`: Unique identifier of a hook. _Cannot be changed once a hook has been created._
+  - Type: string
+  - Case-sensitive: Yes
+  - Character length: [1, 200]
+  - Valid characters: A-Z, a-z, 0-9, _(underscore), and -(hyphen). Name starts with an _(underscore) or -(hyphen) will not be accepted.
+
+**Query parameter**
+
+**Required**
+
+`apiVersion`: The current API version is **2022-07-10-preview**.
+
+**Request body parameters**
+
+The request accepts the following data in JSON format.
+
+| **Parameters** | **Description** | **Type** | **Pattern** |
+| :----------- | :----------- | :----------- | :----------- |
+| `hookType`| _Required._ The type of the notification channel to receive alert. Only Webhook is supported in the current version. | string| |
+| `hookDescription`| _Optional._ Detailed description of a hook.| string||
+| `endpoint`| _Required._ The API address to be called when an alert is triggered. MUST be Https.
+| `header`| _Optional._ Custom headers in the API call. A string map include key-value pairs.| key-value pair(s) | For example, a header could be {"Content-Type": "application/json"}
+| `credential`| _Optional._ For authenticating to the endpoint. Optional if authentication is not needed. | string | URL |
+
+
+### 7.5 Related APIs you may need
+
+- `[DELETE] /multivariate/evaluations/{evaluationName}`: **Delete** a evaluation in a Metrics Advisor resource.
+
+## 8. Set up a streaming inference schedule
+
+
+## 9. Get streaming inference results and diagnose alerts
+
+
+## 10. Trigger a replay on an existing inference schedule

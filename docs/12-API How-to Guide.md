@@ -15,7 +15,7 @@ In the following sections you will :
   1. [Check model status training status.](#4-check-model-training-status)
   1. [Evaluate the model performance and download the evaluation results.](#5-evaluate-model-performance)
   1. [Post-process evaluation results and determine the desired alert settings.](#6-post-process-evaluation-results-and-determine-the-desired-alert-settings)
-  1. [Configure your hook and alert preferences](#7-configure-your-hook-and-alert-preferences)
+  1. [Configure your hook and alert preferences.](#7-configure-your-hook-and-alert-preferences)
   1. [Set up a streaming inference schedule.](#8-set-up-a-streaming-inference-schedule)
   1. [Get streaming inference results and diagnose alerts.](#9-get-streaming-inference-results-and-diagnose-alerts)
   1. [Trigger a replay on an existing inference schedule to backfill/refresh detection results for a historical time period.](#10-trigger-a-replay-on-an-existing-inference-schedule)

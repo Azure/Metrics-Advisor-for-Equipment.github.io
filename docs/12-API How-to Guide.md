@@ -1110,7 +1110,10 @@ The request accepts the following data in JSON format.
 
 **Q: How will `correlationWindow` be used?**
 
-A: 
+A: CorrelationWindow is generally used together with `suppressCorrelatedAlerts` to suppress alerts for anomalies that happened in adjacent timestamps since these anomalies  likely share the same root cause. When `suppressCorrelatedAlerts` is set to false, no alerts will be suppressed regardless of your `CorrelationWindow` value. However, if `suppressCorrelatedAlerts` is set to true, here is how alerts will be triggered when CorrelationWindow = 5 versus CorrelationWindow = 2:
+
+![CorrelationWindow = 5 vs. CorrelationWindow = 2](https://raw.githubusercontent.com/Azure/Metrics-Advisor-for-Equipment/main/image/CorrelationWindow.png "How anomalies are correlated under different CorrelationWindow settings.")
+
 
 ### 7.5 Related APIs you may need
 
@@ -1125,6 +1128,7 @@ A:
 - `[GET] /alertConfigs[?skip][&maxapgesize][&sortBy][&orderBy]`: **List** hooks in a Metrics Advisor resource.
 - `[DELETE] /alertConfigs/{alertConfigName}`: **Delete** a evaluation in a Metrics Advisor resource.
 - `[PATCH] /alertConfigs/{alertConfigName}`: **Update** an alert configuration. _Updatable properties differ by alert configuraiton type._
+
 
 ## 8. Set up a streaming inference schedule
 

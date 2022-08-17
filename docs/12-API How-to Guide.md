@@ -1108,6 +1108,16 @@ The request accepts the following data in JSON format.
 
 ### 7.4 FAQ and best practices
 
+**Q: What `sensitivity` value should I set?**
+
+A: `sensitivity` is the name of the concept that's equivalent to an anomaly severity threshold. `sensitivity` is caculated as (1 -`severity`) * 100. In general, a high sensitivity value means the model is more sensitive to outliers and is likely to identify more anomalies. A low sensitivity value usually means the model will tolerate minor outliers.
+
+You are highly recommended to determine the sensitivity value based on your success metrics and model evaluation results. 
+
+- [Create a model evaluation](#5-evaluate-model-performance)
+- [Tune your evaluation results to identify the optimal sensitivity value](#63-best-practices-for-tuning-evaluation-results)
+
+
 **Q: How will `correlationWindow` be used?**
 
 A: CorrelationWindow is generally used together with `suppressCorrelatedAlerts` to suppress alerts for anomalies that happened in adjacent timestamps since these anomalies  likely share the same root cause. When `suppressCorrelatedAlerts` is set to false, no alerts will be suppressed regardless of your `CorrelationWindow` value. However, if `suppressCorrelatedAlerts` is set to true, here is how alerts will be triggered when CorrelationWindow = 5 versus CorrelationWindow = 2:

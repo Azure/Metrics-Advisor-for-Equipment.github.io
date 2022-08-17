@@ -1031,9 +1031,10 @@ The request accepts the following data in JSON format.
 | :----------- | :----------- | :----------- | :----------- |
 | `hookType`| _Required._ The type of the notification channel to receive alert. Only Webhook is supported in the current version. | string| |
 | `hookDescription`| _Optional._ Detailed description of a hook.| string||
-| `endpoint`| _Required._ The API address to be called when an alert is triggered. MUST be Https.
+| `endpoint`| _Required._ The API address to be called when an alert is triggered. MUST be Https.| string | URL |
 | `header`| _Optional._ Custom headers in the API call. A string map include key-value pairs.| key-value pair(s) | For example, a header could be {"Content-Type": "application/json"}
 | `credential`| _Optional._ For authenticating to the endpoint. Optional if authentication is not needed. | string | URL |
+
 
 ### 7.3 Configure alert preferences
 
@@ -1048,13 +1049,18 @@ The request accepts the following data in JSON format.
     "apiVersion": "2022-07-10-preview",
     "Ocp-Apim-Subscription-Key": "{API key}",
     "Content-Type": "application/json",
-    "hookName": "WebhookToDS",
+    "alertConfigName": "prod_controlValve_5min_v1_alertconfig",
     "body": {
-      "hookType": "Webhook", 
-      "hookDescription": "Webhook for data scientists to receive anomaly alerts for control valves.",
-      "endpoint": "{https://datasciencecentral.contoso.example/api/AnomalyAlertControlValve}", // Replace with the endpoint to receive alerts
-      "header": {},
-      "credential": "https://contoso.key_vault.azure.example/secrets/00000000-0000-0000-0000-000000000000" // Optional if authentication is not needed
+      "alertConfigType": "MultiVariateAnomaly",
+      "alertDescription": "{Add_more_detailed_info_about_this_alert_configuration}",
+      "hookNames": [
+        // Optional. Add the hooks that you'd like to receive alert from
+        "WebhookToSME",
+        "WebhookToDS"
+      ],
+      "sensitivity": 70, // Replace with the value that meets your success metrics based on model evaluation results
+      "correlationWindow": 5,
+      "suppressCorrelatedAlerts": true 
     }
   }
 }
@@ -1064,7 +1070,7 @@ The request accepts the following data in JSON format.
 You will get either a 201 or 200 reponse if the request was successful.
 
 
-#### 7.2.2 Parameter details 
+#### 7.3.2 Parameter details 
 
 **Request headers**
 
@@ -1074,7 +1080,7 @@ You will get either a 201 or 200 reponse if the request was successful.
 
 **URI parameter**
 
-`hookName`: Unique identifier of a hook. _Cannot be changed once a hook has been created._
+`alertConfigName`: Unique identifier of an alert configuration. _Cannot be changed once an alert configuration has been created._
   - Type: string
   - Case-sensitive: Yes
   - Character length: [1, 200]
@@ -1092,16 +1098,32 @@ The request accepts the following data in JSON format.
 
 | **Parameters** | **Description** | **Type** | **Pattern** |
 | :----------- | :----------- | :----------- | :----------- |
-| `hookType`| _Required._ The type of the notification channel to receive alert. Only Webhook is supported in the current version. | string| |
-| `hookDescription`| _Optional._ Detailed description of a hook.| string||
-| `endpoint`| _Required._ The API address to be called when an alert is triggered. MUST be Https.
-| `header`| _Optional._ Custom headers in the API call. A string map include key-value pairs.| key-value pair(s) | For example, a header could be {"Content-Type": "application/json"}
-| `credential`| _Optional._ For authenticating to the endpoint. Optional if authentication is not needed. | string | URL |
+| `alertConfigType`| _Required._ The type of alert to be set up. | string | Valid values: "MultiVariateAnomaly"|
+| `alertDescription`| _Optional._ Detailed description of an alert configuration.| string||
+| `hookNames`| _Optional._ Specifies the list of notification channel(s) through which the alerts will be sent. If left blank, anomalies will still be detected but no alerts will be sent out. This parameter is case-sensitive.| string[] | |
+| `sensitivity`| _Required._ An integer between 1 and 100. Set a lower sensitivity if you only want to be notified when severe anomalies are detected. Set a higher number if you want to report as many anomalies as possible. | int32 | Default value: 70 |
+| `correlationWindow`| _Required._ The number of time-series data points to look back and correlate anomalies. For example, if the window is set to 5 and there is an anomaly at 01:30. Assume your data comes every 5 minutes, then the service will check if the last anomaly detected was within the past 25 minutes (i.e., window size * data frequency). If so, the service will correlate this new anomaly at 01:30 with the last anomaly and show an correlation ID in the alert notification. By default, the window is set to 0 and each anomaly is considered an individual incident. | int32 | Default value: 0 |
+| `suppressCorrelatedAlerts`| _Required._ True if you only want to receive one alert for each group of correlated anomalies (the alert will be sent for the earliest anomaly detected in this group). False if you want to receive an alert for every anomaly detected (regardless whether they are correlated or not). | boolean | Default value: true |
 
+### 7.4 FAQ and best practices
+
+**Q: How will `correlationWindow` be used?**
+
+A: 
 
 ### 7.5 Related APIs you may need
 
-- `[DELETE] /multivariate/evaluations/{evaluationName}`: **Delete** a evaluation in a Metrics Advisor resource.
+**Hook**
+- `[GET] /hooks/{hookName}`: **Get** hook info including hook type and associated set up details.
+- `[GET] /hooks[?skip][&maxapgesize][&sortBy][&orderBy]`: **List** hooks in a Metrics Advisor resource.
+- `[DELETE] /hooks/{hookName}`: **Delete** a hook in a Metrics Advisor resource.
+- `[PATCH] /hooks/{hookName}`: **Update** a hook. _Updatable properties differ by hook type._
+
+**Alert Confuguration**
+- `[GET] /alertConfigs/{alertConfigName}`: **Get** hook info including hook type and associated set up details.
+- `[GET] /alertConfigs[?skip][&maxapgesize][&sortBy][&orderBy]`: **List** hooks in a Metrics Advisor resource.
+- `[DELETE] /alertConfigs/{alertConfigName}`: **Delete** a evaluation in a Metrics Advisor resource.
+- `[PATCH] /alertConfigs/{alertConfigName}`: **Update** an alert configuration. _Updatable properties differ by alert configuraiton type._
 
 ## 8. Set up a streaming inference schedule
 

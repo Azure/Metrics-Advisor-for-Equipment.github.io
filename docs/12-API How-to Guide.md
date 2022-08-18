@@ -965,15 +965,18 @@ Finally, once you've tested a few severity threshold (or `sensitivity` values), 
 
 ### 7.1 Goal for this step 
 
-If you felt confident with the model based on the evaluation result, the next step is to configure your alert preferences before setting up a streaming inference schedule to detect anomalies with the model in real-time. 
+After an anomaly is detected by Metrics Advisor for Equipment, an alert notification will be triggered based on alert settings, using a hook. If you felt confident with the model based on the evaluation result, the next step is to configure your alert preferences before setting up a streaming inference schedule to detect anomalies with the model in real-time.  
 
 To do so, you can: 
-1. set up a hook (i.e., an alert notification channel) by using `[PUT] /hooks/{hookName}` 
-2. configure alert preference by using `[PUT] /alertConfigs/{alertConfigName}`
-Set a lower sensitivity to get notified only when severe anomalies are detected. Set a higher sensitivity to detect anomalies that are less severe.​
+- [set up a hook](#72-set-up-a-hook) (i.e., an alert notification channel) by using `[PUT] /hooks/{hookName}` to indicate how you want to receive an alert
+- [configure alert preference](#73-configure-alert-preferences) by using `[PUT] /alertConfigs/{alertConfigName}`, where various parameters are available to customize your alert rule.
+
 
 
 ### 7.2 Set up a hook 
+
+
+Here is an example of how to set up a webhook with `[PUT] /hooks/{hookName}`. A webhook is another notification channel by using an endpoint that is provided by the customer. 
 
 #### 7.2.1 REST API samples
 
@@ -998,6 +1001,9 @@ Set a lower sensitivity to get notified only when severe anomalies are detected.
 }
 ```
 **Response**
+
+> **_Note:_**
+> When a web hook is created or modified, the endpoint will be called as a test with an empty request body.
 
 You will get either a 201 or 200 reponse if the request was successful.
 
